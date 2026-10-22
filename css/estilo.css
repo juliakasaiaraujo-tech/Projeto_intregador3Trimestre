@@ -1,1 +1,121 @@
+/* ==========================================================================
+   Sol+Água · 3TRI — identidade "Sol + Água", mobile-first, acessível
+   ========================================================================== */
+:root{
+  --sol:#ffb703; --sol-forte:#fb8500;
+  --agua:#0077b6; --agua-clara:#00b4d8; --espuma:#caf0f8;
+  --bg:#f6fdff; --card:#ffffff; --tinta:#08324d; --suave:#3c6478;
+  --borda:#bfe3f2; --raio:18px;
+  --fonte-corpo:'Atkinson Hyperlegible',system-ui,sans-serif;
+  --fonte-titulo:'Comfortaa',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:96px}
+body{font-family:var(--fonte-corpo);background:var(--bg);color:var(--tinta);line-height:1.65;font-size:1rem}
+h1,h2,h3{font-family:var(--fonte-titulo);line-height:1.25;color:var(--agua)}
+a{color:var(--agua)}
+img,svg,video{max-width:100%;height:auto}
+:focus-visible{outline:3px solid var(--sol-forte);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1100px,92%);margin-inline:auto}
+.pular{position:absolute;left:-999px;top:0;z-index:99;background:var(--sol);color:#08324d;font-weight:700;padding:.8rem 1.2rem;border-radius:0 0 12px 0;text-decoration:none}
+.pular:focus{left:0}
 
+/* ---------- Topo ---------- */
+.topo{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(202,240,248,.85));backdrop-filter:blur(10px);border-bottom:2px solid var(--espuma)}
+.topo-wrap{width:min(1100px,94%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px}
+.marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.marca-ico{font-size:1.5rem}
+.marca-txt{font-family:var(--fonte-titulo);font-weight:700;color:var(--agua);line-height:1.05}
+.marca-txt small{display:block;font-family:var(--fonte-corpo);font-weight:400;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sol-forte)}
+.menu ul{display:flex;gap:.2rem;list-style:none}
+.menu a{display:block;padding:.5rem .75rem;border-radius:999px;text-decoration:none;font-weight:700;font-size:.9rem;color:var(--agua)}
+.menu a:hover{background:var(--espuma)}
+.menu a[aria-current="page"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.topo-acoes{display:flex;gap:.5rem;align-items:center}
+.btn-acess{width:42px;height:42px;border-radius:50%;border:2px solid var(--agua);background:#fff;font-size:1.2rem;cursor:pointer}
+.btn-acess:hover{background:var(--espuma)}
+.btn-menu{display:none;background:none;border:0;cursor:pointer;padding:.5rem}
+.btn-menu span{display:block;width:24px;height:3px;background:var(--agua);border-radius:3px;margin:4px 0}
+
+/* ---------- Painel de acessibilidade ---------- */
+.painel-acess{position:fixed;top:76px;right:4%;z-index:60;width:min(300px,90%);background:var(--card);border:2px solid var(--agua);border-radius:16px;padding:1.2rem;display:grid;gap:.5rem;box-shadow:0 18px 40px rgba(0,60,110,.25)}
+.painel-acess h2{font-size:1.05rem;margin-bottom:.3rem}
+.pa-btn{text-align:left;padding:.6rem .8rem;border-radius:10px;border:1.5px solid var(--borda);background:var(--bg);font-family:var(--fonte-corpo);font-weight:700;color:var(--tinta);cursor:pointer}
+.pa-btn:hover{background:var(--espuma)}
+.pa-btn[aria-pressed="true"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));border-color:var(--sol-forte);color:#4a2800}
+.pa-nota{font-size:.78rem;color:var(--suave)}
+
+/* ---------- Hero Sol + Água ---------- */
+.hero{position:relative;overflow:hidden;padding:4.5rem 0 7rem;background:linear-gradient(180deg,#8ecae6 0%,#bde0fe 45%,#e8f7ff 100%)}
+.hero-sol{position:absolute;top:6%;right:8%;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7cc,var(--sol) 60%,var(--sol-forte));box-shadow:0 0 60px 20px rgba(255,183,3,.55);animation:pulso-sol 5s ease-in-out infinite alternate}
+@keyframes pulso-sol{to{box-shadow:0 0 90px 34px rgba(255,183,3,.7)}}
+.hero-conteudo{position:relative;z-index:2}
+.eyebrow{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#023e5f;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.8rem,6vw,3.2rem);color:#023e5f;margin-bottom:1rem}
+.hero h1 em{font-style:normal;color:var(--sol-forte);text-decoration:underline wavy var(--agua-clara);text-underline-offset:.3em}
+.hero-sub{max-width:58ch;color:#0b4f6c;font-size:1.05rem}
+.hero-acoes{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.5rem 0 1.2rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid transparent}
+.btn-sol{background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(251,133,0,.35)}
+.btn-agua{background:linear-gradient(180deg,#90e0ef,var(--agua-clara));color:#023e5f;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(0,119,182,.3)}
+.btn:hover{transform:translateY(-2px)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none}
+.chips li{background:rgba(255,255,255,.8);border:1px solid var(--borda);border-radius:999px;padding:.35rem .8rem;font-size:.8rem;font-weight:700;color:#023e5f}
+.ondas{position:absolute;left:0;right:0;bottom:-1px;height:100px}
+.ondas svg{width:100%;height:100%;display:block}
+
+/* ---------- Seções / cards ---------- */
+.secao{padding:3.5rem 0}
+.sec-tag{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sol-forte);font-weight:700}
+.sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem}
+.sec-lead{max-width:64ch;color:var(--suave)}
+.grade{display:grid;gap:1.1rem}
+.card{background:var(--card);border:1.5px solid var(--borda);border-radius:var(--raio);padding:1.4rem;box-shadow:0 10px 26px rgba(0,80,140,.1)}
+.card .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem;background:radial-gradient(circle at 32% 28%,#fff,var(--espuma) 55%,var(--agua-clara));border:1px solid #fff}
+.card h3{font-size:1.02rem;margin-bottom:.4rem}
+.card p{color:var(--suave);font-size:.94rem}
+.link-card{text-decoration:none;transition:transform .25s,box-shadow .25s;display:block}
+.link-card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(0,80,140,.18)}
+.painel-sol{background:linear-gradient(140deg,var(--sol-forte),#d62828 130%),linear-gradient(180deg,rgba(255,255,255,.25),transparent);border-radius:20px;padding:1.8rem;box-shadow:0 16px 36px rgba(214,40,40,.25)}
+.painel-rotulo{font-family:monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#ffe8c2;margin-bottom:.6rem}
+.lista-perguntas{display:grid;gap:.9rem;margin-top:1.4rem}
+.pergunta summary{cursor:pointer;font-weight:700;font-size:1rem;color:var(--agua);list-style-position:inside}
+.pergunta[open] summary{margin-bottom:.6rem;color:var(--sol-forte)}
+.pergunta p{color:var(--suave);font-size:.95rem}
+
+/* ---------- Rodapé ---------- */
+.rodape{background:linear-gradient(180deg,var(--agua),#023e5f);color:#d8f1ff;margin-top:3rem}
+.rodape-grade{display:grid;gap:2rem;padding:2.8rem 0 2rem}
+.rodape-marca{font-family:var(--fonte-titulo);font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:.5rem}
+.rodape nav ul{list-style:none;display:grid;gap:.4rem}
+.rodape a{color:var(--espuma);text-decoration:none}
+.rodape a:hover{text-decoration:underline}
+.rodape p{font-size:.9rem;margin-bottom:.6rem}
+.rodape-base{border-top:1px solid rgba(255,255,255,.2);padding:1rem 0;font-size:.8rem;color:#9fd4ea}
+
+/* ---------- Mobile-first: grades crescem no desktop ---------- */
+@media(min-width:700px){ .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .rodape-grade{grid-template-columns:1.2fr .9fr 1fr} }
+@media(max-width:860px){
+  .btn-menu{display:block}
+  .menu{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:2px solid var(--espuma);display:none;padding:1rem 4%}
+  .topo.aberto .menu{display:block}
+  .menu ul{flex-direction:column;gap:.4rem}
+  .topo.aberto .btn-menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .topo.aberto .btn-menu span:nth-child(2){opacity:0}
+  .topo.aberto .btn-menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+
+/* ---------- Modos de acessibilidade ---------- */
+body.hc{--bg:#000;--card:#000;--tinta:#fff;--suave:#f2f2f2;--borda:#ff0;--agua:#0ff;--agua-clara:#0ff;--espuma:#111;--sol:#ff0;--sol-forte:#ff0}
+body.hc .hero{background:#000}
+body.hc .hero h1,body.hc .hero-sub,body.hc .eyebrow{color:#fff}
+body.hc .hero h1 em{color:#ff0}
+body.hc .chips li,body.hc .pa-btn{background:#000;color:#fff}
+body.hc .btn-sol,body.hc .btn-agua{background:#000;color:#ff0;border-color:#ff0}
+body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"]{background:#ff0;color:#000}
+body.hc .ondas{display:none}
+body.fdx, body.fdx button, body.fdx input, body.fdx summary{font-family:'OpenDyslexic','Atkinson Hyperlegible',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
+body.esp p, body.esp li, body.esp summary{line-height:2.1;letter-spacing:.06em;word-spacing:.1em}
+body.sem-anim *,body.sem-anim *::before,body.sem-anim *::after{animation:none !important;transition:none !important}
+@media(prefers-reduced-motion:reduce){ *,*::before,*::after{animation:none !important;transition:none !important} html{scroll-behavior:auto} }
