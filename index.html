@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sol+Água · Projeto Integrador 3TRI — CEP</title>
+<meta name="description" content="Site educacional e acessível: ondas eletromagnéticas, radiação do corpo negro, efeito fotoelétrico e sensores de temperatura da piscina do CEP.">
+<meta name="theme-color" content="#0077b6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☀️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- VLibras (critério 5) -->
+<div vw class="enabled"><div access="true"></div></div>
+
+<header class="topo">
+  <div class="topo-wrap">
+    <a class="marca" href="index.html">
+      <span class="marca-ico" aria-hidden="true">☀️💧</span>
+      <span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span>
+    </a>
+    <nav class="menu" aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html" aria-current="page">Início</a></li>
+        <li><a href="ondas.html">Ondas</a></li>
+        <li><a href="radiacao.html">Radiação</a></li>
+        <li><a href="fotoeletrico.html">E. Fotoelétrico</a></li>
+        <li><a href="sensores.html">Sensores</a></li>
+        <li><a href="piscina.html">Piscina</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+      </ul>
+    </nav>
+    <div class="topo-acoes">
+      <button id="btn-acess" class="btn-acess" aria-expanded="false" aria-controls="painel-acess" title="Opções de acessibilidade">♿</button>
+      <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Painel de acessibilidade (critérios 2 e 5) -->
+<div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
+  <h2>♿ Acessibilidade</h2>
+  <button id="btn-hc"  class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>
+  <button id="btn-fdx" class="pa-btn" aria-pressed="false">🔤 Fonte para dislexia</button>
+  <button id="btn-a+"  class="pa-btn">A+ Aumentar texto</button>
+  <button id="btn-a-"  class="pa-btn">A− Diminuir texto</button>
+  <button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>
+  <button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>
+  <button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>
+  <p class="pa-nota">Teclado: <strong>Tab</strong> navega · <strong>Enter</strong> ativa · <strong>Esc</strong> fecha este painel. O VLibras fica no botão azul à direita da tela.</p>
+</div>
+
+<main id="conteudo">
+
+  <!-- HERO Sol + Água -->
+  <section class="hero">
+    <div class="hero-sol" aria-hidden="true"></div>
+    <div class="wrap hero-conteudo">
+      <p class="eyebrow">Projeto Integrador · 3º trimestre · Colégio Estadual do Paraná</p>
+      <h1>Do Sol à água: <em>a física que mede o calor</em></h1>
+      <p class="hero-sub">
+        Um site educacional e acessível que une <strong>Programação</strong>, <strong>Tecnociência</strong>
+        e <strong>Robótica</strong> para responder: <em>como um sensor sabe que a piscina está esquentando?</em>
+      </p>
+      <div class="hero-acoes">
+        <a class="btn btn-sol" href="#simuladores">🌊 Explorar simuladores</a>
+        <a class="btn btn-agua" href="mapa.html">🗺️ Mapa do site</a>
+      </div>
+      <ul class="chips" aria-label="Recursos de acessibilidade disponíveis">
+        <li>♿ VLibras ativado</li><li>⌨️ 100% por teclado</li><li>🌗 Alto contraste</li><li>🔤 Fonte para dislexia</li>
+      </ul>
+    </div>
+    <div class="ondas" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(0,180,216,.25)"/>
+        <path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#f6fdff"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- DESAFIO / DISCIPLINAS -->
+  <section class="secao" id="desafio">
+    <div class="wrap">
+      <p class="sec-tag">O desafio do trimestre</p>
+      <h2 class="sec-title">Três disciplinas, uma missão</h2>
+      <p class="sec-lead">Desenvolver um site educacional, interativo e 100% acessível que explique a física por trás da medição de temperatura da piscina do CEP.</p>
+      <div class="grade g3" style="margin-top:1.6rem">
+        <article class="card">
+          <span class="ico" aria-hidden="true">💻</span>
+          <h3>Programação</h3>
+          <p>Construção deste site: HTML semântico, CSS responsivo mobile-first e JavaScript para os simuladores — com navegação por teclado e VLibras.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">🔬</span>
+          <h3>Tecnociência</h3>
+          <p>Ondas eletromagnéticas, radiação do corpo negro e efeito fotoelétrico: a física da luz e do calor que os sensores aproveitam.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">🤖</span>
+          <h3>Robótica</h3>
+          <p>Sensores: como uma grandeza física (temperatura) vira sinal elétrico e depois dado — precisão, resolução e tempo de resposta.</p>
+        </article>
+      </div>
+      <div class="painel-sol" style="margin-top:1.4rem">
+        <p class="painel-rotulo">Conexão com o Projeto da Piscina</p>
+        <p style="color:#fff;font-size:1.05rem">
+          No projeto integrador, a piscina do CEP é aquecida de forma automatizada. Aqui investigamos
+          <strong>como medir esse aquecimento</strong>: a física das medidas (Tecnociência) encontrando
+          os sensores reais do protótipo (Robótica).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTÕES ORIENTADORAS -->
+  <section class="secao" id="questoes" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Questões orientadoras</p>
+      <h2 class="sec-title">Abra cada pergunta para ver um resumo</h2>
+      <div class="lista-perguntas">
+        <details class="card pergunta">
+          <summary>⚡ Como um sensor transforma uma grandeza física em sinal elétrico?</summary>
+          <p>Pelo processo de <strong>transdução</strong>: no termistor, o calor muda a resistência elétrica; essa mudança vira variação de tensão que o Arduino lê pelo conversor analógico-digital. <a href="sensores.html">Ver simulação em Sensores →</a></p>
+        </details>
+        <details class="card pergunta">
+          <summary>📍 Como medir a temperatura em diferentes pontos?</summary>
+          <p>Com vários sensores distribuídos (superfície, meio e fundo), porque a água estratifica: a parte de cima esquenta primeiro por convecção. Comparar os pontos mostra se o calor está se espalhando. <a href="piscina.html">Ver em Piscina →</a></p>
+        </details>
+        <details class="card pergunta">
+          <summary>🎯 Qual a diferença entre precisão, resolução e tempo de resposta?</summary>
+          <p><strong>Precisão</strong> = quão perto do valor real; <strong>resolução</strong> = menor variação que o sensor percebe (ex.: 0,0625 °C do DS18B20); <strong>tempo de resposta</strong> = quanto tempo leva para reagir a uma mudança. <a href="sensores.html">Comparativo visual em Sensores →</a></p>
+        </details>
+        <details class="card pergunta">
+          <summary>📈 Como os dados indicam se o sistema está aquecendo?</summary>
+          <p>Lendo a temperatura ao longo do tempo: curva subindo = aquecendo; platô = alvo atingido (o relé desliga); descida lenta = perdas. O gráfico é a “assinatura” do funcionamento. <a href="piscina.html">Ver gráfico animado em Piscina →</a></p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉVIA DOS SIMULADORES -->
+  <section class="secao" id="simuladores" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Interatividade</p>
+      <h2 class="sec-title">Simuladores e animações do site</h2>
+      <div class="grade g3" style="margin-top:1.6rem">
+        <a class="card link-card" href="ondas.html"><span class="ico" aria-hidden="true">🌊</span><h3>Ondas eletromagnéticas</h3><p>Espectro interativo: ajuste frequência e veja comprimento de onda e tipo de radiação.</p></a>
+        <a class="card link-card" href="radiacao.html"><span class="ico" aria-hidden="true">🌡️</span><h3>Radiação do corpo negro</h3><p>Aqueça um objeto e veja a cor mudar do vermelho ao azul, como o Sol.</p></a>
+        <a class="card link-card" href="fotoeletrico.html"><span class="ico" aria-hidden="true">⚛️</span><h3>Efeito fotoelétrico</h3><p>Luz certa arranca elétrons; luz fraca, não. Simule frequência e intensidade.</p></a>
+        <a class="card link-card" href="sensores.html"><span class="ico" aria-hidden="true">🤖</span><h3>Sensores e transdução</h3><p>Temperatura → resistência → tensão → número. Precisão × resolução × resposta.</p></a>
+        <a class="card link-card" href="piscina.html"><span class="ico" aria-hidden="true">🏊</span><h3>Medindo a piscina</h3><p>Vários pontos de medição e o gráfico que mostra o aquecimento em tempo real.</p></a>
+        <a class="card link-card" href="mapa.html"><span class="ico" aria-hidden="true">🗺️</span><h3>Mapa do site</h3><p>Todas as páginas organizadas, para navegação rápida e acessível.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VÍDEOS EM LIBRAS (estrutura pronta) -->
+  <section class="secao" id="libras" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Inclusão · Libras</p>
+      <h2 class="sec-title">Vídeos em Libras (estrutura pronta)</h2>
+      <p class="sec-lead">Espaço reservado para as gravações da equipe em Libras. Enquanto isso, o widget do <strong>VLibras</strong> traduz os textos deste site ao vivo.</p>
+      <div class="grade g2" style="margin-top:1.6rem">
+        <figure class="card video-libras">
+          <video controls preload="none" style="width:100%;border-radius:12px;background:#000" aria-label="Vídeo em Libras: apresentação do projeto (aguardando gravação)">
+            <source src="videos/libras-apresentacao.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos. Baixe o arquivo em <code>videos/libras-apresentacao.mp4</code>.
+          </video>
+          <figcaption>🤟 Vídeo 1 — Apresentação do projeto em Libras <em>(coloque o arquivo .mp4 na pasta <code>videos/</code>)</em></figcaption>
+        </figure>
+        <figure class="card video-libras">
+          <video controls preload="none" style="width:100%;border-radius:12px;background:#000" aria-label="Vídeo em Libras: como funcionam os sensores (aguardando gravação)">
+            <source src="videos/libras-sensores.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos. Baixe o arquivo em <code>videos/libras-sensores.mp4</code>.
+          </video>
+          <figcaption>🤟 Vídeo 2 — Sensores explicados em Libras <em>(coloque o arquivo .mp4 na pasta <code>videos/</code>)</em></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape-grade">
+    <div>
+      <p class="rodape-marca">Sol+Água ☀️💧</p>
+      <p>Física, sensores e código a serviço da acessibilidade e da sustentabilidade.</p>
+    </div>
+    <nav aria-label="Mapa do site">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="ondas.html">Ondas eletromagnéticas</a></li>
+        <li><a href="radiacao.html">Radiação do corpo negro</a></li>
+        <li><a href="fotoeletrico.html">Efeito fotoelétrico</a></li>
+        <li><a href="sensores.html">Sensores</a></li>
+        <li><a href="piscina.html">Medindo a piscina</a></li>
+        <li><a href="mapa.html">Mapa do site</a></li>
+      </ul>
+    </nav>
+    <div>
+      <p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p>
+      <p><strong>Colégio Estadual do Paraná</strong><br>Projeto Integrador · <span id="ano">2026</span></p>
+    </div>
+  </div>
+  <div class="wrap rodape-base"><p>Site construído pelas estudantes como parte da disciplina de Programação · navegação 100% por teclado · VLibras integrado.</p></div>
+</footer>
+
+<script src="js/acesso.js"></script>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  window.addEventListener('load', function(){
+    try { new VLibras.Widget('https://vlibras.gov.br/app'); } catch(e){}
+  });
+</script>
+</body>
+</html>
