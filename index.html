@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+  [hidden]{display:none !important}
 /* ========== Sol+Água · CSS embutido (funciona sem outros arquivos) ========== */
 :root{
   --sol:#ffb703; --sol-forte:#fb8500;
@@ -274,27 +275,33 @@ body.sem-anim .reveal{opacity:1;transform:none}
     </div>
   </section>
 
-  <section class="secao" id="libras" style="padding-top:0">
+   <section class="secao" id="libras" style="padding-top:0">
     <div class="wrap">
       <p class="sec-tag">Inclusão · Libras</p>
       <h2 class="sec-title">Vídeos em Libras (estrutura pronta)</h2>
-      <p class="sec-lead">Espaço reservado para as gravações da equipe em Libras. Enquanto isso, o widget do <strong>VLibras</strong> traduz os textos deste site ao vivo.</p>
+      <p class="sec-lead">
+        Espaço reservado para as gravações da equipe em Libras. Enquanto os vídeos não ficam prontos,
+        o widget do <strong>VLibras</strong> (botão azul à direita da tela) já traduz todos os textos do site ao vivo.
+      </p>
       <div class="grade g2" style="margin-top:1.6rem">
-        <figure class="card reveal">
-          <video controls preload="none" style="width:100%;border-radius:12px;background:#000" aria-label="Vídeo em Libras: apresentação do projeto (aguardando gravação)">
-            <source src="videos/libras-apresentacao.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos.
-          </video>
-          <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Vídeo 1 — Apresentação do projeto em Libras <em>(coloque o .mp4 na pasta <code>videos/</code>)</em></figcaption>
-        </figure>
-        <figure class="card reveal">
-          <video controls preload="none" style="width:100%;border-radius:12px;background:#000" aria-label="Vídeo em Libras: como funcionam os sensores (aguardando gravação)">
-            <source src="videos/libras-sensores.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos.
-          </video>
-          <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Vídeo 2 — Sensores explicados em Libras <em>(coloque o .mp4 na pasta <code>videos/</code>)</em></figcaption>
-        </figure>
+        <div class="card reveal" style="text-align:center;padding:2.2rem 1.4rem">
+          <div style="font-size:3rem" aria-hidden="true">🤟</div>
+          <h3 style="margin:.6rem 0 .4rem">Vídeo 1 — Apresentação do projeto</h3>
+          <p>Gravação em Libras em produção. Quando o arquivo <code>videos/libras-apresentacao.mp4</code> existir no repositório, o player acessível aparecerá aqui.</p>
+          <span style="display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px">EM BREVE</span>
+        </div>
+        <div class="card reveal" style="text-align:center;padding:2.2rem 1.4rem">
+          <div style="font-size:3rem" aria-hidden="true">🤟</div>
+          <h3 style="margin:.6rem 0 .4rem">Vídeo 2 — Como funcionam os sensores</h3>
+          <p>Gravação em Libras em produção. Quando o arquivo <code>videos/libras-sensores.mp4</code> existir no repositório, o player acessível aparecerá aqui.</p>
+          <span style="display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px">EM BREVE</span>
+        </div>
       </div>
+      <!-- QUANDO GRAVAREM OS VÍDEOS: subam os .mp4 na pasta videos/ (Add file → Upload files)
+           e troquem um dos cards acima por:
+           <figure class="card"><video controls preload="metadata" style="width:100%;border-radius:12px;background:#000">
+             <source src="videos/libras-apresentacao.mp4" type="video/mp4"></video>
+             <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Apresentação do projeto em Libras</figcaption></figure> -->
     </div>
   </section>
 
