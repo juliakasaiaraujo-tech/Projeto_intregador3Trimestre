@@ -10,18 +10,162 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/estilo.css">
+
+<style>
+/* ========== Sol+Água · CSS embutido (funciona sem outros arquivos) ========== */
+:root{
+  --sol:#ffb703; --sol-forte:#fb8500;
+  --agua:#0077b6; --agua-clara:#00b4d8; --espuma:#caf0f8;
+  --bg:#f6fdff; --card:#ffffff; --tinta:#08324d; --suave:#3c6478;
+  --borda:#bfe3f2; --raio:18px;
+  --fonte-corpo:'Atkinson Hyperlegible',system-ui,sans-serif;
+  --fonte-titulo:'Comfortaa',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:96px}
+body{font-family:var(--fonte-corpo);background:var(--bg);color:var(--tinta);line-height:1.65;font-size:1rem}
+h1,h2,h3{font-family:var(--fonte-titulo);line-height:1.25;color:var(--agua)}
+a{color:var(--agua)}
+img,svg,video{max-width:100%;height:auto}
+:focus-visible{outline:3px solid var(--sol-forte);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1100px,92%);margin-inline:auto}
+.pular{position:absolute;left:-999px;top:0;z-index:99;background:var(--sol);color:#08324d;font-weight:700;padding:.8rem 1.2rem;border-radius:0 0 12px 0;text-decoration:none}
+.pular:focus{left:0}
+
+/* Topo */
+.topo{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(202,240,248,.85));backdrop-filter:blur(10px);border-bottom:2px solid var(--espuma)}
+.topo-wrap{width:min(1100px,94%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px}
+.marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.marca-ico{font-size:1.5rem}
+.marca-txt{font-family:var(--fonte-titulo);font-weight:700;color:var(--agua);line-height:1.05}
+.marca-txt small{display:block;font-family:var(--fonte-corpo);font-weight:400;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sol-forte)}
+.menu ul{display:flex;gap:.2rem;list-style:none}
+.menu a{display:block;padding:.5rem .75rem;border-radius:999px;text-decoration:none;font-weight:700;font-size:.9rem;color:var(--agua)}
+.menu a:hover{background:var(--espuma)}
+.menu a[aria-current="page"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.btn-menu{display:none;background:none;border:0;cursor:pointer;padding:.5rem}
+.btn-menu span{display:block;width:24px;height:3px;background:var(--agua);border-radius:3px;margin:4px 0;transition:.3s}
+
+/* Botão flutuante de acessibilidade (abre/fecha) */
+.btn-flutuante{
+  position:fixed;left:18px;bottom:18px;z-index:70;width:58px;height:58px;border-radius:50%;
+  border:3px solid #fff;background:linear-gradient(180deg,var(--sol),var(--sol-forte));
+  font-size:1.6rem;cursor:pointer;box-shadow:0 10px 26px rgba(251,133,0,.45);
+  animation:flutuar 3s ease-in-out infinite alternate;transition:transform .2s;
+}
+.btn-flutuante:hover{transform:scale(1.08)}
+@keyframes flutuar{to{transform:translateY(-6px)}}
+
+/* Painel de acessibilidade */
+.painel-acess{
+  position:fixed;left:18px;bottom:88px;z-index:70;width:min(310px,92%);
+  background:var(--card);border:2px solid var(--agua);border-radius:16px;padding:1.2rem;
+  display:grid;gap:.5rem;box-shadow:0 18px 40px rgba(0,60,110,.25);
+}
+.painel-acess.abrindo{animation:entrar .3s ease-out}
+@keyframes entrar{from{transform:translateX(-30px);opacity:0}}
+.painel-acess h2{font-size:1.05rem;margin-bottom:.3rem}
+.pa-btn{text-align:left;padding:.6rem .8rem;border-radius:10px;border:1.5px solid var(--borda);background:var(--bg);font-family:var(--fonte-corpo);font-weight:700;color:var(--tinta);cursor:pointer}
+.pa-btn:hover{background:var(--espuma)}
+.pa-btn[aria-pressed="true"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));border-color:var(--sol-forte);color:#4a2800}
+.pa-nota{font-size:.78rem;color:var(--suave)}
+
+/* Hero Sol + Água (com animações) */
+.hero{position:relative;overflow:hidden;padding:4.5rem 0 7rem;background:linear-gradient(180deg,#8ecae6 0%,#bde0fe 45%,#e8f7ff 100%)}
+.hero-sol{position:absolute;top:6%;right:8%;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7cc,var(--sol) 60%,var(--sol-forte));box-shadow:0 0 60px 20px rgba(255,183,3,.55);animation:pulso-sol 5s ease-in-out infinite alternate}
+@keyframes pulso-sol{to{box-shadow:0 0 95px 36px rgba(255,183,3,.7)}}
+.hero-conteudo{position:relative;z-index:2}
+.eyebrow{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#023e5f;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.8rem,6vw,3.2rem);color:#023e5f;margin-bottom:1rem}
+.hero h1 em{font-style:normal;color:var(--sol-forte);text-decoration:underline wavy var(--agua-clara);text-underline-offset:.3em}
+.hero-sub{max-width:58ch;color:#0b4f6c;font-size:1.05rem}
+.hero-acoes{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.5rem 0 1.2rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid transparent;transition:transform .25s}
+.btn:hover{transform:translateY(-3px)}
+.btn-sol{background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(251,133,0,.35)}
+.btn-agua{background:linear-gradient(180deg,#90e0ef,var(--agua-clara));color:#023e5f;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(0,119,182,.3)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none}
+.chips li{background:rgba(255,255,255,.8);border:1px solid var(--borda);border-radius:999px;padding:.35rem .8rem;font-size:.8rem;font-weight:700;color:#023e5f}
+.ondas{position:absolute;left:0;right:0;bottom:-1px;height:100px;overflow:hidden}
+.ondas svg{width:104%;height:100%;display:block;position:absolute;bottom:0;left:-2%;animation:balanco 8s ease-in-out infinite alternate}
+@keyframes balanco{from{transform:translateX(-1.4%)}to{transform:translateX(1.4%)}}
+
+/* Seções / cards */
+.secao{padding:3.5rem 0}
+.sec-tag{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sol-forte);font-weight:700}
+.sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem}
+.sec-lead{max-width:64ch;color:var(--suave)}
+.grade{display:grid;gap:1.1rem}
+.card{background:var(--card);border:1.5px solid var(--borda);border-radius:var(--raio);padding:1.4rem;box-shadow:0 10px 26px rgba(0,80,140,.1);transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(0,80,140,.18)}
+.card .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem;background:radial-gradient(circle at 32% 28%,#fff,var(--espuma) 55%,var(--agua-clara));border:1px solid #fff}
+.card h3{font-size:1.02rem;margin-bottom:.4rem}
+.card p{color:var(--suave);font-size:.94rem}
+.link-card{text-decoration:none;display:block}
+.painel-sol{background:linear-gradient(140deg,var(--sol-forte),#d62828 130%);border-radius:20px;padding:1.8rem;box-shadow:0 16px 36px rgba(214,40,40,.25)}
+.painel-rotulo{font-family:monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#ffe8c2;margin-bottom:.6rem}
+.lista-perguntas{display:grid;gap:.9rem;margin-top:1.4rem}
+.pergunta summary{cursor:pointer;font-weight:700;font-size:1rem;color:var(--agua);list-style-position:inside}
+.pergunta[open] summary{margin-bottom:.6rem;color:var(--sol-forte)}
+.pergunta p{color:var(--suave);font-size:.95rem}
+
+/* Surgir ao rolar */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visivel{opacity:1;transform:none}
+
+/* Rodapé */
+.rodape{background:linear-gradient(180deg,var(--agua),#023e5f);color:#d8f1ff;margin-top:3rem}
+.rodape-grade{display:grid;gap:2rem;padding:2.8rem 0 2rem}
+.rodape-marca{font-family:var(--fonte-titulo);font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:.5rem}
+.rodape nav ul{list-style:none;display:grid;gap:.4rem}
+.rodape a{color:var(--espuma);text-decoration:none}
+.rodape a:hover{text-decoration:underline}
+.rodape p{font-size:.9rem;margin-bottom:.6rem}
+.rodape-base{border-top:1px solid rgba(255,255,255,.2);padding:1rem 0;font-size:.8rem;color:#9fd4ea}
+
+/* Mobile-first → desktop */
+@media(min-width:700px){ .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .rodape-grade{grid-template-columns:1.2fr .9fr 1fr} }
+@media(max-width:860px){
+  .btn-menu{display:block}
+  .menu{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:2px solid var(--espuma);display:none;padding:1rem 4%}
+  .topo.aberto .menu{display:block}
+  .menu ul{flex-direction:column;gap:.4rem}
+  .topo.aberto .btn-menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .topo.aberto .btn-menu span:nth-child(2){opacity:0}
+  .topo.aberto .btn-menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+
+/* Modos de acessibilidade */
+body.hc{--bg:#000;--card:#000;--tinta:#fff;--suave:#f2f2f2;--borda:#ff0;--agua:#0ff;--agua-clara:#0ff;--espuma:#111;--sol:#ff0;--sol-forte:#ff0}
+body.hc .hero{background:#000}
+body.hc .hero h1,body.hc .hero-sub,body.hc .eyebrow{color:#fff}
+body.hc .hero h1 em{color:#ff0}
+body.hc .chips li,body.hc .pa-btn{background:#000;color:#fff}
+body.hc .btn-sol,body.hc .btn-agua{background:#000;color:#ff0;border-color:#ff0}
+body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.hc .btn-flutuante{background:#ff0;color:#000}
+body.hc .ondas{display:none}
+body.fdx, body.fdx button, body.fdx input, body.fdx summary{font-family:'OpenDyslexic','Atkinson Hyperlegible',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
+body.esp p, body.esp li, body.esp summary{line-height:2.1;letter-spacing:.06em;word-spacing:.1em}
+body.sem-anim *,body.sem-anim *::before,body.sem-anim *::after{animation:none !important;transition:none !important}
+body.sem-anim .reveal{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
-<!-- VLibras (critério 5) -->
+<!-- VLibras -->
 <div vw class="enabled"><div access="true"></div></div>
 
 <header class="topo">
   <div class="topo-wrap">
     <a class="marca" href="index.html">
-      <span class="marca-ico" aria-hidden="true">☀️💧</span>
+      <span class="marca-ico" aria-hidden="true">☀️</span>
       <span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span>
     </a>
     <nav class="menu" aria-label="Navegação principal">
@@ -35,14 +179,13 @@
         <li><a href="mapa.html">Mapa</a></li>
       </ul>
     </nav>
-    <div class="topo-acoes">
-      <button id="btn-acess" class="btn-acess" aria-expanded="false" aria-controls="painel-acess" title="Opções de acessibilidade">♿</button>
-      <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
-    </div>
+    <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<!-- Painel de acessibilidade (critérios 2 e 5) -->
+<!-- Botão que ABRE e FECHA a acessibilidade -->
+<button id="btn-acess" class="btn-flutuante" aria-expanded="false" aria-controls="painel-acess" title="Abrir opções de acessibilidade">♿</button>
+
 <div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
   <h2>♿ Acessibilidade</h2>
   <button id="btn-hc"  class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>
@@ -52,12 +195,11 @@
   <button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>
   <button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>
   <button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>
-  <p class="pa-nota">Teclado: <strong>Tab</strong> navega · <strong>Enter</strong> ativa · <strong>Esc</strong> fecha este painel. O VLibras fica no botão azul à direita da tela.</p>
+  <p class="pa-nota">Teclado: <strong>Tab</strong> navega · <strong>Enter</strong> ativa · <strong>Esc</strong> fecha este painel. VLibras no botão azul à direita.</p>
 </div>
 
 <main id="conteudo">
 
-  <!-- HERO Sol + Água -->
   <section class="hero">
     <div class="hero-sol" aria-hidden="true"></div>
     <div class="wrap hero-conteudo">
@@ -83,30 +225,17 @@
     </div>
   </section>
 
-  <!-- DESAFIO / DISCIPLINAS -->
   <section class="secao" id="desafio">
     <div class="wrap">
       <p class="sec-tag">O desafio do trimestre</p>
       <h2 class="sec-title">Três disciplinas, uma missão</h2>
       <p class="sec-lead">Desenvolver um site educacional, interativo e 100% acessível que explique a física por trás da medição de temperatura da piscina do CEP.</p>
       <div class="grade g3" style="margin-top:1.6rem">
-        <article class="card">
-          <span class="ico" aria-hidden="true">💻</span>
-          <h3>Programação</h3>
-          <p>Construção deste site: HTML semântico, CSS responsivo mobile-first e JavaScript para os simuladores — com navegação por teclado e VLibras.</p>
-        </article>
-        <article class="card">
-          <span class="ico" aria-hidden="true">🔬</span>
-          <h3>Tecnociência</h3>
-          <p>Ondas eletromagnéticas, radiação do corpo negro e efeito fotoelétrico: a física da luz e do calor que os sensores aproveitam.</p>
-        </article>
-        <article class="card">
-          <span class="ico" aria-hidden="true">🤖</span>
-          <h3>Robótica</h3>
-          <p>Sensores: como uma grandeza física (temperatura) vira sinal elétrico e depois dado — precisão, resolução e tempo de resposta.</p>
-        </article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">💻</span><h3>Programação</h3><p>Construção deste site: HTML semântico, CSS responsivo mobile-first e JavaScript para os simuladores — com navegação por teclado e VLibras.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🔬</span><h3>Tecnociência</h3><p>Ondas eletromagnéticas, radiação do corpo negro e efeito fotoelétrico: a física da luz e do calor que os sensores aproveitam.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🤖</span><h3>Robótica</h3><p>Sensores: como uma grandeza física (temperatura) vira sinal elétrico e depois dado — precisão, resolução e tempo de resposta.</p></article>
       </div>
-      <div class="painel-sol" style="margin-top:1.4rem">
+      <div class="painel-sol reveal" style="margin-top:1.4rem">
         <p class="painel-rotulo">Conexão com o Projeto da Piscina</p>
         <p style="color:#fff;font-size:1.05rem">
           No projeto integrador, a piscina do CEP é aquecida de forma automatizada. Aqui investigamos
@@ -117,68 +246,53 @@
     </div>
   </section>
 
-  <!-- QUESTÕES ORIENTADORAS -->
   <section class="secao" id="questoes" style="padding-top:0">
     <div class="wrap">
       <p class="sec-tag">Questões orientadoras</p>
       <h2 class="sec-title">Abra cada pergunta para ver um resumo</h2>
       <div class="lista-perguntas">
-        <details class="card pergunta">
-          <summary>⚡ Como um sensor transforma uma grandeza física em sinal elétrico?</summary>
-          <p>Pelo processo de <strong>transdução</strong>: no termistor, o calor muda a resistência elétrica; essa mudança vira variação de tensão que o Arduino lê pelo conversor analógico-digital. <a href="sensores.html">Ver simulação em Sensores →</a></p>
-        </details>
-        <details class="card pergunta">
-          <summary>📍 Como medir a temperatura em diferentes pontos?</summary>
-          <p>Com vários sensores distribuídos (superfície, meio e fundo), porque a água estratifica: a parte de cima esquenta primeiro por convecção. Comparar os pontos mostra se o calor está se espalhando. <a href="piscina.html">Ver em Piscina →</a></p>
-        </details>
-        <details class="card pergunta">
-          <summary>🎯 Qual a diferença entre precisão, resolução e tempo de resposta?</summary>
-          <p><strong>Precisão</strong> = quão perto do valor real; <strong>resolução</strong> = menor variação que o sensor percebe (ex.: 0,0625 °C do DS18B20); <strong>tempo de resposta</strong> = quanto tempo leva para reagir a uma mudança. <a href="sensores.html">Comparativo visual em Sensores →</a></p>
-        </details>
-        <details class="card pergunta">
-          <summary>📈 Como os dados indicam se o sistema está aquecendo?</summary>
-          <p>Lendo a temperatura ao longo do tempo: curva subindo = aquecendo; platô = alvo atingido (o relé desliga); descida lenta = perdas. O gráfico é a “assinatura” do funcionamento. <a href="piscina.html">Ver gráfico animado em Piscina →</a></p>
-        </details>
+        <details class="card pergunta reveal"><summary>⚡ Como um sensor transforma uma grandeza física em sinal elétrico?</summary><p>Pelo processo de <strong>transdução</strong>: no termistor, o calor muda a resistência elétrica; essa mudança vira variação de tensão que o Arduino lê pelo conversor analógico-digital. <a href="sensores.html">Ver simulação em Sensores →</a></p></details>
+        <details class="card pergunta reveal"><summary>📍 Como medir a temperatura em diferentes pontos?</summary><p>Com vários sensores distribuídos (superfície, meio e fundo), porque a água estratifica: a parte de cima esquenta primeiro por convecção. Comparar os pontos mostra se o calor está se espalhando. <a href="piscina.html">Ver em Piscina →</a></p></details>
+        <details class="card pergunta reveal"><summary>🎯 Qual a diferença entre precisão, resolução e tempo de resposta?</summary><p><strong>Precisão</strong> = quão perto do valor real; <strong>resolução</strong> = menor variação que o sensor percebe (ex.: 0,0625 °C do DS18B20); <strong>tempo de resposta</strong> = quanto tempo leva para reagir a uma mudança. <a href="sensores.html">Comparativo visual em Sensores →</a></p></details>
+        <details class="card pergunta reveal"><summary>📈 Como os dados indicam se o sistema está aquecendo?</summary><p>Lendo a temperatura ao longo do tempo: curva subindo = aquecendo; platô = alvo atingido (o relé desliga); descida lenta = perdas. O gráfico é a “assinatura” do funcionamento. <a href="piscina.html">Ver gráfico animado em Piscina →</a></p></details>
       </div>
     </div>
   </section>
 
-  <!-- PRÉVIA DOS SIMULADORES -->
   <section class="secao" id="simuladores" style="padding-top:0">
     <div class="wrap">
       <p class="sec-tag">Interatividade</p>
       <h2 class="sec-title">Simuladores e animações do site</h2>
       <div class="grade g3" style="margin-top:1.6rem">
-        <a class="card link-card" href="ondas.html"><span class="ico" aria-hidden="true">🌊</span><h3>Ondas eletromagnéticas</h3><p>Espectro interativo: ajuste frequência e veja comprimento de onda e tipo de radiação.</p></a>
-        <a class="card link-card" href="radiacao.html"><span class="ico" aria-hidden="true">🌡️</span><h3>Radiação do corpo negro</h3><p>Aqueça um objeto e veja a cor mudar do vermelho ao azul, como o Sol.</p></a>
-        <a class="card link-card" href="fotoeletrico.html"><span class="ico" aria-hidden="true">⚛️</span><h3>Efeito fotoelétrico</h3><p>Luz certa arranca elétrons; luz fraca, não. Simule frequência e intensidade.</p></a>
-        <a class="card link-card" href="sensores.html"><span class="ico" aria-hidden="true">🤖</span><h3>Sensores e transdução</h3><p>Temperatura → resistência → tensão → número. Precisão × resolução × resposta.</p></a>
-        <a class="card link-card" href="piscina.html"><span class="ico" aria-hidden="true">🏊</span><h3>Medindo a piscina</h3><p>Vários pontos de medição e o gráfico que mostra o aquecimento em tempo real.</p></a>
-        <a class="card link-card" href="mapa.html"><span class="ico" aria-hidden="true">🗺️</span><h3>Mapa do site</h3><p>Todas as páginas organizadas, para navegação rápida e acessível.</p></a>
+        <a class="card link-card reveal" href="ondas.html"><span class="ico" aria-hidden="true">🌊</span><h3>Ondas eletromagnéticas</h3><p>Espectro interativo: ajuste frequência e veja comprimento de onda e tipo de radiação.</p></a>
+        <a class="card link-card reveal" href="radiacao.html"><span class="ico" aria-hidden="true">🌡️</span><h3>Radiação do corpo negro</h3><p>Aqueça um objeto e veja a cor mudar do vermelho ao azul, como o Sol.</p></a>
+        <a class="card link-card reveal" href="fotoeletrico.html"><span class="ico" aria-hidden="true">⚛️</span><h3>Efeito fotoelétrico</h3><p>Luz certa arranca elétrons; luz fraca, não. Simule frequência e intensidade.</p></a>
+        <a class="card link-card reveal" href="sensores.html"><span class="ico" aria-hidden="true">🤖</span><h3>Sensores e transdução</h3><p>Temperatura → resistência → tensão → número. Precisão × resolução × resposta.</p></a>
+        <a class="card link-card reveal" href="piscina.html"><span class="ico" aria-hidden="true">🏊</span><h3>Medindo a piscina</h3><p>Vários pontos de medição e o gráfico que mostra o aquecimento em tempo real.</p></a>
+        <a class="card link-card reveal" href="mapa.html"><span class="ico" aria-hidden="true">🗺️</span><h3>Mapa do site</h3><p>Todas as páginas organizadas, para navegação rápida e acessível.</p></a>
       </div>
     </div>
   </section>
 
-  <!-- VÍDEOS EM LIBRAS (estrutura pronta) -->
   <section class="secao" id="libras" style="padding-top:0">
     <div class="wrap">
       <p class="sec-tag">Inclusão · Libras</p>
       <h2 class="sec-title">Vídeos em Libras (estrutura pronta)</h2>
       <p class="sec-lead">Espaço reservado para as gravações da equipe em Libras. Enquanto isso, o widget do <strong>VLibras</strong> traduz os textos deste site ao vivo.</p>
       <div class="grade g2" style="margin-top:1.6rem">
-        <figure class="card video-libras">
+        <figure class="card reveal">
           <video controls preload="none" style="width:100%;border-radius:12px;background:#000" aria-label="Vídeo em Libras: apresentação do projeto (aguardando gravação)">
             <source src="videos/libras-apresentacao.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos. Baixe o arquivo em <code>videos/libras-apresentacao.mp4</code>.
+            Seu navegador não suporta vídeos.
           </video>
-          <figcaption>🤟 Vídeo 1 — Apresentação do projeto em Libras <em>(coloque o arquivo .mp4 na pasta <code>videos/</code>)</em></figcaption>
+          <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Vídeo 1 — Apresentação do projeto em Libras <em>(coloque o .mp4 na pasta <code>videos/</code>)</em></figcaption>
         </figure>
-        <figure class="card video-libras">
+        <figure class="card reveal">
           <video controls preload="none" style="width:100%;border-radius:12px;background:#000" aria-label="Vídeo em Libras: como funcionam os sensores (aguardando gravação)">
             <source src="videos/libras-sensores.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos. Baixe o arquivo em <code>videos/libras-sensores.mp4</code>.
+            Seu navegador não suporta vídeos.
           </video>
-          <figcaption>🤟 Vídeo 2 — Sensores explicados em Libras <em>(coloque o arquivo .mp4 na pasta <code>videos/</code>)</em></figcaption>
+          <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Vídeo 2 — Sensores explicados em Libras <em>(coloque o .mp4 na pasta <code>videos/</code>)</em></figcaption>
         </figure>
       </div>
     </div>
@@ -211,11 +325,87 @@
   <div class="wrap rodape-base"><p>Site construído pelas estudantes como parte da disciplina de Programação · navegação 100% por teclado · VLibras integrado.</p></div>
 </footer>
 
-<script src="js/acesso.js"></script>
+<script>
+/* ========== Sol+Água · JS embutido (acessibilidade + animações) ========== */
+(function () {
+  const $ = id => document.getElementById(id);
+  let estado = {};
+  try { estado = JSON.parse(localStorage.getItem('solagua') || '{}'); } catch (e) { estado = {}; }
+
+  function aplicar() {
+    document.body.classList.toggle('hc', !!estado.hc);
+    document.body.classList.toggle('fdx', !!estado.fdx);
+    document.body.classList.toggle('esp', !!estado.esp);
+    document.body.classList.toggle('sem-anim', !!estado.sem);
+    document.documentElement.style.fontSize = (estado.fs || 100) + '%';
+    if (estado.sem) document.querySelectorAll('.reveal').forEach(r => r.classList.add('visivel'));
+    [['btn-hc','hc'],['btn-fdx','fdx'],['btn-esp','esp'],['btn-sem','sem']].forEach(par => {
+      const b = $(par[0]); if (b) b.setAttribute('aria-pressed', String(!!estado[par[1]]));
+    });
+  }
+  function salvar() { localStorage.setItem('solagua', JSON.stringify(estado)); aplicar(); }
+
+  window.addEventListener('DOMContentLoaded', function () {
+    aplicar();
+
+    /* botão que ABRE e FECHA o painel */
+    const painel = $('painel-acess'), abre = $('btn-acess');
+    function abrir() {
+      painel.removeAttribute('hidden');
+      painel.classList.remove('abrindo'); void painel.offsetWidth; painel.classList.add('abrindo');
+      abre.setAttribute('aria-expanded', 'true');
+      abre.textContent = '✖';
+      abre.title = 'Fechar opções de acessibilidade';
+      const b = painel.querySelector('button'); if (b) b.focus();
+    }
+    function fechar() {
+      painel.setAttribute('hidden', '');
+      abre.setAttribute('aria-expanded', 'false');
+      abre.textContent = '♿';
+      abre.title = 'Abrir opções de acessibilidade';
+    }
+    abre.addEventListener('click', () => painel.hasAttribute('hidden') ? abrir() : fechar());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !painel.hasAttribute('hidden')) { fechar(); abre.focus(); }
+    });
+
+    const liga = (id, fn) => { const b = $(id); if (b) b.addEventListener('click', fn); };
+    liga('btn-hc',  () => { estado.hc  = !estado.hc;  salvar(); });
+    liga('btn-fdx', () => { estado.fdx = !estado.fdx; salvar(); });
+    liga('btn-esp', () => { estado.esp = !estado.esp; salvar(); });
+    liga('btn-sem', () => { estado.sem = !estado.sem; salvar(); });
+    liga('btn-a+',  () => { estado.fs = Math.min(130, (estado.fs || 100) + 10); salvar(); });
+    liga('btn-a-',  () => { estado.fs = Math.max(85,  (estado.fs || 100) - 10); salvar(); });
+    liga('btn-reset', () => { localStorage.removeItem('solagua'); location.reload(); });
+
+    /* menu mobile */
+    const topo = document.querySelector('.topo'), tog = $('btn-menu');
+    if (tog && topo) tog.addEventListener('click', function () {
+      const a = topo.classList.toggle('aberto');
+      tog.setAttribute('aria-expanded', String(a));
+    });
+
+    const ano = $('ano'); if (ano) ano.textContent = new Date().getFullYear();
+
+    /* animação de surgir ao rolar */
+    const revs = [...document.querySelectorAll('.reveal')];
+    const sem = document.body.classList.contains('sem-anim') ||
+                matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (sem || !('IntersectionObserver' in window)) {
+      revs.forEach(r => r.classList.add('visivel'));
+    } else {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visivel'); io.unobserve(e.target); }
+      }), { threshold: .12 });
+      revs.forEach(r => io.observe(r));
+    }
+  });
+})();
+</script>
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 <script>
-  window.addEventListener('load', function(){
-    try { new VLibras.Widget('https://vlibras.gov.br/app'); } catch(e){}
+  window.addEventListener('load', function () {
+    try { new VLibras.Widget('https://vlibras.gov.br/app'); } catch (e) {}
   });
 </script>
 </body>
