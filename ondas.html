@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ondas Eletromagnéticas · Sol+Água 3TRI</title>
+<meta name="description" content="Ondas eletromagnéticas: campos, velocidade da luz, c = λ·f e espectro interativo — Projeto Integrador 3TRI CEP.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo-aero.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div vw class="enabled"><div access="true"></div></div>
+
+<header class="topo">
+  <div class="topo-wrap">
+    <a class="marca" href="index.html"><span class="marca-ico" aria-hidden="true">☀️</span><span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span></a>
+    <nav class="menu" aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="ondas.html" aria-current="page">Ondas</a></li>
+        <li><a href="radiacao.html">Radiação</a></li>
+        <li><a href="fotoeletrico.html">E. Fotoelétrico</a></li>
+        <li><a href="sensores.html">Sensores</a></li>
+        <li><a href="piscina.html">Piscina</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+      </ul>
+    </nav>
+    <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<button id="btn-acess" class="btn-flutuante" aria-expanded="false" aria-controls="painel-acess" title="Abrir opções de acessibilidade">♿</button>
+<div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
+  <h2>♿ Acessibilidade</h2>
+  <button id="btn-hc" class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>
+  <button id="btn-fdx" class="pa-btn" aria-pressed="false">🔤 Fonte para dislexia</button>
+  <button id="btn-a+" class="pa-btn">A+ Aumentar texto</button>
+  <button id="btn-a-" class="pa-btn">A− Diminuir texto</button>
+  <button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>
+  <button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>
+  <button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>
+  <p class="pa-nota">Tab navega · Enter ativa · Esc fecha. VLibras no botão azul à direita.</p>
+</div>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <span class="ghost" aria-hidden="true">01</span>
+    <div class="wrap">
+      <p class="mod">Módulo 01 · Tecnociência</p>
+      <h1>Ondas eletromagnéticas: a luz que aquece e mede</h1>
+      <p class="hero-sub">Tudo o que sentimos como calor do Sol chega até nós em forma de onda eletromagnética — inclusive a energia que aquece a piscina do CEP.</p>
+    </div>
+    <div class="ondas" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/><path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/></svg></div>
+  </section>
+
+  <section class="secao">
+    <div class="wrap">
+      <p class="sec-tag">Fundamentos</p>
+      <h2 class="sec-title">O que é uma onda eletromagnética?</h2>
+      <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true"></span><h3>Dois campos em dança</h3><p>Um campo elétrico e um campo magnético oscilam juntos, perpendiculares entre si e à direção de propagação — por isso ela não precisa de meio material: viaja no vácuo.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🚀</span><h3>Velocidade da luz</h3><p>No vácuo, toda onda eletromagnética viaja a <strong>c ≈ 300.000 km/s</strong> — do rádio aos raios gama, muda a frequência, não a velocidade.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🧮</span><h3>A equação mestre</h3><p><strong>c = λ · f</strong>: comprimento de onda (λ) e frequência (f) são inversamente proporcionais. Quanto maior a frequência, menor a onda — e maior a energia.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Simulador</p>
+      <h2 class="sec-title">Brinque com λ e f</h2>
+      <p class="sec-lead">Aumente a frequência e veja as cristas ficarem mais juntinhas (λ menor). A “velocidade” da onda no desenho é fixa, como c no vácuo.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <div class="palco"><canvas id="onda-cv" style="width:100%;height:200px;display:block"></canvas></div>
+        <label class="linha-slider" style="margin-top:1rem">🌊 Frequência (f) — <span id="onda-f-out" class="leitura">4</span> ondas por segundo
+          <input id="onda-f" type="range" min="1" max="10" step="0.5" value="4">
+        </label>
+        <p class="leitura" style="color:#045a8c">λ (comprimento de onda) ≈ <strong id="onda-lambda">75,0</strong> unidades · c = λ · f (constante)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Comparativo visual</p>
+      <h2 class="sec-title">O espectro eletromagnético interativo</h2>
+      <p class="sec-lead">Arraste o marcador do rádio até os raios gama e veja frequência, comprimento de onda e onde cada faixa aparece no projeto.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <div style="position:relative;height:56px;border-radius:14px;background:linear-gradient(90deg,#8d6e63 0%,#e57373 18%,#ff9a2e 34%,#ffe74c 44%,#7bd94c 52%,#4cc9f0 60%,#7b68ee 70%,#9575cd 82%,#b0bec5 100%);box-shadow:inset 0 2px 6px rgba(0,0,0,.25)">
+          <span id="esp-mark" style="position:absolute;top:-8px;bottom:-8px;width:6px;background:#fff;border:2px solid #045a8c;border-radius:4px;left:40%"></span>
+        </div>
+        <label class="linha-slider" style="margin-top:1.2rem">📻 ← frequência crescente → ☢️
+          <input id="esp-s" type="range" min="0" max="100" value="40">
+        </label>
+        <div class="grade g2" style="gap:.9rem">
+          <p class="leitura" style="color:#045a8c">f = <strong id="esp-f">—</strong><br>λ = <strong id="esp-l">—</strong></p>
+          <p style="font-size:.95rem"><strong id="esp-b">—</strong><br><span id="esp-ex" style="color:#39677f">—</span></p>
+        </div>
+        <div style="display:flex;align-items:center;gap:.8rem;margin-top:.8rem">
+          <span style="font-size:.85rem;font-weight:800;color:#045a8c">Cor (se for luz visível):</span>
+          <span id="esp-vis" style="width:44px;height:44px;border-radius:50%;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,60,110,.3);opacity:0;transition:.3s"></span>
+        </div>
+      </div>
+      <div class="painel-agua reveal" style="margin-top:1.4rem">
+        <p class="painel-rotulo">Conexão com a piscina</p>
+        <p style="color:#fff">O <strong>infravermelho</strong> é a faixa do espectro que sentimos como calor: é ele que o Sol envia e que a água da piscina absorve. Sensores de temperatura por infravermelho medem essa radiação sem tocar na água — a mesma física do aquecimento do projeto!</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape-grade">
+    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física, sensores e código a serviço da acessibilidade.</p></div>
+    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="ondas.html">Ondas</a></li><li><a href="radiacao.html">Radiação</a></li><li><a href="fotoeletrico.html">E. Fotoelétrico</a></li><li><a href="sensores.html">Sensores</a></li><li><a href="piscina.html">Piscina</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
+    <div><p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p><p><strong>Colégio Estadual do Paraná</strong> · <span id="ano">2026</span></p></div>
+  </div>
+  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras integrado · modo alto contraste no botão ♿.</p></div>
+</footer>
+
+<script src="js/base-aero.js"></script>
+<script>
+/* onda animada */
+(function(){
+  var cv=document.getElementById('onda-cv'); if(!cv) return;
+  var ctx=cv.getContext('2d'), f=4, fase=0;
+  function size(){ cv.width=cv.clientWidth; cv.height=200; }
+  addEventListener('resize',size); size();
+  var sf=document.getElementById('onda-f');
+  sf.addEventListener('input',function(){
+    f=+sf.value;
+    document.getElementById('onda-f-out').textContent=String(f).replace('.',',');
+    document.getElementById('onda-lambda').textContent=(300/f).toFixed(1).replace('.',',');
+  });
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    var lam=240/f;
+    ctx.strokeStyle='#2fa8e6'; ctx.lineWidth=3; ctx.beginPath();
+    for(var x=0;x<=cv.width;x++){
+      var y=100+55*Math.sin(2*Math.PI*(x/lam - fase));
+      x?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    ctx.stroke();
+    ctx.strokeStyle='#ff9a2e'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(20,28); ctx.lineTo(20+lam,28); ctx.stroke();
+    ctx.fillStyle='#ff9a2e'; ctx.font='13px monospace'; ctx.fillText('λ',20+lam/2,20);
+    if(!document.body.classList.contains('sem-anim')) fase+=0.004*f;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+/* espectro */
+(function(){
+  var s=document.getElementById('esp-s'); if(!s) return;
+  function fmt(v){ var e=Math.floor(Math.log10(v)); return (v/Math.pow(10,e)).toFixed(1)+'×10^'+e; }
+  function upd(){
+    var f=Math.pow(10, 6 + (s.value/100)*14), l=3e8/f;
+    document.getElementById('esp-f').textContent=fmt(f)+' Hz';
+    document.getElementById('esp-l').textContent = l>=1? l.toFixed(2)+' m' : l>=1e-3? (l*1e3).toFixed(2)+' mm' : l>=1e-6? (l*1e6).toFixed(1)+' µm' : (l*1e9).toFixed(0)+' nm';
+    var b,x;
+    if(f<3e9){b='Ondas de rádio';x='Rádio, TV e Wi-Fi.';}
+    else if(f<3e11){b='Micro-ondas';x='Fornos de micro-ondas e radares.';}
+    else if(f<4.3e14){b='Infravermelho';x='O calor da piscina! Controles e sensores IR.';}
+    else if(f<7.5e14){b='Luz visível';x='LED RGB, display OLED e as cores que vemos.';}
+    else if(f<3e16){b='Ultravioleta';x='Sol — por isso usamos protetor solar.';}
+    else if(f<3e19){b='Raios X';x='Exames de imagem.';}
+    else{b='Raios gama';x='Medicina nuclear e astronomia.';}
+    document.getElementById('esp-b').textContent=b;
+    document.getElementById('esp-ex').textContent=x;
+    document.getElementById('esp-mark').style.left=s.value+'%';
+    var vis=document.getElementById('esp-vis');
+    if(f>=4.3e14&&f<7.5e14){
+      var h=Math.round(280-((f-4.3e14)/(3.2e14))*280);
+      vis.style.background='hsl('+h+',90%,55%)'; vis.style.opacity=1;
+    } else vis.style.opacity=0;
+  }
+  s.addEventListener('input',upd); upd();
+})();
+</script>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>window.addEventListener('load',function(){try{new VLibras.Widget('https://vlibras.gov.br/app')}catch(e){}});</script>
+</body>
+</html>
