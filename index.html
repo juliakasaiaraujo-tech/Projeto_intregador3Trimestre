@@ -12,8 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-  [hidden]{display:none !important}
-/* ========== Sol+Água · CSS embutido (funciona sem outros arquivos) ========== */
+[hidden]{display:none !important}
 :root{
   --sol:#ffb703; --sol-forte:#fb8500;
   --agua:#0077b6; --agua-clara:#00b4d8; --espuma:#caf0f8;
@@ -34,7 +33,6 @@ img,svg,video{max-width:100%;height:auto}
 .pular{position:absolute;left:-999px;top:0;z-index:99;background:var(--sol);color:#08324d;font-weight:700;padding:.8rem 1.2rem;border-radius:0 0 12px 0;text-decoration:none}
 .pular:focus{left:0}
 
-/* Topo */
 .topo{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(202,240,248,.85));backdrop-filter:blur(10px);border-bottom:2px solid var(--espuma)}
 .topo-wrap{width:min(1100px,94%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px}
 .marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
@@ -48,7 +46,6 @@ img,svg,video{max-width:100%;height:auto}
 .btn-menu{display:none;background:none;border:0;cursor:pointer;padding:.5rem}
 .btn-menu span{display:block;width:24px;height:3px;background:var(--agua);border-radius:3px;margin:4px 0;transition:.3s}
 
-/* Botão flutuante de acessibilidade (abre/fecha) */
 .btn-flutuante{
   position:fixed;left:18px;bottom:18px;z-index:70;width:58px;height:58px;border-radius:50%;
   border:3px solid #fff;background:linear-gradient(180deg,var(--sol),var(--sol-forte));
@@ -58,7 +55,6 @@ img,svg,video{max-width:100%;height:auto}
 .btn-flutuante:hover{transform:scale(1.08)}
 @keyframes flutuar{to{transform:translateY(-6px)}}
 
-/* Painel de acessibilidade */
 .painel-acess{
   position:fixed;left:18px;bottom:88px;z-index:70;width:min(310px,92%);
   background:var(--card);border:2px solid var(--agua);border-radius:16px;padding:1.2rem;
@@ -72,7 +68,6 @@ img,svg,video{max-width:100%;height:auto}
 .pa-btn[aria-pressed="true"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));border-color:var(--sol-forte);color:#4a2800}
 .pa-nota{font-size:.78rem;color:var(--suave)}
 
-/* Hero Sol + Água (com animações) */
 .hero{position:relative;overflow:hidden;padding:4.5rem 0 7rem;background:linear-gradient(180deg,#8ecae6 0%,#bde0fe 45%,#e8f7ff 100%)}
 .hero-sol{position:absolute;top:6%;right:8%;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7cc,var(--sol) 60%,var(--sol-forte));box-shadow:0 0 60px 20px rgba(255,183,3,.55);animation:pulso-sol 5s ease-in-out infinite alternate}
 @keyframes pulso-sol{to{box-shadow:0 0 95px 36px rgba(255,183,3,.7)}}
@@ -92,7 +87,6 @@ img,svg,video{max-width:100%;height:auto}
 .ondas svg{width:104%;height:100%;display:block;position:absolute;bottom:0;left:-2%;animation:balanco 8s ease-in-out infinite alternate}
 @keyframes balanco{from{transform:translateX(-1.4%)}to{transform:translateX(1.4%)}}
 
-/* Seções / cards */
 .secao{padding:3.5rem 0}
 .sec-tag{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sol-forte);font-weight:700}
 .sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem}
@@ -110,12 +104,11 @@ img,svg,video{max-width:100%;height:auto}
 .pergunta summary{cursor:pointer;font-weight:700;font-size:1rem;color:var(--agua);list-style-position:inside}
 .pergunta[open] summary{margin-bottom:.6rem;color:var(--sol-forte)}
 .pergunta p{color:var(--suave);font-size:.95rem}
+.chip-breve{display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px}
 
-/* Surgir ao rolar */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visivel{opacity:1;transform:none}
 
-/* Rodapé */
 .rodape{background:linear-gradient(180deg,var(--agua),#023e5f);color:#d8f1ff;margin-top:3rem}
 .rodape-grade{display:grid;gap:2rem;padding:2.8rem 0 2rem}
 .rodape-marca{font-family:var(--fonte-titulo);font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:.5rem}
@@ -125,7 +118,6 @@ img,svg,video{max-width:100%;height:auto}
 .rodape p{font-size:.9rem;margin-bottom:.6rem}
 .rodape-base{border-top:1px solid rgba(255,255,255,.2);padding:1rem 0;font-size:.8rem;color:#9fd4ea}
 
-/* Mobile-first → desktop */
 @media(min-width:700px){ .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .rodape-grade{grid-template-columns:1.2fr .9fr 1fr} }
 @media(max-width:860px){
   .btn-menu{display:block}
@@ -137,7 +129,6 @@ img,svg,video{max-width:100%;height:auto}
   .topo.aberto .btn-menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 }
 
-/* Modos de acessibilidade */
 body.hc{--bg:#000;--card:#000;--tinta:#fff;--suave:#f2f2f2;--borda:#ff0;--agua:#0ff;--agua-clara:#0ff;--espuma:#111;--sol:#ff0;--sol-forte:#ff0}
 body.hc .hero{background:#000}
 body.hc .hero h1,body.hc .hero-sub,body.hc .eyebrow{color:#fff}
@@ -148,6 +139,7 @@ body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.h
 body.hc .ondas{display:none}
 body.fdx, body.fdx button, body.fdx input, body.fdx summary{font-family:'OpenDyslexic','Atkinson Hyperlegible',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
 body.esp p, body.esp li, body.esp summary{line-height:2.1;letter-spacing:.06em;word-spacing:.1em}
+/* SOMENTE o botão manual 🐢 desliga animações (acessibilidade com controle do usuário) */
 body.sem-anim *,body.sem-anim *::before,body.sem-anim *::after{animation:none !important;transition:none !important}
 body.sem-anim .reveal{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
@@ -155,11 +147,11 @@ body.sem-anim .reveal{opacity:1;transform:none}
   .reveal{opacity:1;transform:none}
 }
 </style>
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
-<!-- VLibras -->
 <div vw class="enabled"><div access="true"></div></div>
 
 <header class="topo">
@@ -183,7 +175,6 @@ body.sem-anim .reveal{opacity:1;transform:none}
   </div>
 </header>
 
-<!-- Botão que ABRE e FECHA a acessibilidade -->
 <button id="btn-acess" class="btn-flutuante" aria-expanded="false" aria-controls="painel-acess" title="Abrir opções de acessibilidade">♿</button>
 
 <div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
@@ -274,7 +265,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
     </div>
   </section>
 
-   <section class="secao" id="libras" style="padding-top:0">
+  <section class="secao" id="libras" style="padding-top:0">
     <div class="wrap">
       <p class="sec-tag">Inclusão · Libras</p>
       <h2 class="sec-title">Vídeos em Libras (estrutura pronta)</h2>
@@ -287,20 +278,19 @@ body.sem-anim .reveal{opacity:1;transform:none}
           <div style="font-size:3rem" aria-hidden="true">🤟</div>
           <h3 style="margin:.6rem 0 .4rem">Vídeo 1 — Apresentação do projeto</h3>
           <p>Gravação em Libras em produção. Quando o arquivo <code>videos/libras-apresentacao.mp4</code> existir no repositório, o player acessível aparecerá aqui.</p>
-          <span style="display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px">EM BREVE</span>
+          <span class="chip-breve">EM BREVE</span>
         </div>
         <div class="card reveal" style="text-align:center;padding:2.2rem 1.4rem">
           <div style="font-size:3rem" aria-hidden="true">🤟</div>
           <h3 style="margin:.6rem 0 .4rem">Vídeo 2 — Como funcionam os sensores</h3>
           <p>Gravação em Libras em produção. Quando o arquivo <code>videos/libras-sensores.mp4</code> existir no repositório, o player acessível aparecerá aqui.</p>
-          <span style="display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px">EM BREVE</span>
+          <span class="chip-breve">EM BREVE</span>
         </div>
       </div>
-      <!-- QUANDO GRAVAREM OS VÍDEOS: subam os .mp4 na pasta videos/ (Add file → Upload files)
-           e troquem um dos cards acima por:
-           <figure class="card"><video controls preload="metadata" style="width:100%;border-radius:12px;background:#000">
-             <source src="videos/libras-apresentacao.mp4" type="video/mp4"></video>
-             <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Apresentação do projeto em Libras</figcaption></figure> -->
+      <!-- QUANDO GRAVAREM: subam os .mp4 em videos/ (Add file → Upload files) e troquem um card por:
+      <figure class="card"><video controls preload="metadata" style="width:100%;border-radius:12px;background:#000">
+      <source src="videos/libras-apresentacao.mp4" type="video/mp4"></video>
+      <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Apresentação do projeto em Libras</figcaption></figure> -->
     </div>
   </section>
 
@@ -309,7 +299,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
 <footer class="rodape">
   <div class="wrap rodape-grade">
     <div>
-      <p class="rodape-marca">Sol+Água ☀️💧</p>
+      <p class="rodape-marca">Sol+Água ☀️</p>
       <p>Física, sensores e código a serviço da acessibilidade e da sustentabilidade.</p>
     </div>
     <nav aria-label="Mapa do site">
@@ -332,7 +322,6 @@ body.sem-anim .reveal{opacity:1;transform:none}
 </footer>
 
 <script>
-/* ========== Sol+Água · JS embutido (acessibilidade + animações) ========== */
 (function () {
   const $ = id => document.getElementById(id);
   let estado = {};
@@ -354,7 +343,6 @@ body.sem-anim .reveal{opacity:1;transform:none}
   window.addEventListener('DOMContentLoaded', function () {
     aplicar();
 
-    /* botão que ABRE e FECHA o painel */
     const painel = $('painel-acess'), abre = $('btn-acess');
     function abrir() {
       painel.removeAttribute('hidden');
@@ -384,7 +372,6 @@ body.sem-anim .reveal{opacity:1;transform:none}
     liga('btn-a-',  () => { estado.fs = Math.max(85,  (estado.fs || 100) - 10); salvar(); });
     liga('btn-reset', () => { localStorage.removeItem('solagua'); location.reload(); });
 
-    /* menu mobile */
     const topo = document.querySelector('.topo'), tog = $('btn-menu');
     if (tog && topo) tog.addEventListener('click', function () {
       const a = topo.classList.toggle('aberto');
@@ -393,10 +380,9 @@ body.sem-anim .reveal{opacity:1;transform:none}
 
     const ano = $('ano'); if (ano) ano.textContent = new Date().getFullYear();
 
-    /* animação de surgir ao rolar */
+    /* surgir ao rolar — só o botão manual 🐢 desliga */
     const revs = [...document.querySelectorAll('.reveal')];
-    const sem = document.body.classList.contains('sem-anim') ||
-                matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sem = document.body.classList.contains('sem-anim');
     if (sem || !('IntersectionObserver' in window)) {
       revs.forEach(r => r.classList.add('visivel'));
     } else {
