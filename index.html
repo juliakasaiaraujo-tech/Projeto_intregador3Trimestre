@@ -400,5 +400,67 @@ body.sem-anim .reveal{opacity:1;transform:none}
     try { new VLibras.Widget('https://vlibras.gov.br/app'); } catch (e) {}
   });
 </script>
+  <script>
+/* ===== 🐠 Mundo Sol+Água: peixinhos e bolhas no fundo ===== */
+(function(){
+  if (document.getElementById('mundo-agua')) return;
+  var estado={}; try{estado=JSON.parse(localStorage.getItem('solagua')||'{}')}catch(e){}
+  var sem = !!estado.sem || document.body.classList.contains('sem-anim');
+
+  var st=document.createElement('style');
+  st.textContent =
+    '#mundo-agua{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}' +
+    '#mundo-agua .peixe{position:absolute;left:-12%;transform:scaleX(-1);opacity:.85;' +
+      'filter:drop-shadow(0 3px 4px rgba(0,60,110,.2))}' +
+    '#mundo-agua .peixe.esq{transform:none}' +
+    '#mundo-agua .peixe.dourado{filter:sepia(1) saturate(3.2) hue-rotate(-12deg) brightness(1.1)' +
+      ' drop-shadow(0 3px 4px rgba(0,60,110,.2))}' +
+    '#mundo-agua .peixe span{display:inline-block}' +
+    '#mundo-agua .bolha-f{position:absolute;bottom:-40px;border-radius:50%;' +
+      'background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.95),rgba(255,255,255,.2) 42%,rgba(0,180,216,.15) 60%,rgba(255,255,255,.45));' +
+      'border:1px solid rgba(255,255,255,.6);box-shadow:inset 0 0 8px rgba(255,255,255,.4)}';
+  document.head.appendChild(st);
+
+  var mundo=document.createElement('div');
+  mundo.id='mundo-agua';
+  document.body.appendChild(mundo);
+
+  /* se alguém ativar o modo 🐢 Reduzir animações, o aquário se esconde */
+  new MutationObserver(function(){
+    mundo.style.display = document.body.classList.contains('sem-anim') ? 'none' : '';
+  }).observe(document.body,{attributes:true,attributeFilter:['class']});
+
+  /* peixinhos nadando (🐟 vira dourado) */
+  ['🐠','','🐠','🐡','🐟','🐠',''].forEach(function(e,i){
+    var p=document.createElement('span');
+    var esq = i%2===1;
+    p.className='peixe'+(esq?' esq':'')+(e==='🐟'?' dourado':'');
+    p.innerHTML='<span>'+e+'</span>';
+    p.style.top=(55+Math.random()*35)+'%';
+    p.style.fontSize=(20+Math.random()*24)+'px';
+    mundo.appendChild(p);
+    if(sem){ p.style.left=(5+Math.random()*85)+'%'; return; }
+    var dur=24000+Math.random()*26000;
+    p.animate(esq?[{left:'112%'},{left:'-12%'}]:[{left:'-12%'},{left:'112%'}],
+      {duration:dur,iterations:Infinity,delay:-Math.random()*dur});
+    p.querySelector('span').animate([{transform:'translateY(-6px)'},{transform:'translateY(6px)'}],
+      {duration:2600+Math.random()*1400,iterations:Infinity,direction:'alternate',easing:'ease-in-out'});
+  });
+
+  /* bolhas subindo */
+  for(var i=0;i<16;i++){
+    var b=document.createElement('span');
+    b.className='bolha-f';
+    var s=6+Math.random()*16;
+    b.style.width=b.style.height=s+'px';
+    b.style.left=Math.random()*100+'%';
+    mundo.appendChild(b);
+    if(sem){ b.style.bottom=(Math.random()*80)+'%'; continue; }
+    var d=9000+Math.random()*10000;
+    b.animate([{transform:'translateY(0)'},{transform:'translateY(-115vh)'}],
+      {duration:d,iterations:Infinity,delay:-Math.random()*d,easing:'linear'});
+  }
+})();
+</script>
 </body>
 </html>
