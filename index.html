@@ -16,7 +16,7 @@
 :root{
   --sol:#ffb703; --sol-forte:#fb8500;
   --agua:#0077b6; --agua-clara:#00b4d8; --espuma:#caf0f8;
-  --bg:#f6fdff; --card:#ffffff; --tinta:#08324d; --suave:#3c6478;
+  --bg:#f6fdff; --card:rgba(255,255,255,.86); --tinta:#08324d; --suave:#3c6478;
   --borda:#bfe3f2; --raio:18px;
   --fonte-corpo:'Atkinson Hyperlegible',system-ui,sans-serif;
   --fonte-titulo:'Comfortaa',system-ui,sans-serif;
@@ -57,7 +57,7 @@ img,svg,video{max-width:100%;height:auto}
 
 .painel-acess{
   position:fixed;left:18px;bottom:88px;z-index:70;width:min(310px,92%);
-  background:var(--card);border:2px solid var(--agua);border-radius:16px;padding:1.2rem;
+  background:#fff;border:2px solid var(--agua);border-radius:16px;padding:1.2rem;
   display:grid;gap:.5rem;box-shadow:0 18px 40px rgba(0,60,110,.25);
 }
 .painel-acess.abrindo{animation:entrar .3s ease-out}
@@ -92,7 +92,7 @@ img,svg,video{max-width:100%;height:auto}
 .sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem}
 .sec-lead{max-width:64ch;color:var(--suave)}
 .grade{display:grid;gap:1.1rem}
-.card{background:var(--card);border:1.5px solid var(--borda);border-radius:var(--raio);padding:1.4rem;box-shadow:0 10px 26px rgba(0,80,140,.1);transition:transform .25s,box-shadow .25s}
+.card{background:var(--card);backdrop-filter:blur(5px);border:1.5px solid var(--borda);border-radius:var(--raio);padding:1.4rem;box-shadow:0 10px 26px rgba(0,80,140,.1);transition:transform .25s,box-shadow .25s}
 .card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(0,80,140,.18)}
 .card .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem;background:radial-gradient(circle at 32% 28%,#fff,var(--espuma) 55%,var(--agua-clara));border:1px solid #fff}
 .card h3{font-size:1.02rem;margin-bottom:.4rem}
@@ -130,6 +130,7 @@ img,svg,video{max-width:100%;height:auto}
 }
 
 body.hc{--bg:#000;--card:#000;--tinta:#fff;--suave:#f2f2f2;--borda:#ff0;--agua:#0ff;--agua-clara:#0ff;--espuma:#111;--sol:#ff0;--sol-forte:#ff0}
+body.hc .card{backdrop-filter:none}
 body.hc .hero{background:#000}
 body.hc .hero h1,body.hc .hero-sub,body.hc .eyebrow{color:#fff}
 body.hc .hero h1 em{color:#ff0}
@@ -139,14 +140,12 @@ body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.h
 body.hc .ondas{display:none}
 body.fdx, body.fdx button, body.fdx input, body.fdx summary{font-family:'OpenDyslexic','Atkinson Hyperlegible',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
 body.esp p, body.esp li, body.esp summary{line-height:2.1;letter-spacing:.06em;word-spacing:.1em}
-/* SOMENTE o botão manual 🐢 desliga animações (acessibilidade com controle do usuário) */
 body.sem-anim *,body.sem-anim *::before,body.sem-anim *::after{animation:none !important;transition:none !important}
 body.sem-anim .reveal{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none}
 }
-  .card{background:rgba(255,255,255,.86);backdrop-filter:blur(5px)}
 </style>
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
@@ -323,6 +322,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
 </footer>
 
 <script>
+/* ===== Acessibilidade + animações de entrada ===== */
 (function () {
   const $ = id => document.getElementById(id);
   let estado = {};
@@ -381,7 +381,6 @@ body.sem-anim .reveal{opacity:1;transform:none}
 
     const ano = $('ano'); if (ano) ano.textContent = new Date().getFullYear();
 
-    /* surgir ao rolar — só o botão manual 🐢 desliga */
     const revs = [...document.querySelectorAll('.reveal')];
     const sem = document.body.classList.contains('sem-anim');
     if (sem || !('IntersectionObserver' in window)) {
@@ -395,16 +394,9 @@ body.sem-anim .reveal{opacity:1;transform:none}
   });
 })();
 </script>
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
 <script>
-  window.addEventListener('load', function () {
-    try { new VLibras.Widget('https://vlibras.gov.br/app'); } catch (e) {}
-  });
-</script>
-  <script>
-<script>
-<script>
-/* ===== 🐠 Aquário Sol+Água v2 ===== */
+/* ===== 🐠 Aquário Sol+Água: peixinhos e bolhas no fundo ===== */
 (function(){
   var velho=document.getElementById('mundo-agua'); if(velho) velho.remove();
 
@@ -422,12 +414,10 @@ body.sem-anim .reveal{opacity:1;transform:none}
   mundo.id='mundo-agua';
   document.body.appendChild(mundo);
 
-  var sem=document.body.classList.contains('sem-anim');
   var anims=[];
+  function reg(a){ if(a) anims.push(a); }
 
-  function registra(a){ if(a) anims.push(a); return a; }
-
-  ['🐠','','🐠','','🐟','','🐟'].forEach(function(e,i){
+  ['🐠','🐟','🐠','🐡','🐟','🐠','🐟'].forEach(function(e,i){
     var p=document.createElement('span');
     var esq=i%2===1;
     p.className='peixe'+(esq?' esq':'')+(e==='🐟'?' dourado':'');
@@ -438,9 +428,9 @@ body.sem-anim .reveal{opacity:1;transform:none}
     mundo.appendChild(p);
     if(p.animate){
       var dur=24000+Math.random()*26000;
-      registra(p.animate(esq?[{left:'112%'},{left:'-12%'}]:[{left:'-12%'},{left:'112%'}],
+      reg(p.animate(esq?[{left:'112%'},{left:'-12%'}]:[{left:'-12%'},{left:'112%'}],
         {duration:dur,iterations:Infinity,delay:-Math.random()*dur}));
-      registra(p.firstChild.animate([{transform:'translateY(-6px)'},{transform:'translateY(6px)'}],
+      reg(p.firstChild.animate([{transform:'translateY(-6px)'},{transform:'translateY(6px)'}],
         {duration:2600+Math.random()*1400,iterations:Infinity,direction:'alternate',easing:'ease-in-out'}));
     } else { p.style.left=(5+Math.random()*85)+'%'; }
   });
@@ -455,20 +445,26 @@ body.sem-anim .reveal{opacity:1;transform:none}
     mundo.appendChild(b);
     if(b.animate){
       var d=9000+Math.random()*10000;
-      registra(b.animate([{transform:'translateY(0)'},{transform:'translateY(-115vh)'}],
+      reg(b.animate([{transform:'translateY(0)'},{transform:'translateY(-115vh)'}],
         {duration:d,iterations:Infinity,delay:-Math.random()*d,easing:'linear'}));
     } else { b.style.bottom=(Math.random()*85)+'%'; }
   }
 
-  /* modo 🐢 Reduzir animações: os peixes PARAM, mas continuam visíveis */
+  /* modo 🐢 Reduzir animações: peixes param, mas continuam visíveis */
   function sincroniza(){
-    sem=document.body.classList.contains('sem-anim');
-    anims.forEach(function(a){ sem ? a.pause() : a.play(); });
+    var sem=document.body.classList.contains('sem-anim');
+    anims.forEach(function(a){ if(sem){ a.pause(); } else { a.play(); } });
   }
-  new MutationObserver(synchronizaFix()).observe(document.body,{attributes:true,attributeFilter:['class']});
-  function synchronizaFix(){ return sincroniza; }
+  new MutationObserver(sincroniza).observe(document.body,{attributes:true,attributeFilter:['class']});
   sincroniza();
 })();
+</script>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    try { new VLibras.Widget('https://vlibras.gov.br/app'); } catch (e) {}
+  });
 </script>
 </body>
 </html>
