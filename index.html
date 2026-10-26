@@ -5,140 +5,197 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sol+Água · Projeto Integrador 3TRI — CEP</title>
 <meta name="description" content="Site educacional e acessível: ondas eletromagnéticas, radiação do corpo negro, efeito fotoelétrico e sensores de temperatura da piscina do CEP.">
-<meta name="theme-color" content="#0077b6">
+<meta name="theme-color" content="#045a8c">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☀️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+@font-face{font-family:'OpenDyslexic';src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/otf/OpenDyslexic-Regular.otf') format('opentype');font-display:swap}
 [hidden]{display:none !important}
 :root{
-  --sol:#ffb703; --sol-forte:#fb8500;
-  --agua:#0077b6; --agua-clara:#00b4d8; --espuma:#caf0f8;
-  --bg:#f6fdff; --card:rgba(255,255,255,.86); --tinta:#08324d; --suave:#3c6478;
-  --borda:#bfe3f2; --raio:18px;
-  --fonte-corpo:'Atkinson Hyperlegible',system-ui,sans-serif;
-  --fonte-titulo:'Comfortaa',system-ui,sans-serif;
+  --ceu:#2f9fe0; --ceu-claro:#bfe7ff;
+  --agua:#0a78b8; --agua-prof:#045a8c;
+  --verde:#59c214; --verde-esc:#2e8f0a;
+  --sol:#ffdf7e; --sol-forte:#ff9a2e;
+  --tinta:#0b3d5c; --tinta-suave:#39677f;
+  --borda-vidro:rgba(255,255,255,.85);
+  --raio:20px;
+  --sombra:0 14px 34px rgba(20,110,170,.18);
+  --display:'Comfortaa','Nunito',system-ui,sans-serif;
+  --corpo:'Nunito','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 [id]{scroll-margin-top:96px}
-body{font-family:var(--fonte-corpo);background:var(--bg);color:var(--tinta);line-height:1.65;font-size:1rem}
-h1,h2,h3{font-family:var(--fonte-titulo);line-height:1.25;color:var(--agua)}
-a{color:var(--agua)}
 img,svg,video{max-width:100%;height:auto}
-:focus-visible{outline:3px solid var(--sol-forte);outline-offset:3px;border-radius:6px}
+body{
+  font-family:var(--corpo);color:var(--tinta);line-height:1.65;font-size:1rem;
+  background:linear-gradient(180deg,#eaf9ff 0%,#f4feff 60%,#eafff2 100%) fixed;
+}
+/* nuvens + brilho do sol */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(38rem 20rem at 85% -5%, rgba(255,250,205,.75), transparent 60%),
+    radial-gradient(30rem 12rem at 15% 12%, rgba(255,255,255,.85), transparent 70%),
+    radial-gradient(36rem 13rem at 75% 34%, rgba(255,255,255,.7), transparent 70%),
+    radial-gradient(28rem 11rem at 25% 62%, rgba(255,255,255,.55), transparent 70%);
+}
+/* faixa de grama */
+body::after{
+  content:"";position:fixed;left:0;right:0;bottom:0;height:64px;z-index:-1;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 2px, transparent 2px 7px),
+    linear-gradient(180deg, rgba(122,196,66,0), rgba(122,196,66,.55) 40%, #58b30c);
+}
+h1,h2,h3{font-family:var(--display);line-height:1.25;color:var(--agua-prof)}
+a{color:var(--agua)}
+::selection{background:#7ecdf2;color:#04333a}
+::-webkit-scrollbar{width:12px}
+::-webkit-scrollbar-track{background:#d7f0ff}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#9fe0ff,#2fa8e6);border:3px solid #d7f0ff;border-radius:99px}
+:focus-visible{outline:3px solid var(--verde);outline-offset:3px;border-radius:6px}
 .wrap{width:min(1100px,92%);margin-inline:auto}
-.pular{position:absolute;left:-999px;top:0;z-index:99;background:var(--sol);color:#08324d;font-weight:700;padding:.8rem 1.2rem;border-radius:0 0 12px 0;text-decoration:none}
+.pular{position:absolute;left:-999px;top:0;z-index:99;background:var(--verde);color:#fff;font-weight:800;padding:.8rem 1.2rem;border-radius:0 0 12px 0;text-decoration:none}
 .pular:focus{left:0}
 
-.topo{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(202,240,248,.85));backdrop-filter:blur(10px);border-bottom:2px solid var(--espuma)}
-.topo-wrap{width:min(1100px,94%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px}
+/* ---------- Topo de vidro Aero ---------- */
+.topo{position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(220,244,255,.88),rgba(150,215,250,.55));
+  backdrop-filter:blur(12px) saturate(1.6);border-bottom:1px solid rgba(255,255,255,.8);
+  box-shadow:0 4px 18px rgba(30,120,190,.22);}
+.topo-wrap{width:min(1100px,94%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:66px}
 .marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
-.marca-ico{font-size:1.5rem}
-.marca-txt{font-family:var(--fonte-titulo);font-weight:700;color:var(--agua);line-height:1.05}
-.marca-txt small{display:block;font-family:var(--fonte-corpo);font-weight:400;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sol-forte)}
+.marca-ico{font-size:1.5rem;filter:drop-shadow(0 3px 6px rgba(20,120,190,.4))}
+.marca-txt{font-family:var(--display);font-weight:700;color:var(--agua-prof);line-height:1.05;text-shadow:0 1px 0 #fff}
+.marca-txt small{display:block;font-family:var(--corpo);font-weight:700;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--verde-esc)}
 .menu ul{display:flex;gap:.2rem;list-style:none}
-.menu a{display:block;padding:.5rem .75rem;border-radius:999px;text-decoration:none;font-weight:700;font-size:.9rem;color:var(--agua)}
-.menu a:hover{background:var(--espuma)}
-.menu a[aria-current="page"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
-.btn-menu{display:none;background:none;border:0;cursor:pointer;padding:.5rem}
-.btn-menu span{display:block;width:24px;height:3px;background:var(--agua);border-radius:3px;margin:4px 0;transition:.3s}
+.menu a{display:block;padding:.55rem .8rem;border-radius:999px;text-decoration:none;font-weight:800;font-size:.9rem;color:var(--agua-prof);transition:.25s}
+.menu a:hover{background:rgba(255,255,255,.55)}
+.menu a[aria-current="page"]{background:linear-gradient(180deg,#9fe0ff,#2fa8e6);color:#fff;border:1px solid #1b8ec9;text-shadow:0 1px 2px rgba(0,60,110,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 3px 8px rgba(20,120,190,.35)}
+.btn-menu{display:none;background:none;border:0;cursor:pointer;padding:.65rem}
+.btn-menu span{display:block;width:24px;height:3px;background:var(--agua-prof);border-radius:3px;margin:4px 0;transition:.3s;box-shadow:0 1px 0 #fff}
 
+/* ---------- Botão flutuante ♿ (gel de sol) ---------- */
 .btn-flutuante{
   position:fixed;left:18px;bottom:18px;z-index:70;width:58px;height:58px;border-radius:50%;
-  border:3px solid #fff;background:linear-gradient(180deg,var(--sol),var(--sol-forte));
-  font-size:1.6rem;cursor:pointer;box-shadow:0 10px 26px rgba(251,133,0,.45);
+  border:2px solid #fff;background:linear-gradient(180deg,#ffe9c0 0%,#ffcf70 45%,#ff9a2e 55%,#ffd27a 100%);
+  font-size:1.6rem;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 26px rgba(251,133,0,.45);
   animation:flutuar 3s ease-in-out infinite alternate;transition:transform .2s;
 }
 .btn-flutuante:hover{transform:scale(1.08)}
 @keyframes flutuar{to{transform:translateY(-6px)}}
 
+/* ---------- Painel de acessibilidade (vidro) ---------- */
 .painel-acess{
   position:fixed;left:18px;bottom:88px;z-index:70;width:min(310px,92%);
-  background:#fff;border:2px solid var(--agua);border-radius:16px;padding:1.2rem;
-  display:grid;gap:.5rem;box-shadow:0 18px 40px rgba(0,60,110,.25);
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(235,250,255,.8));
+  backdrop-filter:blur(10px);border:1px solid var(--borda-vidro);border-radius:18px;padding:1.2rem;
+  display:grid;gap:.5rem;box-shadow:var(--sombra),inset 0 1px 0 #fff;
 }
 .painel-acess.abrindo{animation:entrar .3s ease-out}
 @keyframes entrar{from{transform:translateX(-30px);opacity:0}}
 .painel-acess h2{font-size:1.05rem;margin-bottom:.3rem}
-.pa-btn{text-align:left;padding:.6rem .8rem;border-radius:10px;border:1.5px solid var(--borda);background:var(--bg);font-family:var(--fonte-corpo);font-weight:700;color:var(--tinta);cursor:pointer}
-.pa-btn:hover{background:var(--espuma)}
-.pa-btn[aria-pressed="true"]{background:linear-gradient(180deg,var(--sol),var(--sol-forte));border-color:var(--sol-forte);color:#4a2800}
-.pa-nota{font-size:.78rem;color:var(--suave)}
+.pa-btn{text-align:left;padding:.6rem .8rem;border-radius:12px;border:1px solid rgba(120,190,230,.7);background:rgba(255,255,255,.75);font-family:var(--corpo);font-weight:800;color:var(--tinta);cursor:pointer;box-shadow:inset 0 1px 0 #fff}
+.pa-btn:hover{background:#fff}
+.pa-btn[aria-pressed="true"]{background:linear-gradient(180deg,#9fe0ff,#2fa8e6);border-color:#1b8ec9;color:#fff;text-shadow:0 1px 2px rgba(0,60,110,.4)}
+.pa-nota{font-size:.78rem;color:var(--tinta-suave)}
 
-.hero{position:relative;overflow:hidden;padding:4.5rem 0 7rem;background:linear-gradient(180deg,#8ecae6 0%,#bde0fe 45%,#e8f7ff 100%)}
-.hero-sol{position:absolute;top:6%;right:8%;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7cc,var(--sol) 60%,var(--sol-forte));box-shadow:0 0 60px 20px rgba(255,183,3,.55);animation:pulso-sol 5s ease-in-out infinite alternate}
-@keyframes pulso-sol{to{box-shadow:0 0 95px 36px rgba(255,183,3,.7)}}
+/* ---------- Hero céu + sol ---------- */
+.hero{position:relative;overflow:hidden;padding:4.5rem 0 7.5rem;color:#fff;
+  background:linear-gradient(180deg,#1e8fd8 0%,#56b8ef 45%,#a5e2ff 80%,#eaf9ff 100%);}
+.hero-sol{position:absolute;top:6%;right:8%;width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff7cc,var(--sol) 60%,#ffb703);
+  box-shadow:0 0 60px 20px rgba(255,220,120,.65);animation:pulso-sol 5s ease-in-out infinite alternate}
+@keyframes pulso-sol{to{box-shadow:0 0 95px 36px rgba(255,220,120,.85)}}
 .hero-conteudo{position:relative;z-index:2}
-.eyebrow{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#023e5f;margin-bottom:1rem}
-.hero h1{font-size:clamp(1.8rem,6vw,3.2rem);color:#023e5f;margin-bottom:1rem}
-.hero h1 em{font-style:normal;color:var(--sol-forte);text-decoration:underline wavy var(--agua-clara);text-underline-offset:.3em}
-.hero-sub{max-width:58ch;color:#0b4f6c;font-size:1.05rem}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:#eaffff;margin-bottom:1rem;text-shadow:0 1px 4px rgba(0,80,140,.4)}
+.hero h1{font-size:clamp(1.8rem,6vw,3.2rem);color:#fff;margin-bottom:1rem;text-shadow:0 2px 10px rgba(0,80,140,.4)}
+.hero h1 em{font-style:normal;color:#eaffff;text-decoration:underline wavy var(--sol);text-decoration-thickness:3px;text-underline-offset:.35em}
+.hero-sub{max-width:58ch;color:#eaf9ff;font-size:1.05rem;text-shadow:0 1px 4px rgba(0,80,140,.35)}
 .hero-acoes{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.5rem 0 1.2rem}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid transparent;transition:transform .25s}
-.btn:hover{transform:translateY(-3px)}
-.btn-sol{background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(251,133,0,.35)}
-.btn-agua{background:linear-gradient(180deg,#90e0ef,var(--agua-clara));color:#023e5f;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(0,119,182,.3)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:800;text-decoration:none;border:1px solid transparent;transition:transform .25s,filter .25s}
+.btn:hover{transform:translateY(-3px);filter:brightness(1.06)}
+.btn-sol{background:linear-gradient(180deg,#ffe9c0 0%,#ffcf70 45%,#ff9a2e 55%,#ffd27a 100%);border-color:#d97b00;color:#7a3c00;text-shadow:0 1px 0 rgba(255,255,255,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 16px rgba(251,133,0,.4)}
+.btn-agua{background:linear-gradient(180deg,#c9f0ff 0%,#6fd2f7 45%,#2fa8e6 55%,#7fdcff 100%);border-color:#1b8ec9;color:#04466c;text-shadow:0 1px 0 rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 16px rgba(20,120,190,.4)}
 .chips{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none}
-.chips li{background:rgba(255,255,255,.8);border:1px solid var(--borda);border-radius:999px;padding:.35rem .8rem;font-size:.8rem;font-weight:700;color:#023e5f}
+.chips li{color:var(--agua-prof);font-size:.8rem;font-weight:800;padding:.4rem .95rem;border:1px solid rgba(255,255,255,.8);border-radius:999px;background:rgba(255,255,255,.5);backdrop-filter:blur(4px);box-shadow:inset 0 1px 0 #fff}
 .ondas{position:absolute;left:0;right:0;bottom:-1px;height:100px;overflow:hidden}
 .ondas svg{width:104%;height:100%;display:block;position:absolute;bottom:0;left:-2%;animation:balanco 8s ease-in-out infinite alternate}
 @keyframes balanco{from{transform:translateX(-1.4%)}to{transform:translateX(1.4%)}}
 
+/* ---------- Seções / cards de vidro ---------- */
 .secao{padding:3.5rem 0}
-.sec-tag{font-family:monospace;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sol-forte);font-weight:700}
-.sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem}
-.sec-lead{max-width:64ch;color:var(--suave)}
-.grade{display:grid;gap:1.1rem}
-.card{background:var(--card);backdrop-filter:blur(5px);border:1.5px solid var(--borda);border-radius:var(--raio);padding:1.4rem;box-shadow:0 10px 26px rgba(0,80,140,.1);transition:transform .25s,box-shadow .25s}
-.card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(0,80,140,.18)}
-.card .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem;background:radial-gradient(circle at 32% 28%,#fff,var(--espuma) 55%,var(--agua-clara));border:1px solid #fff}
+.sec-tag{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--verde-esc);font-weight:700}
+.sec-tag::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,var(--verde),var(--ceu))}
+.sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem;text-shadow:0 1px 0 #fff}
+.sec-lead{max-width:64ch;color:var(--tinta-suave)}
+.grade{display:grid;gap:1.25rem}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.5) 46%,rgba(255,255,255,.22) 52%,rgba(255,255,255,.6) 100%);
+  backdrop-filter:blur(8px);border:1px solid var(--borda-vidro);border-radius:var(--raio);
+  padding:1.5rem;box-shadow:var(--sombra),inset 0 1px 0 #fff;transition:transform .3s,box-shadow .3s;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 44px rgba(20,110,170,.28),inset 0 1px 0 #fff}
+.card .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem;
+  background:radial-gradient(circle at 32% 28%,#fff,#bfe7ff 45%,#7ecdf2 100%);
+  border:1px solid rgba(255,255,255,.9);box-shadow:inset 0 -4px 8px rgba(30,140,200,.25),0 4px 10px rgba(20,110,170,.25)}
 .card h3{font-size:1.02rem;margin-bottom:.4rem}
-.card p{color:var(--suave);font-size:.94rem}
+.card p{color:var(--tinta-suave);font-size:.94rem}
 .link-card{text-decoration:none;display:block}
-.painel-sol{background:linear-gradient(140deg,var(--sol-forte),#d62828 130%);border-radius:20px;padding:1.8rem;box-shadow:0 16px 36px rgba(214,40,40,.25)}
-.painel-rotulo{font-family:monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#ffe8c2;margin-bottom:.6rem}
+.painel-sol{border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:1.9rem;position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 40%),linear-gradient(140deg,#ffb703,#fb8500 60%,#f45d2c);
+  box-shadow:0 18px 40px rgba(251,133,0,.35),inset 0 1px 0 rgba(255,255,255,.6);}
+.painel-sol::after{content:"";position:absolute;right:-60px;top:-70px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.5),transparent 65%);pointer-events:none}
+.painel-rotulo{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#fff3d6;margin-bottom:.6rem}
 .lista-perguntas{display:grid;gap:.9rem;margin-top:1.4rem}
-.pergunta summary{cursor:pointer;font-weight:700;font-size:1rem;color:var(--agua);list-style-position:inside}
-.pergunta[open] summary{margin-bottom:.6rem;color:var(--sol-forte)}
-.pergunta p{color:var(--suave);font-size:.95rem}
-.chip-breve{display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,var(--sol),var(--sol-forte));color:#4a2800;font-weight:700;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px}
+.pergunta summary{cursor:pointer;font-weight:800;font-size:1rem;color:var(--agua-prof);list-style-position:inside}
+.pergunta[open] summary{margin-bottom:.6rem;color:var(--verde-esc)}
+.pergunta p{color:var(--tinta-suave);font-size:.95rem}
+.chip-breve{display:inline-block;margin-top:.8rem;background:linear-gradient(180deg,#ffe9c0,#ff9a2e);border:1px solid #d97b00;color:#7a3c00;font-weight:800;font-size:.72rem;letter-spacing:.14em;padding:.35rem .9rem;border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visivel{opacity:1;transform:none}
 
-.rodape{background:linear-gradient(180deg,var(--agua),#023e5f);color:#d8f1ff;margin-top:3rem}
+/* ---------- Rodapé água profunda ---------- */
+.rodape{background:linear-gradient(180deg,#0a78b8,#04324f);color:#cfeaff;margin-top:3.5rem;border-top:6px solid #58b30c}
 .rodape-grade{display:grid;gap:2rem;padding:2.8rem 0 2rem}
-.rodape-marca{font-family:var(--fonte-titulo);font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:.5rem}
+.rodape-marca{font-family:var(--display);font-weight:700;font-size:1.25rem;color:#fff;margin-bottom:.5rem;text-shadow:0 1px 0 rgba(255,255,255,.3)}
 .rodape nav ul{list-style:none;display:grid;gap:.4rem}
-.rodape a{color:var(--espuma);text-decoration:none}
+.rodape a{color:#9deef3;text-decoration:none}
 .rodape a:hover{text-decoration:underline}
 .rodape p{font-size:.9rem;margin-bottom:.6rem}
-.rodape-base{border-top:1px solid rgba(255,255,255,.2);padding:1rem 0;font-size:.8rem;color:#9fd4ea}
+.rodape-base{border-top:1px solid rgba(255,255,255,.2);padding:1rem 0;font-size:.8rem;color:#8fc6e8}
 
 @media(min-width:700px){ .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .rodape-grade{grid-template-columns:1.2fr .9fr 1fr} }
 @media(max-width:860px){
   .btn-menu{display:block}
-  .menu{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:2px solid var(--espuma);display:none;padding:1rem 4%}
+  .menu{position:absolute;top:100%;left:0;right:0;background:linear-gradient(180deg,rgba(220,244,255,.97),rgba(170,225,252,.95));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.8);display:none;padding:1rem 4%}
   .topo.aberto .menu{display:block}
-  .menu ul{flex-direction:column;gap:.4rem}
+  .menu ul{flex-direction:column;gap:.35rem}
   .topo.aberto .btn-menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .topo.aberto .btn-menu span:nth-child(2){opacity:0}
   .topo.aberto .btn-menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 }
 
-body.hc{--bg:#000;--card:#000;--tinta:#fff;--suave:#f2f2f2;--borda:#ff0;--agua:#0ff;--agua-clara:#0ff;--espuma:#111;--sol:#ff0;--sol-forte:#ff0}
-body.hc .card{backdrop-filter:none}
+/* ---------- Modos de acessibilidade ---------- */
+body.hc{--tinta:#fff;--tinta-suave:#f2f2f2;--agua:#0ff;--agua-prof:#0ff;--verde:#ff0;--verde-esc:#ff0;--borda-vidro:#ff0;--sombra:none}
+body.hc{background:#000 fixed}
+body.hc::before,body.hc::after{display:none}
+body.hc .card,body.hc .painel-acess{background:#000;backdrop-filter:none;border-color:#ff0}
+body.hc .topo{background:#000;backdrop-filter:none;border-color:#ff0}
 body.hc .hero{background:#000}
-body.hc .hero h1,body.hc .hero-sub,body.hc .eyebrow{color:#fff}
+body.hc .hero h1,body.hc .hero-sub,body.hc .eyebrow{color:#fff;text-shadow:none}
 body.hc .hero h1 em{color:#ff0}
-body.hc .chips li,body.hc .pa-btn{background:#000;color:#fff}
-body.hc .btn-sol,body.hc .btn-agua{background:#000;color:#ff0;border-color:#ff0}
-body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.hc .btn-flutuante{background:#ff0;color:#000}
-body.hc .ondas{display:none}
-body.fdx, body.fdx button, body.fdx input, body.fdx summary{font-family:'OpenDyslexic','Atkinson Hyperlegible',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
+body.hc .chips li,body.hc .pa-btn{background:#000;color:#fff;border-color:#ff0}
+body.hc .btn-sol,body.hc .btn-agua{background:#000;color:#ff0;border-color:#ff0;box-shadow:none}
+body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.hc .btn-flutuante{background:#ff0;color:#000;border-color:#ff0;text-shadow:none}
+body.hc .ondas,body.hc .hero-sol{display:none}
+body.hc .painel-sol{background:#000;border-color:#ff0}
+body.fdx, body.fdx button, body.fdx input, body.fdx summary{font-family:'OpenDyslexic','Nunito',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
 body.esp p, body.esp li, body.esp summary{line-height:2.1;letter-spacing:.06em;word-spacing:.1em}
 body.sem-anim *,body.sem-anim *::before,body.sem-anim *::after{animation:none !important;transition:none !important}
 body.sem-anim .reveal{opacity:1;transform:none}
@@ -210,8 +267,8 @@ body.sem-anim .reveal{opacity:1;transform:none}
     </div>
     <div class="ondas" aria-hidden="true">
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-        <path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(0,180,216,.25)"/>
-        <path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#f6fdff"/>
+        <path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/>
+        <path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/>
       </svg>
     </div>
   </section>
@@ -290,7 +347,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
       <!-- QUANDO GRAVAREM: subam os .mp4 em videos/ (Add file → Upload files) e troquem um card por:
       <figure class="card"><video controls preload="metadata" style="width:100%;border-radius:12px;background:#000">
       <source src="videos/libras-apresentacao.mp4" type="video/mp4"></video>
-      <figcaption style="font-size:.85rem;color:var(--suave);margin-top:.6rem">🤟 Apresentação do projeto em Libras</figcaption></figure> -->
+      <figcaption style="font-size:.85rem;color:var(--tinta-suave);margin-top:.6rem">🤟 Apresentação do projeto em Libras</figcaption></figure> -->
     </div>
   </section>
 
@@ -299,7 +356,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
 <footer class="rodape">
   <div class="wrap rodape-grade">
     <div>
-      <p class="rodape-marca">Sol+Água ☀️</p>
+      <p class="rodape-marca">Sol+Água ☀️💧</p>
       <p>Física, sensores e código a serviço da acessibilidade e da sustentabilidade.</p>
     </div>
     <nav aria-label="Mapa do site">
@@ -396,7 +453,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
 </script>
 
 <script>
-/* ===== 🐠 Aquário Sol+Água: peixinhos e bolhas no fundo ===== */
+/* ===== 🐠 Aquário: peixinhos e bolhas no fundo (estilo Aero) ===== */
 (function(){
   var velho=document.getElementById('mundo-agua'); if(velho) velho.remove();
 
@@ -407,7 +464,7 @@ body.sem-anim .reveal{opacity:1;transform:none}
    '#mundo-agua .peixe.esq{transform:none}'+
    '#mundo-agua .peixe.dourado{filter:sepia(1) saturate(3.2) hue-rotate(-12deg) brightness(1.1)}'+
    '#mundo-agua .peixe>span{display:inline-block}'+
-   '#mundo-agua .bolha-f{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.95),rgba(255,255,255,.2) 42%,rgba(0,180,216,.15) 60%,rgba(255,255,255,.45));border:1px solid rgba(255,255,255,.6)}';
+   '#mundo-agua .bolha-f{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.95),rgba(255,255,255,.2) 42%,rgba(120,200,255,.15) 60%,rgba(255,255,255,.45));border:1px solid rgba(255,255,255,.6);box-shadow:inset 0 0 8px rgba(255,255,255,.4)}';
   document.head.appendChild(st);
 
   var mundo=document.createElement('div');
@@ -450,7 +507,6 @@ body.sem-anim .reveal{opacity:1;transform:none}
     } else { b.style.bottom=(Math.random()*85)+'%'; }
   }
 
-  /* modo 🐢 Reduzir animações: peixes param, mas continuam visíveis */
   function sincroniza(){
     var sem=document.body.classList.contains('sem-anim');
     anims.forEach(function(a){ if(sem){ a.pause(); } else { a.play(); } });
