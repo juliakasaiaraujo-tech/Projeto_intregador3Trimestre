@@ -1,4 +1,4 @@
-/* Sol+Água Aero · CSS compartilhado das subpáginas */
+/* Sol+Água Aero v2 · contraste total (inclusive canvas), dislexia global, foco visível */
 @font-face{font-family:'OpenDyslexic';src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/otf/OpenDyslexic-Regular.otf') format('opentype');font-display:swap}
 [hidden]{display:none!important}
 :root{
@@ -7,6 +7,9 @@
   --borda-vidro:rgba(255,255,255,.85);--raio:20px;--sombra:0 14px 34px rgba(20,110,170,.18);
   --display:'Comfortaa','Nunito',system-ui,sans-serif;--corpo:'Nunito','Segoe UI',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
+  /* cores dos GRÁFICOS/SIMULADORES (canvas lê estas variáveis) */
+  --g-a:#7fdcff;--g-b:#59c214;--g-c:#ffb08a;--g-alvo:#ff9a2e;--g-fundo:#062733;
+  --g-grade:rgba(157,238,243,.25);--g-texto:#9deef3;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -18,10 +21,12 @@ body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:64px;z-inde
 h1,h2,h3{font-family:var(--display);line-height:1.25;color:var(--agua-prof)}
 a{color:var(--agua)}
 ::selection{background:#7ecdf2;color:#04333a}
-:focus-visible{outline:3px solid var(--verde);outline-offset:3px;border-radius:6px}
 .wrap{width:min(1100px,92%);margin-inline:auto}
 .pular{position:absolute;left:-999px;top:0;z-index:99;background:var(--verde);color:#fff;font-weight:800;padding:.8rem 1.2rem;border-radius:0 0 12px 0;text-decoration:none}
 .pular:focus{left:0}
+/* FOCO VISÍVEL EM TUDO (teclado) */
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--verde);outline-offset:3px;border-radius:6px;box-shadow:0 0 0 6px rgba(89,194,20,.25)}
+input[type=range]:focus{outline:3px solid var(--verde);outline-offset:3px}
 .topo{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(220,244,255,.88),rgba(150,215,250,.55));backdrop-filter:blur(12px) saturate(1.6);border-bottom:1px solid rgba(255,255,255,.8);box-shadow:0 4px 18px rgba(30,120,190,.22)}
 .topo-wrap{width:min(1100px,94%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:66px}
 .marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
@@ -45,8 +50,8 @@ a{color:var(--agua)}
 .pa-nota{font-size:.78rem;color:var(--tinta-suave)}
 .page-hero{position:relative;overflow:hidden;color:#fff;padding:7.5rem 0 5rem;background:linear-gradient(180deg,#1e8fd8 0%,#56b8ef 55%,#a5e2ff 100%)}
 .page-hero .wrap{position:relative;z-index:2}
-.page-hero h1{color:#fff;font-size:clamp(1.7rem,4.5vw,2.8rem);margin:.6rem 0 .7rem;text-shadow:0 2px 10px rgba(0,80,140,.4);max-width:24ch}
-.page-hero .hero-sub{color:#eaf9ff;max-width:62ch;text-shadow:0 1px 4px rgba(0,80,140,.35)}
+.page-hero h1{color:#fff;font-size:clamp(1.7rem,4.5vw,2.8rem);margin:.6rem 0 .7rem;text-shadow:0 2px 10px rgba(0,80,140,.4);max-width:26ch}
+.page-hero .hero-sub{color:#eaf9ff;max-width:64ch;text-shadow:0 1px 4px rgba(0,80,140,.35)}
 .page-hero .mod{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#eaffff;display:inline-flex;gap:.6rem;align-items:center}
 .page-hero .mod::before{content:"";width:34px;height:2px;background:var(--sol)}
 .ghost{position:absolute;right:-1rem;top:46%;transform:translateY(-50%);font-family:var(--display);font-weight:700;font-size:clamp(8rem,22vw,15rem);color:rgba(255,255,255,.22);line-height:1;pointer-events:none;user-select:none}
@@ -57,7 +62,7 @@ a{color:var(--agua)}
 .sec-tag{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--verde-esc);font-weight:700}
 .sec-tag::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,var(--verde),var(--ceu))}
 .sec-title{font-size:clamp(1.4rem,4vw,2.1rem);margin:.5rem 0 .6rem;text-shadow:0 1px 0 #fff}
-.sec-lead{max-width:66ch;color:var(--tinta-suave)}
+.sec-lead{max-width:68ch;color:var(--tinta-suave)}
 .grade{display:grid;gap:1.25rem}
 .card{background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.5) 46%,rgba(255,255,255,.22) 52%,rgba(255,255,255,.6) 100%);backdrop-filter:blur(8px);border:1px solid var(--borda-vidro);border-radius:var(--raio);padding:1.5rem;box-shadow:var(--sombra),inset 0 1px 0 #fff;transition:transform .3s}
 .card:hover{transform:translateY(-4px)}
@@ -66,8 +71,8 @@ a{color:var(--agua)}
 .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem;background:radial-gradient(circle at 32% 28%,#fff,#bfe7ff 45%,#7ecdf2 100%);border:1px solid rgba(255,255,255,.9);box-shadow:inset 0 -4px 8px rgba(30,140,200,.25)}
 .painel-agua{border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:1.9rem;color:#eafcff;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 40%),linear-gradient(180deg,#1287c4,#045a8c);box-shadow:0 18px 40px rgba(4,70,110,.35)}
 .painel-rotulo{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#bfe7ff;margin-bottom:.6rem}
-.palco{background:linear-gradient(180deg,#062733,#04141d);border:1px solid rgba(160,220,255,.4);border-radius:16px;padding:1rem;box-shadow:0 0 0 5px rgba(255,255,255,.25)}
-.leitura{font-family:var(--mono);color:#9deef3;font-size:.85rem}
+.palco{background:var(--g-fundo);border:1px solid rgba(160,220,255,.4);border-radius:16px;padding:1rem;box-shadow:0 0 0 5px rgba(255,255,255,.25)}
+.leitura{font-family:var(--mono);color:var(--g-texto);font-size:.85rem}
 .linha-slider{display:grid;gap:.3rem;font-weight:800;font-size:.9rem;color:var(--tinta);margin-bottom:.9rem}
 input[type=range]{width:100%;accent-color:#2fa8e6;height:2rem;cursor:pointer}
 .btn-gel{padding:.6rem 1.1rem;border-radius:999px;border:1px solid #1b8ec9;background:linear-gradient(180deg,#c9f0ff,#2fa8e6);color:#04466c;font-weight:800;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
@@ -93,18 +98,29 @@ input[type=range]{width:100%;accent-color:#2fa8e6;height:2rem;cursor:pointer}
   .topo.aberto .menu{display:block}
   .menu ul{flex-direction:column;gap:.35rem}
 }
-body.hc{--tinta:#fff;--tinta-suave:#f2f2f2;--agua:#0ff;--agua-prof:#0ff;--verde:#ff0;--verde-esc:#ff0;--borda-vidro:#ff0;--sombra:none;background:#000 fixed}
+/* ===== ALTO CONTRASTE: interface INTEIRA, inclusive canvas/palcos ===== */
+body.hc{--tinta:#fff;--tinta-suave:#f2f2f2;--agua:#ff0;--agua-prof:#ff0;--verde:#ff0;--verde-esc:#ff0;--borda-vidro:#ff0;--sombra:none;
+  --g-a:#ff0;--g-b:#fff;--g-c:#0ff;--g-alvo:#ff0;--g-fundo:#000;--g-grade:rgba(255,255,0,.35);--g-texto:#ff0;
+  background:#000 fixed}
 body.hc::before,body.hc::after{display:none}
 body.hc .card,body.hc .painel-acess{background:#000;backdrop-filter:none;border-color:#ff0}
 body.hc .topo{background:#000;backdrop-filter:none;border-color:#ff0}
 body.hc .page-hero{background:#000}
 body.hc .page-hero h1,body.hc .hero-sub,body.hc .mod{color:#fff;text-shadow:none}
-body.hc .palco{background:#000;border-color:#ff0}
+body.hc .palco{background:#000;border-color:#ff0;box-shadow:none}
+body.hc .leitura{color:#ff0}
 body.hc .btn-gel{background:#000;color:#ff0;border-color:#ff0;box-shadow:none}
-body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.hc .btn-flutuante{background:#ff0;color:#000;border-color:#ff0}
+body.hc .menu a{color:#ff0}
+body.hc .menu a[aria-current="page"],body.hc .pa-btn[aria-pressed="true"],body.hc .btn-flutuante{background:#ff0;color:#000;border-color:#ff0;text-shadow:none}
 body.hc .ondas{display:none}
-body.hc .painel-agua{background:#000;border-color:#ff0}
-body.fdx,body.fdx button,body.fdx input,body.fdx summary{font-family:'OpenDyslexic','Nunito',sans-serif!important;letter-spacing:.03em;word-spacing:.06em}
+body.hc .painel-agua{background:#000;border-color:#ff0;color:#ff0}
+body.hc .painel-agua p{color:#fff}
+body.hc .msg-caixa{background:#000;border-color:#ff0;color:#fff}
+body.hc .chip{background:#000;color:#ff0;border-color:#ff0}
+body.hc a:focus-visible,body.hc button:focus-visible,body.hc input:focus-visible,body.hc summary:focus-visible{outline-color:#ff0;box-shadow:0 0 0 6px rgba(255,255,0,.35)}
+body.hc input[type=range]:focus{outline-color:#ff0}
+/* ===== FONTE PARA DISLEXIA: TODO o texto ===== */
+body.fdx, body.fdx *{font-family:'OpenDyslexic','Nunito',sans-serif !important;letter-spacing:.03em;word-spacing:.06em}
 body.esp p,body.esp li,body.esp summary{line-height:2.1;letter-spacing:.06em;word-spacing:.1em}
 body.sem-anim *,body.sem-anim *::before,body.sem-anim *::after{animation:none!important;transition:none!important}
 body.sem-anim .reveal{opacity:1;transform:none}
