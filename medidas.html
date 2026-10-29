@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Física das Medidas · Sol+Água 3TRI</title>
+<meta name="description" content="Física das medidas de temperatura: termistor NTC, equação de Steinhart-Hart, sensibilidade e estratificação térmica da piscina — Projeto Integrador 3TRI CEP.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌡️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo-aero.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div vw class="enabled"><div access="true"></div></div>
+<header class="topo">
+  <div class="topo-wrap">
+    <a class="marca" href="index.html"><span class="marca-ico" aria-hidden="true">☀️</span><span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span></a>
+    <nav class="menu" aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="medidas.html" aria-current="page">Física das Medidas</a></li>
+        <li><a href="sensores.html">Sensores e Robótica</a></li>
+        <li><a href="piscina.html">Piscina e Controle</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+      </ul>
+    </nav>
+    <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<button id="btn-acess" class="btn-flutuante" aria-expanded="false" aria-controls="painel-acess" title="Abrir opções de acessibilidade">♿</button>
+<div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
+  <h2>♿ Acessibilidade</h2>
+  <button id="btn-hc" class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>
+  <button id="btn-fdx" class="pa-btn" aria-pressed="false">🔤 Fonte para dislexia</button>
+  <button id="btn-a+" class="pa-btn">A+ Aumentar texto</button>
+  <button id="btn-a-" class="pa-btn">A− Diminuir texto</button>
+  <button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>
+  <button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>
+  <button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>
+  <p class="pa-nota">Tab navega · Enter ativa · Esc fecha. VLibras no botão azul à direita.</p>
+</div>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <span class="ghost" aria-hidden="true">01</span>
+    <div class="wrap">
+      <p class="mod">Módulo 01 · Tecnociência — Física das Medidas</p>
+      <h1>Medir o calor da água: a física por trás do número</h1>
+      <p class="hero-sub">Antes de “28,5 °C” aparecer no display, existe física: um material que muda de resistência com o calor, uma equação que traduz essa resistência em temperatura e uma piscina que não aquece por igual.</p>
+    </div>
+    <div class="ondas" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/><path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/></svg></div>
+  </section>
+
+  <section class="secao">
+    <div class="wrap">
+      <p class="sec-tag">Fundamentos</p>
+      <h2 class="sec-title">O que significa “medir” uma temperatura?</h2>
+      <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">⚖️</span><h3>Comparar com um padrão</h3><p>Medir é comparar: o sensor transforma calor em uma grandeza elétrica que comparamos com uma escala calibrada (kelvin/Celsius). Sem calibração, não há medida — só um número.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🎯</span><h3>Erro e incerteza</h3><p>Todo sensor tem erro: desvio de calibração, ruído elétrico, auto-aquecimento. No protótipo do CEP, a Etapa 3 existiu justamente para reduzir esses erros com testes repetidos.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">📏</span><h3>Sensibilidade</h3><p>Quanto o sinal muda por grau? No termistor NTC, a resistência cai vários kΩ por °C perto de 25 °C — alta sensibilidade. Mas ela <strong>não é constante</strong>: a curva é exponencial.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Simulador · Steinhart–Hart</p>
+      <h2 class="sec-title">O termistor NTC e a equação que o traduz</h2>
+      <p class="sec-lead">O modelo completo é <strong>1/T = A + B·ln(R) + C·(ln R)³</strong> (Steinhart–Hart). Na prática usa-se a forma simplificada de parâmetro B: <strong>R(T) = R₀·e^[B·(1/T − 1/T₀)]</strong>. Arraste a temperatura e veja a resistência do NTC 10k (B = 3950) desabar.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <div class="palco"><canvas id="ntc-cv" style="width:100%;height:220px;display:block"></canvas></div>
+        <label class="linha-slider" style="margin-top:1rem">🌡️ Temperatura da água — <span id="ntc-tout" class="leitura">25</span> °C
+          <input id="ntc-t" type="range" min="0" max="60" step="0.5" value="25">
+        </label>
+        <div class="grade g3" style="gap:.9rem">
+          <p class="leitura">Resistência R(T): <strong id="ntc-r">—</strong></p>
+          <p class="leitura">Sensibilidade local: <strong id="ntc-sens">—</strong></p>
+          <p class="leitura">Modelo: <strong>NTC 10 kΩ · B 3950</strong></p>
+        </div>
+        <p class="msg-caixa" id="ntc-msg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Simulador · Estratificação</p>
+      <h2 class="sec-title">Por que a piscina não aquece por igual</h2>
+      <p class="sec-lead">Convecção: a água aquecida fica menos densa e sobe. Sem mistura, formam-se camadas (estratificação) — e um sensor só mente sobre o resto. Simule o tempo de aquecedor ligado e a recirculação da bomba.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <div class="grade g2" style="gap:1.4rem;align-items:center">
+          <div style="display:flex;gap:1rem;align-items:center;justify-content:center">
+            <div id="est-bar" style="width:90px;height:230px;border-radius:14px;border:2px solid rgba(255,255,255,.8);background:linear-gradient(180deg,#39c4f0,#0a78b8);box-shadow:inset 0 2px 8px rgba(0,0,0,.25)"></div>
+            <div style="display:grid;gap:.6rem">
+              <p class="leitura" style="color:#045a8c">S1 superfície: <strong id="est-s1">—</strong></p>
+              <p class="leitura" style="color:#045a8c">S2 meio: <strong id="est-s2">—</strong></p>
+              <p class="leitura" style="color:#045a8c">S3 fundo: <strong id="est-s3">—</strong></p>
+              <p class="leitura" style="color:#045a8c">Δ (S1−S3): <strong id="est-d">—</strong></p>
+            </div>
+          </div>
+          <div>
+            <label class="linha-slider">⏱️ Aquecedor ligado há — <span id="est-tout" class="leitura">0</span> min
+              <input id="est-t" type="range" min="0" max="60" value="0">
+            </label>
+            <label class="linha-slider">🌀 Recirculação (mistura) — <span id="est-mout" class="leitura">0</span>%
+              <input id="est-m" type="range" min="0" max="100" value="0">
+            </label>
+            <p class="msg-caixa" id="est-msg" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+      <div class="painel-agua reveal" style="margin-top:1.4rem">
+        <p class="painel-rotulo">Ponte para a Robótica</p>
+        <p style="color:#fff">A resistência que você viu aqui ainda não é um número: ela vira <strong>tensão</strong> num divisor resistivo e só então o <strong>ADC do Arduino</strong> a transforma em dado digital. Esse é o coração da página <a style="color:#ffe74c" href="sensores.html">Sensores e Robótica →</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Quiz</p>
+      <h2 class="sec-title">Cheque seu entendimento</h2>
+      <div class="grade g2" style="margin-top:1.5rem">
+        <div class="card reveal">
+          <p style="font-weight:800;color:#045a8c">1) Num termistor NTC, quando a água esquenta a resistência…</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem">
+            <button class="btn-gel q-btn" data-ok="1" data-exp="NTC = coeficiente negativo: mais calor, menos resistência.">Diminui</button>
+            <button class="btn-gel q-btn" data-ok="0" data-exp="Isso valeria para um PTC; o protótipo usa NTC.">Aumenta</button>
+          </div>
+          <p class="q-msg msg-caixa" style="min-height:2.4em"></p>
+        </div>
+        <div class="card reveal">
+          <p style="font-weight:800;color:#045a8c">2) Por que medir em 3 profundidades diferentes?</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem">
+            <button class="btn-gel q-btn" data-ok="1" data-exp="Exato: a estratificação faz a superfície esquentar antes; 3 pontos revelam se o calor já se distribuiu.">Porque a água estratifica por convecção</button>
+            <button class="btn-gel q-btn" data-ok="0" data-exp="Sensores a mais não são enfeite: a temperatura realmente varia com a profundidade.">Para economizar sensores</button>
+          </div>
+          <p class="q-msg msg-caixa" style="min-height:2.4em"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape-grade">
+    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física das medidas e robótica a serviço da acessibilidade.</p></div>
+    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="medidas.html">Física das Medidas</a></li><li><a href="sensores.html">Sensores e Robótica</a></li><li><a href="piscina.html">Piscina e Controle</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
+    <div><p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p><p>Colégio Estadual do Paraná · <span id="ano">2026</span></p></div>
+  </div>
+  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras ativo em todas as páginas · alto contraste preto/amarelo no botão ♿.</p></div>
+</footer>
+
+<script src="js/base-aero.js"></script>
+<script>
+/* NTC + Steinhart-Hart (forma B) */
+(function(){
+  var s=document.getElementById('ntc-t'); if(!s) return;
+  var cv=document.getElementById('ntc-cv'), ctx=cv.getContext('2d'), W,H;
+  function size(){ W=cv.width=cv.clientWidth; H=cv.height=220; }
+  addEventListener('resize',size); size();
+  var R0=10000,B=3950,T0=298.15;
+  function R(T){ return R0*Math.exp(B*(1/(T+273.15)-1/T0)); }
+  function draw(Tat){
+    var g=window.coresGraf?coresGraf():{};
+    var Rmax=R(0),Rmin=R(60);
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle=g.grade; ctx.lineWidth=1;
+    for(var i=0;i<=4;i++){ var y=15+i*(H-35)/4; ctx.beginPath(); ctx.moveTo(20,y); ctx.lineTo(W-10,y); ctx.stroke(); }
+    ctx.strokeStyle=g.a; ctx.lineWidth=3; ctx.beginPath();
+    for(var T=0;T<=60;T++){
+      var x=20+(T/60)*(W-40), y=H-20-((R(T)-Rmin)/(Rmax-Rmin))*(H-45);
+      T?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    ctx.stroke();
+    var px=20+(Tat/60)*(W-40), py=H-20-((R(Tat)-Rmin)/(Rmax-Rmin))*(H-45);
+    ctx.fillStyle=g.alvo; ctx.beginPath(); ctx.arc(px,py,7,0,7); ctx.fill();
+    ctx.fillStyle=g.texto; ctx.font='12px monospace';
+    ctx.fillText('R ↑',6,14); ctx.fillText('T (°C) →',W-78,H-6);
+  }
+  function upd(){
+    var T=+s.value, r=R(T);
+    document.getElementById('ntc-tout').textContent=String(T).replace('.',',');
+    document.getElementById('ntc-r').textContent=(r/1000).toFixed(2).replace('.',',')+' kΩ';
+    document.getElementById('ntc-sens').textContent=(Math.abs(R(T+1)-r)/1000).toFixed(2).replace('.',',')+' kΩ/°C';
+    document.getElementById('ntc-msg').textContent = T<15
+      ? 'Água fria: resistência altíssima — o sinal elétrico muda muito por grau (alta sensibilidade), mas o divisor precisa ser bem dimensionado.'
+      : T<35 ? 'Faixa de trabalho da piscina: a curva é suave o bastante para o ADC resolver bem cada passo de temperatura.'
+      : 'Água quente: resistência baixa e curva achatada — pequenos erros de leitura pesam mais (por isso calibramos na Etapa 3).';
+    draw(T);
+  }
+  s.addEventListener('input',upd); upd();
+  /* quiz */
+  document.querySelectorAll('.q-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=b.closest('.card');
+      p.querySelectorAll('.q-btn').forEach(function(x){x.style.opacity=.55;});
+      b.style.opacity=1;
+      if(b.dataset.ok==='1'){ b.style.background='linear-gradient(180deg,#e2fbc0,#59c214)'; b.style.color='#1c5a00'; p.querySelector('.q-msg').textContent='✅ Certo! '+b.dataset.exp; }
+      else { b.style.background='linear-gradient(180deg,#ffd6d6,#e57373)'; b.style.color='#5c1a1a'; p.querySelector('.q-msg').textContent='❌ Quase. '+b.dataset.exp; }
+    });
+  });
+})();
+/* estratificação */
+(function(){
+  var t=document.getElementById('est-t'), m=document.getElementById('est-m');
+  if(!t) return;
+  function cor(T){ var h=Math.max(0,Math.min(1,(T-24)/8)); return 'hsl('+Math.round(200-h*170)+',80%,55%)'; }
+  function upd(){
+    var min=+t.value, mix=+m.value/100;
+    var ganho=Math.min(6,min*0.1);
+    var s1=24+ganho*(1-0.70*mix), s2=24+ganho*0.55*(1-0.90*mix), s3=24+ganho*0.25*(1-0.95*mix);
+    document.getElementById('est-tout').textContent=min;
+    document.getElementById('est-mout').textContent=Math.round(mix*100);
+    document.getElementById('est-s1').textContent=s1.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('est-s2').textContent=s2.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('est-s3').textContent=s3.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('est-d').textContent=(s1-s3).toFixed(1).replace('.',',')+' °C';
+    document.getElementById('est-bar').style.background='linear-gradient(180deg,'+cor(s1)+','+cor(s2)+' 50%,'+cor(s3)+')';
+    document.getElementById('est-msg').textContent = (s1-s3)>2
+      ? '⚠️ Estratificação forte: um sensor único na superfície diria que a piscina está pronta, mas o fundo segue frio — banhistas sentiriam o choque térmico.'
+      : (s1-s3)>0.8 ? '🌡️ Camadas em formação: por isso o projeto lê 3 profundidades e só considera “pronta” quando o Δ cai.'
+      : '✅ Água homogênea: com recirculação, os 3 sensores concordam — a medida representa a piscina inteira.';
+  }
+  t.addEventListener('input',upd); m.addEventListener('input',upd); upd();
+})();
+</script>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>window.addEventListener('load',function(){try{new VLibras.Widget('https://vlibras.gov.br/app')}catch(e){}});</script>
+</body>
+</html>
