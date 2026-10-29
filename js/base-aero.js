@@ -1,4 +1,16 @@
-/* Sol+Água Aero · base: acessibilidade + menu + reveal + aquário */
+/* Sol+Água Aero v2 · acessibilidade + menu + reveal + aquário + cores de gráfico */
+window.coresGraf = function () {
+  var cs = getComputedStyle(document.body);
+  return {
+    a: cs.getPropertyValue('--g-a').trim() || '#7fdcff',
+    b: cs.getPropertyValue('--g-b').trim() || '#59c214',
+    c: cs.getPropertyValue('--g-c').trim() || '#ffb08a',
+    alvo: cs.getPropertyValue('--g-alvo').trim() || '#ff9a2e',
+    fundo: cs.getPropertyValue('--g-fundo').trim() || '#062733',
+    grade: cs.getPropertyValue('--g-grade').trim() || 'rgba(157,238,243,.25)',
+    texto: cs.getPropertyValue('--g-texto').trim() || '#9deef3'
+  };
+};
 (function () {
   const $ = id => document.getElementById(id);
   let estado = {};
@@ -44,7 +56,6 @@
     }
   });
 })();
-
 /* 🐠 aquário de fundo */
 (function(){
   if (document.getElementById('mundo-agua')) return;
