@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensores e Robótica · Sol+Água 3TRI</title>
+<meta name="description" content="Cadeia de transdução temperatura-resistência-tensão-digital, interior do ADC do Arduino e comparativo DS18B20 × LM35 × NTC do protótipo do CEP.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo-aero.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div vw class="enabled"><div access="true"></div></div>
+<header class="topo">
+  <div class="topo-wrap">
+    <a class="marca" href="index.html"><span class="marca-ico" aria-hidden="true">☀️</span><span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span></a>
+    <nav class="menu" aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="medidas.html">Física das Medidas</a></li>
+        <li><a href="sensores.html" aria-current="page">Sensores e Robótica</a></li>
+        <li><a href="piscina.html">Piscina e Controle</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+      </ul>
+    </nav>
+    <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<button id="btn-acess" class="btn-flutuante" aria-expanded="false" aria-controls="painel-acess" title="Abrir opções de acessibilidade">♿</button>
+<div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
+  <h2>♿ Acessibilidade</h2>
+  <button id="btn-hc" class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>
+  <button id="btn-fdx" class="pa-btn" aria-pressed="false">🔤 Fonte para dislexia</button>
+  <button id="btn-a+" class="pa-btn">A+ Aumentar texto</button>
+  <button id="btn-a-" class="pa-btn">A− Diminuir texto</button>
+  <button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>
+  <button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>
+  <button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>
+  <p class="pa-nota">Tab navega · Enter ativa · Esc fecha. VLibras no botão azul à direita.</p>
+</div>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <span class="ghost" aria-hidden="true">02</span>
+    <div class="wrap">
+      <p class="mod">Módulo 02 · Robótica</p>
+      <h1>A cadeia de transdução: do calor ao bit</h1>
+      <p class="hero-sub">Temperatura → Resistência → Tensão → Sinal digital → Decisão. Este é o coração do projeto: como o Arduino “sente” a piscina e transforma física em dado.</p>
+    </div>
+    <div class="ondas" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/><path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/></svg></div>
+  </section>
+
+  <!-- CORAÇÃO: CADEIA DE TRANSDUÇÃO -->
+  <section class="secao">
+    <div class="wrap">
+      <p class="sec-tag">O coração da Robótica</p>
+      <h2 class="sec-title">Cadeia de transdução ao vivo</h2>
+      <p class="sec-lead">Mova a temperatura da água e acompanhe cada estágio se recalculando em tempo real — exatamente o caminho que o sinal percorre no protótipo do CEP.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <style>.elo{transition:.3s}.elo.ativo{background:linear-gradient(180deg,#ffe9c0,#ffcf70);border-color:#d97b00;box-shadow:0 0 0 3px rgba(255,154,46,.35)}</style>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-weight:800;color:#045a8c">
+          <span class="chip elo" id="elo1">🌡️ Temperatura<br><b id="v1">—</b></span> →
+          <span class="chip elo" id="elo2">🧲 Resistência (NTC)<br><b id="v2">—</b></span> →
+          <span class="chip elo" id="elo3">⚡ Tensão (divisor)<br><b id="v3">—</b></span> →
+          <span class="chip elo" id="elo4">🔢 ADC 10 bits<br><b id="v4">—</b></span> →
+          <span class="chip elo" id="elo5">🖥️ Dado no display<br><b id="v5">—</b></span>
+        </div>
+        <label class="linha-slider" style="margin-top:1.2rem">🌡️ Temperatura da água — <span id="cad-tout" class="leitura">28,0 °C</span>
+          <input id="cad-t" type="range" min="10" max="45" step="0.1" value="28">
+        </label>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <button id="cad-anim" class="btn-gel laranja">▶ Animar o caminho do sinal</button>
+        </div>
+        <p id="cad-msg" class="msg-caixa" aria-live="polite">Cada estágio usa a saída do anterior: a física vira elétrica, a elétrica vira número e o número vira decisão no relé.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADC POR DENTRO -->
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Profundidade técnica</p>
+      <h2 class="sec-title">Por dentro do ADC do Arduino</h2>
+      <div class="grade g2" style="margin-top:1.5rem;align-items:start">
+        <div class="card reveal">
+          <h3>🔢 O que é quantizar?</h3>
+          <p>O conversor analógico-digital tem <strong>10 bits = 1024 níveis (0–1023)</strong>. Com referência de 5 V, cada degrau vale <strong>5/1024 ≈ 4,88 mV</strong>. Qualquer tensão entre dois degraus é “arredondada” — esse é o erro de quantização (±2,44 mV).</p>
+          <p style="margin-top:.6rem">No <strong>LM35</strong> (10 mV/°C), cada degrau do ADC equivale a ≈ <strong>0,49 °C</strong>: é o limite de resolução desse caminho analógico. O <strong>DS18B20</strong> já entrega o valor digital com resolução de 0,0625 °C — por isso ele foi escolhido para o protótipo.</p>
+          <label class="linha-slider" style="margin-top:1rem">⚡ Tensão de entrada — <span id="adc-vout" class="leitura">2,50 V</span>
+            <input id="adc-v" type="range" min="0" max="5" step="0.01" value="2.5">
+          </label>
+          <div class="grade g3" style="gap:.7rem">
+            <p class="leitura">Código ADC: <strong id="adc-code">—</strong></p>
+            <p class="leitura">Tensão do código: <strong id="adc-vq">—</strong></p>
+            <p class="leitura">Erro de quant.: <strong id="adc-err">—</strong></p>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>📊 A escada de degraus</h3>
+          <div class="palco"><canvas id="adc-cv" style="width:100%;height:230px;display:block"></canvas></div>
+          <p style="font-size:.8rem;color:#39677f;margin-top:.6rem">Escada de quantização (degraus ampliados para visualização). O ponto mostra sua tensão; a linha horizontal é o nível quantizado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARATIVO MODELOS REAIS -->
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Comparativo vinculado ao protótipo</p>
+      <h2 class="sec-title">Precisão × Resolução × Tempo de resposta: DS18B20 × LM35 × NTC</h2>
+      <p class="sec-lead">Os três modelos abaixo são exatamente os estudados/usados no protótipo do CEP. Mude a temperatura real e veja o que cada um “enxerga” — com sua resolução, seu erro e sua demora próprios.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <label class="linha-slider">🌡️ Temperatura real da água — <span id="cmp-tout" class="leitura">28,00 °C</span>
+          <input id="cmp-t" type="range" min="20" max="35" step="0.01" value="28">
+        </label>
+        <div class="grade g3" style="gap:.9rem;margin-top:.6rem">
+          <div class="palco" style="padding:.9rem;text-align:center"><p class="leitura">DS18B20 · digital (usado no protótipo)</p><p id="cmp-a" class="leitura" style="font-size:1.25rem;margin-top:.4rem">—</p><p style="font-size:.72rem;color:#7fcdd3">res. 0,0625 °C · precisão ±0,5 °C · conversão ~750 ms</p></div>
+          <div class="palco" style="padding:.9rem;text-align:center"><p class="leitura">LM35 + ADC · analógico</p><p id="cmp-b" class="leitura" style="font-size:1.25rem;margin-top:.4rem">—</p><p style="font-size:.72rem;color:#7fcdd3">res. ~0,49 °C (degrau do ADC) · ±0,5 °C · rápido</p></div>
+          <div class="palco" style="padding:.9rem;text-align:center"><p class="leitura">NTC 10k sem calibrar</p><p id="cmp-c" class="leitura" style="font-size:1.25rem;margin-top:.4rem">—</p><p style="font-size:.72rem;color:#7fcdd3">res. 0,1 °C · erro de calibração −0,8 °C · muito rápido</p></div>
+        </div>
+        <p id="cmp-msg" class="msg-caixa" aria-live="polite"></p>
+      </div>
+      <div class="grade g3" style="margin-top:1.25rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">🎯</span><h3>Precisão</h3><p>Quão perto do valor verdadeiro. O NTC do exemplo tem ótima resolução mas mente 0,8 °C: sem calibração (Etapa 3 do projeto!), resolução alta não salva.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🔬</span><h3>Resolução</h3><p>Menor variação percebida. DS18B20: 0,0625 °C. LM35+ADC: limitada pelo degrau de 4,88 mV (≈0,49 °C). NTC: depende do divisor e do ADC.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">⏱️</span><h3>Tempo de resposta</h3><p>Quanto tempo o sensor leva para reagir. O DS18B20 converte em ~750 ms; termistores respondem em centenas de ms; massas maiores demoram mais dentro da água.</p></article>
+      </div>
+      <div class="painel-agua reveal" style="margin-top:1.4rem">
+        <p class="painel-rotulo">E depois do dado?</p>
+        <p style="color:#fff">Com a temperatura em mãos, o código compara com o alvo e decide sobre o <strong>relé</strong> — com histerese para economizar energia. Veja essa lógica funcionando na página <a style="color:#ffe74c" href="piscina.html">Piscina e Controle →</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Quiz</p>
+      <h2 class="sec-title">Cheque seu entendimento</h2>
+      <div class="grade g2" style="margin-top:1.5rem">
+        <div class="card reveal">
+          <p style="font-weight:800;color:#045a8c">1) Com referência de 5 V e ADC de 10 bits, quanto vale cada degrau?</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem">
+            <button class="btn-gel q-btn" data-ok="1" data-exp="5 V ÷ 1024 ≈ 4,88 mV por nível.">≈ 4,88 mV</button>
+            <button class="btn-gel q-btn" data-ok="0" data-exp="Esse valor seria de um ADC de ~8 bits com outra referência.">≈ 10 mV</button>
+            <button class="btn-gel q-btn" data-ok="0" data-exp="Lembre: 10 bits = 1024 níveis, não 100.">≈ 50 mV</button>
+          </div>
+          <p class="q-msg msg-caixa" style="min-height:2.4em"></p>
+        </div>
+        <div class="card reveal">
+          <p style="font-weight:800;color:#045a8c">2) Por que o protótipo do CEP usa o DS18B20?</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem">
+            <button class="btn-gel q-btn" data-ok="1" data-exp="Ele já entrega o valor digital com resolução de 0,0625 °C, sem depender do degrau do ADC.">Porque é digital, com alta resolução e sem erro de quantização do ADC</button>
+            <button class="btn-gel q-btn" data-ok="0" data-exp="O DS18B20 não é analógico: ele usa o protocolo 1-Wire.">Porque é o mais barato e analógico</button>
+          </div>
+          <p class="q-msg msg-caixa" style="min-height:2.4em"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape-grade">
+    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física das medidas e robótica a serviço da acessibilidade.</p></div>
+    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="medidas.html">Física das Medidas</a></li><li><a href="sensores.html">Sensores e Robótica</a></li><li><a href="piscina.html">Piscina e Controle</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
+    <div><p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p><p>Colégio Estadual do Paraná · <span id="ano">2026</span></p></div>
+  </div>
+  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras ativo em todas as páginas · alto contraste preto/amarelo no botão ♿.</p></div>
+</footer>
+
+<script src="js/base-aero.js"></script>
+<script>
+/* cadeia de transdução ao vivo */
+(function(){
+  var s=document.getElementById('cad-t'); if(!s) return;
+  var R0=10000,B=3950,T0=298.15;
+  function R(T){ return R0*Math.exp(B*(1/(T+273.15)-1/T0)); }
+  function upd(){
+    var T=+s.value, r=R(T), V=5*10000/(r+10000), ADC=Math.round(V/5*1023);
+    var Td=1/(1/T0+Math.log((5*10000/V-10000)/R0)/B)-273.15;
+    document.getElementById('cad-tout').textContent=T.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('v1').textContent=T.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('v2').textContent=(r/1000).toFixed(2).replace('.',',')+' kΩ';
+    document.getElementById('v3').textContent=V.toFixed(3).replace('.',',')+' V';
+    document.getElementById('v4').textContent=ADC+' / 1023';
+    document.getElementById('v5').textContent=Td.toFixed(1).replace('.',',')+' °C no OLED';
+  }
+  s.addEventListener('input',upd); upd();
+  document.getElementById('cad-anim').addEventListener('click',function(){
+    var i=0, msgs=[
+      '1️⃣ Grandeza física: a água transfere calor ao encapsulamento do sensor.',
+      '2️⃣ Transdução resistiva: o NTC muda de resistência conforme a temperatura (Steinhart–Hart).',
+      '3️⃣ Transdução em tensão: o divisor resistivo converte a resistência em volts mensuráveis.',
+      '4️⃣ Digitalização: o ADC de 10 bits quantiza a tensão em um código de 0 a 1023.',
+      '5️⃣ Dado: o código vira temperatura no display — e entra na lógica de controle do relé!'
+    ];
+    var t=setInterval(function(){
+      document.querySelectorAll('.elo').forEach(function(e){e.classList.remove('ativo');});
+      document.getElementById('elo'+(i+1)).classList.add('ativo');
+      document.getElementById('cad-msg').textContent=msgs[i];
+      i++; if(i>4) clearInterval(t);
+    },900);
+  });
+})();
+/* ADC escada */
+(function(){
+  var s=document.getElementById('adc-v'); if(!s) return;
+  var cv=document.getElementById('adc-cv'), ctx=cv.getContext('2d'), W,H;
+  function size(){ W=cv.width=cv.clientWidth; H=cv.height=230; draw(); }
+  addEventListener('resize',size);
+  function draw(){
+    var g=window.coresGraf?coresGraf():{};
+    var V=+s.value, code=Math.round(V/5*1023), Vq=code*5/1024;
+    document.getElementById('adc-vout').textContent=V.toFixed(2).replace('.',',')+' V';
+    document.getElementById('adc-code').textContent=code;
+    document.getElementById('adc-vq').textContent=Vq.toFixed(3).replace('.',',')+' V';
+    document.getElementById('adc-err').textContent=((Vq-V)*1000).toFixed(1).replace('.',',')+' mV';
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle=g.grade; ctx.lineWidth=1;
+    for(var i=0;i<=4;i++){ var y=10+i*(H-25)/4; ctx.beginPath(); ctx.moveTo(25,y); ctx.lineTo(W-8,y); ctx.stroke(); }
+    /* escada visual com 32 degraus */
+    ctx.strokeStyle=g.a; ctx.lineWidth=2; ctx.beginPath();
+    var ND=32;
+    for(var d=0;d<ND;d++){
+      var x0=25+(d/ND)*(W-35), x1=25+((d+1)/ND)*(W-35);
+      var y=H-15-((d+0.5)/ND)*(H-30);
+      d?ctx.lineTo(x0,y):ctx.moveTo(x0,y); ctx.lineTo(x1,y);
+    }
+    ctx.stroke();
+    var px=25+(V/5)*(W-35), py=H-15-((code/1023))*(H-30);
+    ctx.fillStyle=g.alvo; ctx.beginPath(); ctx.arc(px,py,6,0,7); ctx.fill();
+    ctx.strokeStyle=g.alvo; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(25,py); ctx.lineTo(W-8,py); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle=g.texto; ctx.font='12px monospace'; ctx.fillText('V in →',4,H-4);
+  }
+  s.addEventListener('input',draw); size();
+})();
+/* comparativo DS18B20 x LM35 x NTC */
+(function(){
+  var s=document.getElementById('cmp-t'); if(!s) return;
+  var hist=[], C={a:{q:0.0625,off:0,d:750},b:{q:0.49,off:0.3,d:250},c:{q:0.1,off:-0.8,d:150}};
+  function quant(v,q){ return Math.round(v/q)*q; }
+  setInterval(function(){ hist.push({t:Date.now(),v:+s.value}); if(hist.length>500) hist.shift(); },100);
+  function val(k){
+    var cfg=C[k], alvo=Date.now()-cfg.d, v=hist.length?hist[0].v:+s.value;
+    for(var i=hist.length-1;i>=0;i--){ if(hist[i].t<=alvo){ v=hist[i].v; break; } }
+    return quant(v+cfg.off,cfg.q);
+  }
+  setInterval(function(){
+    document.getElementById('cmp-tout').textContent=(+s.value).toFixed(2).replace('.',',')+' °C';
+    document.getElementById('cmp-a').textContent=val('a').toFixed(4).replace('.',',')+' °C';
+    document.getElementById('cmp-b').textContent=val('b').toFixed(2).replace('.',',')+' °C';
+    document.getElementById('cmp-c').textContent=val('c').toFixed(1).replace('.',',')+' °C';
+    document.getElementById('cmp-msg').textContent='Leia assim: o DS18B20 mostra muitos dígitos E acerta (resolução + precisão); o LM35 “pula” de ~0,5 em ~0,5 °C por causa do degrau do ADC (resolução limitada); o NTC reage rápido e mostra décimos, mas desloca tudo em −0,8 °C (falta de calibração = precisão ruim).';
+  },200);
+})();
+/* quiz */
+(function(){
+  document.querySelectorAll('.q-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=b.closest('.card');
+      p.querySelectorAll('.q-btn').forEach(function(x){x.style.opacity=.55;});
+      b.style.opacity=1;
+      if(b.dataset.ok==='1'){ b.style.background='linear-gradient(180deg,#e2fbc0,#59c214)'; b.style.color='#1c5a00'; p.querySelector('.q-msg').textContent='✅ Certo! '+b.dataset.exp; }
+      else { b.style.background='linear-gradient(180deg,#ffd6d6,#e57373)'; b.style.color='#5c1a1a'; p.querySelector('.q-msg').textContent='❌ Quase. '+b.dataset.exp; }
+    });
+  });
+})();
+</script>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>window.addEventListener('load',function(){try{new VLibras.Widget('https://vlibras.gov.br/app')}catch(e){}});</script>
+</body>
+</html>
