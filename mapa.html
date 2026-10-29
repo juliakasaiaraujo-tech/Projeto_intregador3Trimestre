@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mapa do Site · Sol+Água 3TRI</title>
-<meta name="description" content="Mapa do site, guia de navegação por teclado e declaração de acessibilidade — Projeto Integrador 3TRI CEP.">
+<meta name="description" content="Mapa do site, guia de teclado, declaração de acessibilidade e correspondência com os critérios de avaliação do Roteiro 3TRI.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/estilo-aero.css">
@@ -17,12 +17,11 @@
     <a class="marca" href="index.html"><span class="marca-ico" aria-hidden="true">☀️</span><span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span></a>
     <nav class="menu" aria-label="Navegação principal">
       <ul>
-              <ul>
         <li><a href="index.html">Início</a></li>
         <li><a href="medidas.html">Física das Medidas</a></li>
         <li><a href="sensores.html">Sensores e Robótica</a></li>
         <li><a href="piscina.html">Piscina e Controle</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="mapa.html" aria-current="page">Mapa</a></li>
       </ul>
     </nav>
     <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
@@ -43,11 +42,11 @@
 
 <main id="conteudo">
   <section class="page-hero">
-    <span class="ghost" aria-hidden="true">06</span>
+    <span class="ghost" aria-hidden="true">04</span>
     <div class="wrap">
-      <p class="mod">Módulo 06 · Navegação</p>
+      <p class="mod">Módulo 04 · Navegação e acessibilidade</p>
       <h1>Mapa do site</h1>
-      <p class="hero-sub">Todas as páginas do Sol+Água em um só lugar — com o que cada uma oferece e como navegar com teclado, leitor de tela ou VLibras.</p>
+      <p class="hero-sub">Toda a estrutura do Sol+Água em um lugar: páginas, simuladores, atalhos de teclado e a declaração de acessibilidade verificável.</p>
     </div>
     <div class="ondas" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/><path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/></svg></div>
   </section>
@@ -55,15 +54,23 @@
   <section class="secao">
     <div class="wrap">
       <p class="sec-tag">Estrutura</p>
-      <h2 class="sec-title">As 7 páginas do projeto</h2>
+      <h2 class="sec-title">As 5 páginas do projeto</h2>
       <div class="grade g3" style="margin-top:1.5rem">
-        <a class="card reveal" style="text-decoration:none;display:block" href="index.html"><span class="ico" aria-hidden="true">🏠</span><h3>Início</h3><p>Desafio do trimestre, integração das 3 disciplinas, questões orientadoras e estrutura de vídeos em Libras.</p></a>
-        <a class="card reveal" style="text-decoration:none;display:block" href="ondas.html"><span class="ico" aria-hidden="true">🌊</span><h3>Ondas eletromagnéticas</h3><p>Campos, c = λ·f, onda animada e espectro interativo do rádio aos raios gama.</p></a>
-        <a class="card reveal" style="text-decoration:none;display:block" href="radiacao.html"><span class="ico" aria-hidden="true">🌡️</span><h3>Radiação do corpo negro</h3><p>Cor × temperatura, Lei de Wien, Stefan–Boltzmann e simulador de aquecimento com presets.</p></a>
-        <a class="card reveal" style="text-decoration:none;display:block" href="fotoeletrico.html"><span class="ico" aria-hidden="true">⚛️</span><h3>Efeito fotoelétrico</h3><p>Fótons, função trabalho, laboratório com metais e quiz de 3 perguntas.</p></a>
-        <a class="card reveal" style="text-decoration:none;display:block" href="sensores.html"><span class="ico" aria-hidden="true">🤖</span><h3>Sensores</h3><p>Cadeia de transdução animada, tipos de sensor e comparativo precisão × resolução × resposta.</p></a>
-        <a class="card reveal" style="text-decoration:none;display:block" href="piscina.html"><span class="ico" aria-hidden="true">🏊</span><h3>Medindo a piscina</h3><p>3 sensores em profundidades diferentes, modo automático com histerese e gráfico ao vivo.</p></a>
-        <a class="card reveal" style="text-decoration:none;display:block" href="mapa.html"><span class="ico" aria-hidden="true">🗺️</span><h3>Mapa do site</h3><p>Esta página: estrutura completa, guia de teclado e declaração de acessibilidade.</p></a>
+        <a class="card reveal" style="text-decoration:none;display:block" href="index.html"><span class="ico" aria-hidden="true">🏠</span><h3>Início</h3><p>Desafio do trimestre, integração Programação + Tecnociência + Robótica, questões orientadoras e Libras.</p></a>
+        <a class="card reveal" style="text-decoration:none;display:block" href="medidas.html"><span class="ico" aria-hidden="true">🌡️</span><h3>Física das Medidas</h3><p>Termistor NTC, Steinhart–Hart, sensibilidade, estratificação térmica e simuladores de curva.</p></a>
+        <a class="card reveal" style="text-decoration:none;display:block" href="sensores.html"><span class="ico" aria-hidden="true">🤖</span><h3>Sensores e Robótica</h3><p>Cadeia de transdução ao vivo, interior do ADC 10 bits e comparativo DS18B20 × LM35 × NTC.</p></a>
+        <a class="card reveal" style="text-decoration:none;display:block" href="piscina.html"><span class="ico" aria-hidden="true">🏊</span><h3>Piscina e Controle</h3><p>Relé + histerese, gráfico com 3 sensores e contabilidade de energia economizada (kWh, R$, CO₂).</p></a>
+        <a class="card reveal" style="text-decoration:none;display:block" href="mapa.html"><span class="ico" aria-hidden="true">🗺️</span><h3>Mapa do site</h3><p>Esta página: estrutura, teclado, declaração de acessibilidade e critérios do roteiro.</p></a>
+      </div>
+      <div class="painel-agua reveal" style="margin-top:1.4rem">
+        <p class="painel-rotulo">Árvore do site</p>
+        <p style="color:#fff;font-family:var(--mono);font-size:.85rem;line-height:1.9">
+          index.html · início<br>
+          ├─ medidas.html · módulo 01 (Tecnociência — física das medidas)<br>
+          ├─ sensores.html · módulo 02 (Robótica — transdução e ADC)<br>
+          ├─ piscina.html · módulo 03 (controle, histerese e sustentabilidade)<br>
+          └─ mapa.html · módulo 04 (navegação e acessibilidade)
+        </p>
       </div>
     </div>
   </section>
@@ -73,39 +80,42 @@
       <div class="grade g2">
         <div class="card reveal">
           <span class="ico" aria-hidden="true">⌨️</span>
-          <h3>Navegar pelo teclado</h3>
+          <h3>Navegar pelo teclado (testado)</h3>
           <ul style="margin-left:1.1rem;color:#39677f;display:grid;gap:.4rem;margin-top:.5rem">
-            <li><strong>Tab / Shift+Tab</strong> — percorre todos os links, botões e controles;</li>
-            <li><strong>Enter / Espaço</strong> — ativa botões, abre as perguntas e simuladores;</li>
-            <li><strong>Setas</strong> — ajustam os sliders dos simuladores;</li>
+            <li><strong>Tab / Shift+Tab</strong> — percorre links, botões, sliders e perguntas;</li>
+            <li><strong>Enter / Espaço</strong> — ativa botões e abre os <em>details</em>;</li>
+            <li><strong>Setas ← →</strong> — ajustam os sliders dos simuladores;</li>
             <li><strong>Esc</strong> — fecha o painel de acessibilidade;</li>
-            <li><strong>Link “Pular para o conteúdo”</strong> — aparece no primeiro Tab.</li>
+            <li><strong>Foco visível</strong> — contorno verde (amarelo no alto contraste) em todo controle interativo.</li>
           </ul>
         </div>
         <div class="card reveal">
           <span class="ico" aria-hidden="true">♿</span>
           <h3>Declaração de acessibilidade</h3>
           <ul style="margin-left:1.1rem;color:#39677f;display:grid;gap:.4rem;margin-top:.5rem">
-            <li>🌗 Alto contraste (preto/amarelo) em todas as páginas;</li>
-            <li>🔤 Fonte amigável para dislexia + ajustes de tamanho e espaçamento;</li>
-            <li>🐢 Opção de reduzir animações (peixes e bolhas param, conteúdo fica visível);</li>
-            <li>🤟 VLibras integrado + estrutura pronta para vídeos em Libras;</li>
-            <li>📱 Mobile-first: testado em celular e computador;</li>
-            <li>🎯 Foco visível e textos alternativos em imagens e simulações.</li>
+            <li>🤟 <strong>VLibras ativo em todas as páginas</strong>, traduzindo 100% do texto estático;</li>
+            <li>🌗 Alto contraste preto/amarelo em toda a interface, <strong>inclusive gráficos e simuladores</strong>;</li>
+            <li>🔤 Fonte para dislexia aplicada a <strong>todo</strong> o texto (não só títulos);</li>
+            <li>🔍 A+/A− e espaçamento ampliados, salvos no navegador;</li>
+            <li>🐢 Reduzir animações (peixes param, conteúdo permanece visível);</li>
+            <li>📱 Mobile-first, testado em celular e computador.</li>
           </ul>
         </div>
       </div>
-      <div class="painel-agua reveal" style="margin-top:1.4rem">
-        <p class="painel-rotulo">Árvore do site</p>
-        <p style="color:#fff;font-family:var(--mono);font-size:.85rem;line-height:1.9">
-          index.html<br>
-          ├─ ondas.html · módulo 01 (Tecnociência)<br>
-          ├─ radiacao.html · módulo 02 (Tecnociência)<br>
-          ├─ fotoeletrico.html · módulo 03 (Tecnociência)<br>
-          ├─ sensores.html · módulo 04 (Robótica)<br>
-          ├─ piscina.html · módulo 05 (conexão com o projeto)<br>
-          └─ mapa.html · módulo 06 (navegação e acessibilidade)
-        </p>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Transparência</p>
+      <h2 class="sec-title">Onde cada critério do roteiro foi atendido</h2>
+      <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">🧭</span><h3>Estrutura e navegação</h3><p>Menu fixo em 5 páginas, mapa do site funcional e link “pular para o conteúdo”.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🎨</span><h3>Design e responsividade</h3><p>Identidade “Sol + Água” (céu, sol, ondas, peixes), mobile-first e modos de acessibilidade.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🔬</span><h3>Profundidade científica</h3><p>Steinhart–Hart, divisor resistivo, ADC 10 bits, quantização, convecção e estratificação.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🕹️</span><h3>Interatividade</h3><p>5 simuladores: curva NTC, estratificação, cadeia de transdução, escada do ADC e piscina com relé.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">♿</span><h3>Acessibilidade e inclusão</h3><p>VLibras funcional, contraste validado, dislexia, teclado e foco visível em todos os controles.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🌱</span><h3>Inovação e impacto</h3><p>Histerese que economiza kWh/R$/CO₂ medida ao vivo + inclusão digital como parte do projeto.</p></article>
       </div>
     </div>
   </section>
@@ -113,11 +123,11 @@
 
 <footer class="rodape">
   <div class="wrap rodape-grade">
-    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física, sensores e código a serviço da acessibilidade.</p></div>
-    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="ondas.html">Ondas</a></li><li><a href="radiacao.html">Radiação</a></li><li><a href="fotoeletrico.html">E. Fotoelétrico</a></li><li><a href="sensores.html">Sensores</a></li><li><a href="piscina.html">Piscina</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
+    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física das medidas e robótica a serviço da acessibilidade.</p></div>
+    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="medidas.html">Física das Medidas</a></li><li><a href="sensores.html">Sensores e Robótica</a></li><li><a href="piscina.html">Piscina e Controle</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
     <div><p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p><p>Colégio Estadual do Paraná · <span id="ano">2026</span></p></div>
   </div>
-  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras · alto contraste no botão ♿.</p></div>
+  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras ativo em todas as páginas · alto contraste preto/amarelo no botão ♿.</p></div>
 </footer>
 
 <script src="js/base-aero.js"></script>
