@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Medindo a Piscina · Sol+Água 3TRI</title>
-<meta name="description" content="Medição de temperatura em vários pontos da piscina, estratificação e gráfico de aquecimento em tempo real — Projeto Integrador 3TRI CEP.">
+<title>Piscina e Controle · Sol+Água 3TRI</title>
+<meta name="description" content="Como o dado do sensor aciona relé com histerese, economiza energia (kWh, R$ e CO2) e garante conforto na piscina do CEP.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏊</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/estilo-aero.css">
@@ -16,11 +16,11 @@
   <div class="topo-wrap">
     <a class="marca" href="index.html"><span class="marca-ico" aria-hidden="true">☀️</span><span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span></a>
     <nav class="menu" aria-label="Navegação principal">
-           <ul>
+      <ul>
         <li><a href="index.html">Início</a></li>
         <li><a href="medidas.html">Física das Medidas</a></li>
         <li><a href="sensores.html">Sensores e Robótica</a></li>
-        <li><a href="piscina.html">Piscina e Controle</a></li>
+        <li><a href="piscina.html" aria-current="page">Piscina e Controle</a></li>
         <li><a href="mapa.html">Mapa</a></li>
       </ul>
     </nav>
@@ -42,24 +42,36 @@
 
 <main id="conteudo">
   <section class="page-hero">
-    <span class="ghost" aria-hidden="true">05</span>
+    <span class="ghost" aria-hidden="true">03</span>
     <div class="wrap">
-      <p class="mod">Módulo 05 · Conexão com o projeto</p>
-      <h1>Medindo o aquecimento da piscina</h1>
-      <p class="hero-sub">Um sensor só conta parte da história: a água estratifica. Veja como vários pontos de medição e um gráfico no tempo revelam se o sistema está funcionando.</p>
+      <p class="mod">Módulo 03 · Controle e sustentabilidade</p>
+      <h1>Do dado à decisão: relé, histerese e economia</h1>
+      <p class="hero-sub">O sensor mede, o Arduino compara, o relé liga ou desliga. E é nessa lógica que mora a sustentabilidade do projeto: aquecer só quando necessário.</p>
     </div>
     <div class="ondas" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/><path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/></svg></div>
   </section>
 
   <section class="secao">
     <div class="wrap">
-      <p class="sec-tag">Simulador</p>
-      <h2 class="sec-title">Piscina virtual com 3 sensores + gráfico ao vivo</h2>
-      <p class="sec-lead">Ligue o aquecedor (ou deixe no modo automático com histerese, como no projeto) e acompanhe as curvas: <strong>subindo = aquecendo</strong>, <strong>platô = alvo atingido</strong>.</p>
+      <p class="sec-tag">Lógica de controle</p>
+      <h2 class="sec-title">O ciclo que se repete para sempre</h2>
+      <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">📡</span><h3>1. Ler o sensor</h3><p>O DS18B20 entrega a temperatura (resolução 0,0625 °C) ao Arduino a cada ciclo do <code>loop()</code>.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">⚖️</span><h3>2. Comparar com o alvo</h3><p>Alvo = 30 °C com <strong>banda de histerese</strong>: liga abaixo de 29,5 °C e só desliga ao atingir 30 °C.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">⚡</span><h3>3. Agir no relé</h3><p><code>digitalWrite(rele, HIGH/LOW)</code> liga ou desliga o aquecedor — e cada minuto desligado é energia poupada.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Simulador completo</p>
+      <h2 class="sec-title">Piscina virtual: sensores, relé e conta de luz</h2>
+      <p class="sec-lead">No modo automático, o relé obedece à histerese usando o sensor do meio (S2). Acompanhe as curvas, a faixa verde do relé e o contador de energia: <strong>com controle × sem controle</strong>.</p>
       <div class="card reveal" style="margin-top:1.5rem">
         <div class="grade g2" style="gap:1.2rem;align-items:start">
           <div>
-            <svg viewBox="0 0 300 220" style="width:100%;border-radius:14px" role="img" aria-label="Corte da piscina com sensores na superfície, no meio e no fundo.">
+            <svg viewBox="0 0 300 220" style="width:100%;border-radius:14px" role="img" aria-label="Corte da piscina com sensores S1, S2 e S3 e o relé do aquecedor.">
               <rect x="20" y="30" width="260" height="170" rx="10" fill="#0e7c86"/>
               <rect x="20" y="30" width="260" height="26" fill="#7adfe6" opacity=".8"/>
               <path d="M20 44 q 20 -6 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0" stroke="#eafcff" stroke-width="2" fill="none" opacity=".7">
@@ -70,25 +82,30 @@
               <circle cx="150" cy="115" r="7" fill="#ff9a2e" stroke="#fff" stroke-width="2"/>
               <circle cx="150" cy="180" r="7" fill="#ff9a2e" stroke="#fff" stroke-width="2"/>
               <text x="165" y="56" fill="#eafcff" font-size="12" font-family="monospace">S1 superfície</text>
-              <text x="165" y="119" fill="#eafcff" font-size="12" font-family="monospace">S2 meio</text>
+              <text x="165" y="119" fill="#eafcff" font-size="12" font-family="monospace">S2 meio (controla)</text>
               <text x="165" y="184" fill="#eafcff" font-size="12" font-family="monospace">S3 fundo</text>
               <rect id="pc-rele" x="240" y="8" width="40" height="16" rx="8" fill="#5c6b70"/>
-              <text x="205" y="20" fill="#045a8c" font-size="11" font-family="monospace">relé</text>
+              <text x="200" y="20" fill="#045a8c" font-size="11" font-family="monospace">relé</text>
             </svg>
             <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem">
-              <button id="pc-auto" class="btn-gel verde" aria-pressed="true">🤖 Modo automático: ON</button>
-              <button id="pc-man" class="btn-gel laranja">🔥 Aquecedor: OFF</button>
+              <button id="pc-auto" class="btn-gel verde" aria-pressed="true">🤖 Automático (histerese): ON</button>
+              <button id="pc-man" class="btn-gel laranja">🔥 Aquecedor: AUTO</button>
+            </div>
+            <div class="grade g3" style="gap:.6rem;margin-top:1rem;text-align:center">
+              <p class="leitura" style="color:#045a8c">S1 <strong id="pc-s1">—</strong></p>
+              <p class="leitura" style="color:#045a8c">S2 <strong id="pc-s2">—</strong></p>
+              <p class="leitura" style="color:#045a8c">S3 <strong id="pc-s3">—</strong></p>
             </div>
             <p id="pc-msg" class="msg-caixa" aria-live="polite"></p>
           </div>
           <div>
             <div class="palco"><canvas id="pc-cv" style="width:100%;height:230px;display:block"></canvas></div>
-            <div class="grade g3" style="gap:.6rem;margin-top:.8rem;text-align:center">
-              <p class="leitura" style="color:#045a8c">S1 <strong id="pc-s1">—</strong></p>
-              <p class="leitura" style="color:#045a8c">S2 <strong id="pc-s2">—</strong></p>
-              <p class="leitura" style="color:#045a8c">S3 <strong id="pc-s3">—</strong></p>
+            <p style="font-size:.8rem;color:#39677f;margin-top:.5rem">Curvas S1/S2/S3 · tracejado = alvo 30 °C · faixa inferior = relé LIGADO.</p>
+            <div class="grade g2" style="gap:.8rem;margin-top:.9rem">
+              <div class="palco" style="padding:.8rem;text-align:center"><p class="leitura">COM controle (histerese)</p><p id="pc-kwh" class="leitura" style="font-size:1.2rem;margin-top:.3rem">0,0 kWh</p><p id="pc-rs" style="font-size:.75rem;color:#7fcdd3">R$ 0,00</p></div>
+              <div class="palco" style="padding:.8rem;text-align:center"><p class="leitura">SEM controle (sempre ligado)</p><p id="pc-kwh2" class="leitura" style="font-size:1.2rem;margin-top:.3rem">0,0 kWh</p><p id="pc-rs2" style="font-size:.75rem;color:#7fcdd3">R$ 0,00</p></div>
             </div>
-            <p style="font-size:.8rem;color:#39677f;margin-top:.5rem">— S1 superfície · — S2 meio · — S3 fundo · tracejado = alvo 30 °C</p>
+            <p class="leitura" style="margin-top:.8rem;color:#045a8c">💚 Economia: <strong id="pc-eco">—</strong> · CO₂ evitado: <strong id="pc-co2">—</strong></p>
           </div>
         </div>
       </div>
@@ -97,25 +114,30 @@
 
   <section class="secao" style="padding-top:0">
     <div class="wrap">
-      <p class="sec-tag">Comparativo visual</p>
-      <h2 class="sec-title">Como ler o gráfico dos dados</h2>
+      <p class="sec-tag">Por que histerese = sustentabilidade</p>
+      <h2 class="sec-title">Três razões físicas e elétricas</h2>
       <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">🔁</span><h3>Evita o “tiquetaque”</h3><p>Sem banda, o relé ligaria/desligaria a cada variação de 0,06 °C, desgastando contatos e aquecedor. A histerese dá folga ao sistema.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🪫</span><h3>Desliga no alvo</h3><p>Ao atingir 30 °C o aquecedor para: a inércia térmica da água mantém o conforto sem gastar — é a física trabalhando de graça.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🌱</span><h3>Energia = impacto</h3><p>Cada kWh poupado evita ≈ 0,075 kg de CO₂ e ≈ R$ 0,95 na conta. Automatizar é a forma mais simples de ser sustentável.</p></article>
+      </div>
+      <div class="grade g3" style="margin-top:1.25rem">
         <article class="card reveal" style="text-align:center">
           <svg viewBox="0 0 120 70" style="width:100%"><polyline points="5,60 30,50 60,35 90,20 115,12" fill="none" stroke="#59c214" stroke-width="4" stroke-linecap="round"/></svg>
-          <h3>Curva subindo</h3><p>O aquecedor está ligado e vencendo as perdas: o sistema <strong>está aquecendo</strong>.</p>
+          <h3>Curva subindo</h3><p>Relé ligado: o aquecedor vence as perdas e a temperatura cresce.</p>
         </article>
         <article class="card reveal" style="text-align:center">
           <svg viewBox="0 0 120 70" style="width:100%"><polyline points="5,40 30,26 60,20 90,20 115,20" fill="none" stroke="#2fa8e6" stroke-width="4" stroke-linecap="round"/><line x1="5" y1="20" x2="115" y2="20" stroke="#ff9a2e" stroke-width="2" stroke-dasharray="5 4"/></svg>
-          <h3>Platô no alvo</h3><p>Temperatura estável em 30 °C: o relé desligou e a <strong>histerese</strong> segura a banda de conforto.</p>
+          <h3>Platô no alvo</h3><p>Histerese segurando a banda de conforto com o relé desligado.</p>
         </article>
         <article class="card reveal" style="text-align:center">
           <svg viewBox="0 0 120 70" style="width:100%"><polyline points="5,15 30,25 60,38 90,50 115,58" fill="none" stroke="#e57373" stroke-width="4" stroke-linecap="round"/></svg>
-          <h3>Curva descendo</h3><p>Perdas térmicas dominam (noite/tampa aberta): o dado avisa que é hora de <strong>reaquecer</strong>.</p>
+          <h3>Curva descendo</h3><p>Perdas térmicas: abaixo de 29,5 °C o dado do sensor religa o relé.</p>
         </article>
       </div>
       <div class="painel-agua reveal" style="margin-top:1.4rem">
-        <p class="painel-rotulo">Por que vários pontos?</p>
-        <p style="color:#fff">Por convecção, a água quente sobe: a superfície esquenta antes do fundo. Medir em 3 profundidades mostra se o calor já se distribuiu — e evita banhistas sentirem “metade da piscina fria”. É a física das medidas a serviço da acessibilidade.</p>
+        <p class="painel-rotulo">Acessibilidade no mesmo ciclo</p>
+        <p style="color:#fff">Enquanto o relé cuida da temperatura, os sensores de presença acionam a <strong>rampa motorizada</strong> e o LED RGB dá o <strong>alerta visual</strong> (azul = aquecendo, verde = pronta). Automação que inclui pessoas e poupa energia ao mesmo tempo.</p>
       </div>
     </div>
   </section>
@@ -123,11 +145,11 @@
 
 <footer class="rodape">
   <div class="wrap rodape-grade">
-    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física, sensores e código a serviço da acessibilidade.</p></div>
-    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="ondas.html">Ondas</a></li><li><a href="radiacao.html">Radiação</a></li><li><a href="fotoeletrico.html">E. Fotoelétrico</a></li><li><a href="sensores.html">Sensores</a></li><li><a href="piscina.html">Piscina</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
+    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física das medidas e robótica a serviço da acessibilidade.</p></div>
+    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="medidas.html">Física das Medidas</a></li><li><a href="sensores.html">Sensores e Robótica</a></li><li><a href="piscina.html">Piscina e Controle</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
     <div><p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p><p>Colégio Estadual do Paraná · <span id="ano">2026</span></p></div>
   </div>
-  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras · alto contraste no botão ♿.</p></div>
+  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras ativo em todas as páginas · alto contraste preto/amarelo no botão ♿.</p></div>
 </footer>
 
 <script src="js/base-aero.js"></script>
@@ -137,47 +159,290 @@
   var ctx=cv.getContext('2d'), W,H;
   function size(){ W=cv.width=cv.clientWidth; H=cv.height=230; }
   addEventListener('resize',size); size();
-  var T={s1:24,s2:23,s3:22}, rele=false, auto=true, hist={s1:[],s2:[],s3:[]}, N=160;
+  var T={s1:24,s2:23,s3:22}, rele=false, auto=true, N=170;
+  var hist={s1:[],s2:[],s3:[],re:[]};
+  var kwh=0, kwhSem=0, P=3; /* kW do aquecedor */
   var bAuto=document.getElementById('pc-auto'), bMan=document.getElementById('pc-man');
   bAuto.addEventListener('click',function(){
-    auto=!auto; bAuto.textContent='🤖 Modo automático: '+(auto?'ON':'OFF');
+    auto=!auto; bAuto.textContent='🤖 Automático (histerese): '+(auto?'ON':'OFF');
     bAuto.setAttribute('aria-pressed',String(auto));
     if(auto) bMan.textContent='🔥 Aquecedor: AUTO';
   });
   bMan.addEventListener('click',function(){
-    if(auto){ return; }
+    if(auto) return;
     rele=!rele; bMan.textContent='🔥 Aquecedor: '+(rele?'ON':'OFF');
   });
   setInterval(function(){
-    if(auto){ rele = T.s2 < 29.5 ? true : (T.s2 >= 30 ? false : rele); }
+    if(auto) rele = T.s2 < 29.5 ? true : (T.s2 >= 30 ? false : rele);
     var sem=document.body.classList.contains('sem-anim');
     if(!sem){
-      if(rele){ T.s1+=0.05; T.s2+=0.035; T.s3+=0.02; }
+      if(rele){ T.s1+=0.05; T.s2+=0.035; T.s3+=0.02; kwh+=P*(2/60); }
       else { T.s1-=0.010; T.s2-=0.007; T.s3-=0.005; }
+      kwhSem+=P*(2/60); /* cenário sem controle: sempre ligado */
       T.s2+=(T.s1-T.s2)*0.012; T.s3+=(T.s2-T.s3)*0.010;
       T.s1+=(Math.random()-.5)*.03; T.s2+=(Math.random()-.5)*.02; T.s3+=(Math.random()-.5)*.02;
     }
     ['s1','s2','s3'].forEach(function(k){ hist[k].push(T[k]); if(hist[k].length>N) hist[k].shift(); });
+    hist.re.push(rele?1:0); if(hist.re.length>N) hist.re.shift();
     document.getElementById('pc-s1').textContent=T.s1.toFixed(1).replace('.',',')+' °C';
     document.getElementById('pc-s2').textContent=T.s2.toFixed(1).replace('.',',')+' °C';
     document.getElementById('pc-s3').textContent=T.s3.toFixed(1).replace('.',',')+' °C';
     document.getElementById('pc-rele').setAttribute('fill', rele?'#59c214':'#5c6b70');
     bMan.textContent = auto ? '🔥 Aquecedor: AUTO' : '🔥 Aquecedor: '+(rele?'ON':'OFF');
+    document.getElementById('pc-kwh').textContent=kwh.toFixed(1).replace('.',',')+' kWh';
+    document.getElementById('pc-kwh2').textContent=kwhSem.toFixed(1).replace('.',',')+' kWh';
+    document.getElementById('pc-rs').textContent='R$ '+(kwh*0.95).toFixed(2).replace('.',',');
+    document.getElementById('pc-rs2').textContent='R$ '+(kwhSem*0.95).toFixed(2).replace('.',',');
+    var eco = kwhSem>0 ? (1-kwh/kwhSem)*100 : 0;
+    document.getElementById('pc-eco').textContent=eco.toFixed(0)+'% ('+((kwhSem-kwh)*0.95).toFixed(2).replace('.',',')+' R$)';
+    document.getElementById('pc-co2').textContent=((kwhSem-kwh)*0.075).toFixed(2).replace('.',',')+' kg';
     document.getElementById('pc-msg').textContent = rele
-      ? '📈 Curvas subindo: o aquecedor está ligado. A superfície (S1) lidera, o fundo (S3) vem atrás — estratificação!'
-      : (T.s2>=29.5 ? '➖ Platô: alvo de 30 °C atingido, relé desligado. Economia de energia em ação.' : '📉 Curvas descendo devagar: perdas térmicas. No modo automático o relé religaria abaixo de 29,5 °C.');
+      ? '📈 S2 abaixo de 29,5 °C → o dado do sensor LIGOU o relé. As curvas sobem e o contador de energia roda.'
+      : (T.s2>=29.5 ? '➖ Platô: S2 atingiu 30 °C → relé DESLIGADO. O conforto se mantém pela inércia térmica, com gasto zero.' : '📉 Perdas térmicas derrubando a curva: no automático, o relé religará quando S2 cruzar 29,5 °C.');
     /* gráfico */
+    var g=window.coresGraf?coresGraf():{};
     ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle='rgba(157,238,243,.25)'; ctx.lineWidth=1;
-    for(var g=20;g<=35;g+=5){ var y=H-((g-18)/(35-18))*H; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
-    var yAlvo=H-((30-18)/(35-18))*H;
-    ctx.strokeStyle='#ff9a2e'; ctx.setLineDash([6,5]); ctx.beginPath(); ctx.moveTo(0,yAlvo); ctx.lineTo(W,yAlvo); ctx.stroke(); ctx.setLineDash([]);
-    var cores={s1:'#7fdcff',s2:'#59c214',s3:'#ffb08a'};
-    ['s1','s2','s3'].forEach(function(k){
-      ctx.strokeStyle=cores[k]; ctx.lineWidth=2.5; ctx.beginPath();
-      hist[k].forEach(function(v,i){
-        var x=i/(N-1)*W, y=H-((v-18)/(35-18))*H;
-        i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    /* faixa do relé */
+    for(var i=0;i<hist.re.length;i++){
+      if(hist.re[i]){ ctx.fillStyle=g.b; ctx.globalAlpha=.35; ctx.fillRect(i/(N-1)*W, H-14, W/(N-1)+1, 10); ctx.globalAlpha=1; }
+    }
+    ctx.strokeStyle=g.grade; ctx.lineWidth=1;
+    for(var gg=20;gg<=35;gg+=5){ var y=H-18-((gg-18)/(35-18))*(H-30); ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    var yA=H-18-((30-18)/(35-18))*(H-30);
+    ctx.strokeStyle=g.alvo; ctx.setLineDash([6,5]); ctx.beginPath(); ctx.moveTo(0,yA); ctx.lineTo(W,yA); ctx.stroke(); ctx.setLineDash([]);
+    var cores=[g.a,g.b,g.c], ks=['s1','s2','s3'];
+    ks.forEach(function(k,idx){
+      ctx.strokeStyle=cores[idx]; ctx.lineWidth=2.5; ctx.beginPath();
+      hist[k].forEach(function(v,i2){
+        var x=i2/(N-1)*W, y=H-18-((v-18)/(35-18))*(H-30);
+        i2?ctx.lineTo(x,y):ctx.moveTo(x,y);
+      });
+      ctx.stroke();
+    });
+  },200);
+})();
+</script>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>window.addEventListener('load',function(){try{new VLibras.Widget('https://vlibras.gov.br/app')}catch(e){}});</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piscina e Controle · Sol+Água 3TRI</title>
+<meta name="description" content="Como o dado do sensor aciona relé com histerese, economiza energia (kWh, R$ e CO2) e garante conforto na piscina do CEP.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo-aero.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div vw class="enabled"><div access="true"></div></div>
+<header class="topo">
+  <div class="topo-wrap">
+    <a class="marca" href="index.html"><span class="marca-ico" aria-hidden="true">☀️</span><span class="marca-txt">Sol+Água<small>Projeto Integrador · 3TRI · CEP</small></span></a>
+    <nav class="menu" aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="medidas.html">Física das Medidas</a></li>
+        <li><a href="sensores.html">Sensores e Robótica</a></li>
+        <li><a href="piscina.html" aria-current="page">Piscina e Controle</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+      </ul>
+    </nav>
+    <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<button id="btn-acess" class="btn-flutuante" aria-expanded="false" aria-controls="painel-acess" title="Abrir opções de acessibilidade">♿</button>
+<div id="painel-acess" class="painel-acess" role="dialog" aria-label="Opções de acessibilidade" hidden>
+  <h2>♿ Acessibilidade</h2>
+  <button id="btn-hc" class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>
+  <button id="btn-fdx" class="pa-btn" aria-pressed="false">🔤 Fonte para dislexia</button>
+  <button id="btn-a+" class="pa-btn">A+ Aumentar texto</button>
+  <button id="btn-a-" class="pa-btn">A− Diminuir texto</button>
+  <button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>
+  <button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>
+  <button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>
+  <p class="pa-nota">Tab navega · Enter ativa · Esc fecha. VLibras no botão azul à direita.</p>
+</div>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <span class="ghost" aria-hidden="true">03</span>
+    <div class="wrap">
+      <p class="mod">Módulo 03 · Controle e sustentabilidade</p>
+      <h1>Do dado à decisão: relé, histerese e economia</h1>
+      <p class="hero-sub">O sensor mede, o Arduino compara, o relé liga ou desliga. E é nessa lógica que mora a sustentabilidade do projeto: aquecer só quando necessário.</p>
+    </div>
+    <div class="ondas" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70 C 240 110 480 30 720 60 C 960 90 1200 40 1440 75 L 1440 120 L 0 120 Z" fill="rgba(157,238,243,.2)"/><path d="M0 88 C 260 48 520 108 780 80 C 1040 52 1240 98 1440 70 L 1440 120 L 0 120 Z" fill="#eaf9ff"/></svg></div>
+  </section>
+
+  <section class="secao">
+    <div class="wrap">
+      <p class="sec-tag">Lógica de controle</p>
+      <h2 class="sec-title">O ciclo que se repete para sempre</h2>
+      <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">📡</span><h3>1. Ler o sensor</h3><p>O DS18B20 entrega a temperatura (resolução 0,0625 °C) ao Arduino a cada ciclo do <code>loop()</code>.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">⚖️</span><h3>2. Comparar com o alvo</h3><p>Alvo = 30 °C com <strong>banda de histerese</strong>: liga abaixo de 29,5 °C e só desliga ao atingir 30 °C.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">⚡</span><h3>3. Agir no relé</h3><p><code>digitalWrite(rele, HIGH/LOW)</code> liga ou desliga o aquecedor — e cada minuto desligado é energia poupada.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Simulador completo</p>
+      <h2 class="sec-title">Piscina virtual: sensores, relé e conta de luz</h2>
+      <p class="sec-lead">No modo automático, o relé obedece à histerese usando o sensor do meio (S2). Acompanhe as curvas, a faixa verde do relé e o contador de energia: <strong>com controle × sem controle</strong>.</p>
+      <div class="card reveal" style="margin-top:1.5rem">
+        <div class="grade g2" style="gap:1.2rem;align-items:start">
+          <div>
+            <svg viewBox="0 0 300 220" style="width:100%;border-radius:14px" role="img" aria-label="Corte da piscina com sensores S1, S2 e S3 e o relé do aquecedor.">
+              <rect x="20" y="30" width="260" height="170" rx="10" fill="#0e7c86"/>
+              <rect x="20" y="30" width="260" height="26" fill="#7adfe6" opacity=".8"/>
+              <path d="M20 44 q 20 -6 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0" stroke="#eafcff" stroke-width="2" fill="none" opacity=".7">
+                <animate attributeName="d" dur="3s" repeatCount="indefinite"
+                  values="M20 44 q 20 -6 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0;M20 44 q 20 6 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0;M20 44 q 20 -6 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0"/>
+              </path>
+              <circle cx="150" cy="52" r="7" fill="#ff9a2e" stroke="#fff" stroke-width="2"/>
+              <circle cx="150" cy="115" r="7" fill="#ff9a2e" stroke="#fff" stroke-width="2"/>
+              <circle cx="150" cy="180" r="7" fill="#ff9a2e" stroke="#fff" stroke-width="2"/>
+              <text x="165" y="56" fill="#eafcff" font-size="12" font-family="monospace">S1 superfície</text>
+              <text x="165" y="119" fill="#eafcff" font-size="12" font-family="monospace">S2 meio (controla)</text>
+              <text x="165" y="184" fill="#eafcff" font-size="12" font-family="monospace">S3 fundo</text>
+              <rect id="pc-rele" x="240" y="8" width="40" height="16" rx="8" fill="#5c6b70"/>
+              <text x="200" y="20" fill="#045a8c" font-size="11" font-family="monospace">relé</text>
+            </svg>
+            <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem">
+              <button id="pc-auto" class="btn-gel verde" aria-pressed="true">🤖 Automático (histerese): ON</button>
+              <button id="pc-man" class="btn-gel laranja">🔥 Aquecedor: AUTO</button>
+            </div>
+            <div class="grade g3" style="gap:.6rem;margin-top:1rem;text-align:center">
+              <p class="leitura" style="color:#045a8c">S1 <strong id="pc-s1">—</strong></p>
+              <p class="leitura" style="color:#045a8c">S2 <strong id="pc-s2">—</strong></p>
+              <p class="leitura" style="color:#045a8c">S3 <strong id="pc-s3">—</strong></p>
+            </div>
+            <p id="pc-msg" class="msg-caixa" aria-live="polite"></p>
+          </div>
+          <div>
+            <div class="palco"><canvas id="pc-cv" style="width:100%;height:230px;display:block"></canvas></div>
+            <p style="font-size:.8rem;color:#39677f;margin-top:.5rem">Curvas S1/S2/S3 · tracejado = alvo 30 °C · faixa inferior = relé LIGADO.</p>
+            <div class="grade g2" style="gap:.8rem;margin-top:.9rem">
+              <div class="palco" style="padding:.8rem;text-align:center"><p class="leitura">COM controle (histerese)</p><p id="pc-kwh" class="leitura" style="font-size:1.2rem;margin-top:.3rem">0,0 kWh</p><p id="pc-rs" style="font-size:.75rem;color:#7fcdd3">R$ 0,00</p></div>
+              <div class="palco" style="padding:.8rem;text-align:center"><p class="leitura">SEM controle (sempre ligado)</p><p id="pc-kwh2" class="leitura" style="font-size:1.2rem;margin-top:.3rem">0,0 kWh</p><p id="pc-rs2" style="font-size:.75rem;color:#7fcdd3">R$ 0,00</p></div>
+            </div>
+            <p class="leitura" style="margin-top:.8rem;color:#045a8c">💚 Economia: <strong id="pc-eco">—</strong> · CO₂ evitado: <strong id="pc-co2">—</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <p class="sec-tag">Por que histerese = sustentabilidade</p>
+      <h2 class="sec-title">Três razões físicas e elétricas</h2>
+      <div class="grade g3" style="margin-top:1.5rem">
+        <article class="card reveal"><span class="ico" aria-hidden="true">🔁</span><h3>Evita o “tiquetaque”</h3><p>Sem banda, o relé ligaria/desligaria a cada variação de 0,06 °C, desgastando contatos e aquecedor. A histerese dá folga ao sistema.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🪫</span><h3>Desliga no alvo</h3><p>Ao atingir 30 °C o aquecedor para: a inércia térmica da água mantém o conforto sem gastar — é a física trabalhando de graça.</p></article>
+        <article class="card reveal"><span class="ico" aria-hidden="true">🌱</span><h3>Energia = impacto</h3><p>Cada kWh poupado evita ≈ 0,075 kg de CO₂ e ≈ R$ 0,95 na conta. Automatizar é a forma mais simples de ser sustentável.</p></article>
+      </div>
+      <div class="grade g3" style="margin-top:1.25rem">
+        <article class="card reveal" style="text-align:center">
+          <svg viewBox="0 0 120 70" style="width:100%"><polyline points="5,60 30,50 60,35 90,20 115,12" fill="none" stroke="#59c214" stroke-width="4" stroke-linecap="round"/></svg>
+          <h3>Curva subindo</h3><p>Relé ligado: o aquecedor vence as perdas e a temperatura cresce.</p>
+        </article>
+        <article class="card reveal" style="text-align:center">
+          <svg viewBox="0 0 120 70" style="width:100%"><polyline points="5,40 30,26 60,20 90,20 115,20" fill="none" stroke="#2fa8e6" stroke-width="4" stroke-linecap="round"/><line x1="5" y1="20" x2="115" y2="20" stroke="#ff9a2e" stroke-width="2" stroke-dasharray="5 4"/></svg>
+          <h3>Platô no alvo</h3><p>Histerese segurando a banda de conforto com o relé desligado.</p>
+        </article>
+        <article class="card reveal" style="text-align:center">
+          <svg viewBox="0 0 120 70" style="width:100%"><polyline points="5,15 30,25 60,38 90,50 115,58" fill="none" stroke="#e57373" stroke-width="4" stroke-linecap="round"/></svg>
+          <h3>Curva descendo</h3><p>Perdas térmicas: abaixo de 29,5 °C o dado do sensor religa o relé.</p>
+        </article>
+      </div>
+      <div class="painel-agua reveal" style="margin-top:1.4rem">
+        <p class="painel-rotulo">Acessibilidade no mesmo ciclo</p>
+        <p style="color:#fff">Enquanto o relé cuida da temperatura, os sensores de presença acionam a <strong>rampa motorizada</strong> e o LED RGB dá o <strong>alerta visual</strong> (azul = aquecendo, verde = pronta). Automação que inclui pessoas e poupa energia ao mesmo tempo.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape-grade">
+    <div><p class="rodape-marca">Sol+Água ☀️💧</p><p>Física das medidas e robótica a serviço da acessibilidade.</p></div>
+    <nav aria-label="Mapa do site"><ul><li><a href="index.html">Início</a></li><li><a href="medidas.html">Física das Medidas</a></li><li><a href="sensores.html">Sensores e Robótica</a></li><li><a href="piscina.html">Piscina e Controle</a></li><li><a href="mapa.html">Mapa</a></li></ul></nav>
+    <div><p><strong>Equipe</strong><br>Julia Saory · Maria Fernanda · Luiza Brandão</p><p>Colégio Estadual do Paraná · <span id="ano">2026</span></p></div>
+  </div>
+  <div class="wrap rodape-base"><p>Navegação 100% por teclado · VLibras ativo em todas as páginas · alto contraste preto/amarelo no botão ♿.</p></div>
+</footer>
+
+<script src="js/base-aero.js"></script>
+<script>
+(function(){
+  var cv=document.getElementById('pc-cv'); if(!cv) return;
+  var ctx=cv.getContext('2d'), W,H;
+  function size(){ W=cv.width=cv.clientWidth; H=cv.height=230; }
+  addEventListener('resize',size); size();
+  var T={s1:24,s2:23,s3:22}, rele=false, auto=true, N=170;
+  var hist={s1:[],s2:[],s3:[],re:[]};
+  var kwh=0, kwhSem=0, P=3; /* kW do aquecedor */
+  var bAuto=document.getElementById('pc-auto'), bMan=document.getElementById('pc-man');
+  bAuto.addEventListener('click',function(){
+    auto=!auto; bAuto.textContent='🤖 Automático (histerese): '+(auto?'ON':'OFF');
+    bAuto.setAttribute('aria-pressed',String(auto));
+    if(auto) bMan.textContent='🔥 Aquecedor: AUTO';
+  });
+  bMan.addEventListener('click',function(){
+    if(auto) return;
+    rele=!rele; bMan.textContent='🔥 Aquecedor: '+(rele?'ON':'OFF');
+  });
+  setInterval(function(){
+    if(auto) rele = T.s2 < 29.5 ? true : (T.s2 >= 30 ? false : rele);
+    var sem=document.body.classList.contains('sem-anim');
+    if(!sem){
+      if(rele){ T.s1+=0.05; T.s2+=0.035; T.s3+=0.02; kwh+=P*(2/60); }
+      else { T.s1-=0.010; T.s2-=0.007; T.s3-=0.005; }
+      kwhSem+=P*(2/60); /* cenário sem controle: sempre ligado */
+      T.s2+=(T.s1-T.s2)*0.012; T.s3+=(T.s2-T.s3)*0.010;
+      T.s1+=(Math.random()-.5)*.03; T.s2+=(Math.random()-.5)*.02; T.s3+=(Math.random()-.5)*.02;
+    }
+    ['s1','s2','s3'].forEach(function(k){ hist[k].push(T[k]); if(hist[k].length>N) hist[k].shift(); });
+    hist.re.push(rele?1:0); if(hist.re.length>N) hist.re.shift();
+    document.getElementById('pc-s1').textContent=T.s1.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('pc-s2').textContent=T.s2.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('pc-s3').textContent=T.s3.toFixed(1).replace('.',',')+' °C';
+    document.getElementById('pc-rele').setAttribute('fill', rele?'#59c214':'#5c6b70');
+    bMan.textContent = auto ? '🔥 Aquecedor: AUTO' : '🔥 Aquecedor: '+(rele?'ON':'OFF');
+    document.getElementById('pc-kwh').textContent=kwh.toFixed(1).replace('.',',')+' kWh';
+    document.getElementById('pc-kwh2').textContent=kwhSem.toFixed(1).replace('.',',')+' kWh';
+    document.getElementById('pc-rs').textContent='R$ '+(kwh*0.95).toFixed(2).replace('.',',');
+    document.getElementById('pc-rs2').textContent='R$ '+(kwhSem*0.95).toFixed(2).replace('.',',');
+    var eco = kwhSem>0 ? (1-kwh/kwhSem)*100 : 0;
+    document.getElementById('pc-eco').textContent=eco.toFixed(0)+'% ('+((kwhSem-kwh)*0.95).toFixed(2).replace('.',',')+' R$)';
+    document.getElementById('pc-co2').textContent=((kwhSem-kwh)*0.075).toFixed(2).replace('.',',')+' kg';
+    document.getElementById('pc-msg').textContent = rele
+      ? '📈 S2 abaixo de 29,5 °C → o dado do sensor LIGOU o relé. As curvas sobem e o contador de energia roda.'
+      : (T.s2>=29.5 ? '➖ Platô: S2 atingiu 30 °C → relé DESLIGADO. O conforto se mantém pela inércia térmica, com gasto zero.' : '📉 Perdas térmicas derrubando a curva: no automático, o relé religará quando S2 cruzar 29,5 °C.');
+    /* gráfico */
+    var g=window.coresGraf?coresGraf():{};
+    ctx.clearRect(0,0,W,H);
+    /* faixa do relé */
+    for(var i=0;i<hist.re.length;i++){
+      if(hist.re[i]){ ctx.fillStyle=g.b; ctx.globalAlpha=.35; ctx.fillRect(i/(N-1)*W, H-14, W/(N-1)+1, 10); ctx.globalAlpha=1; }
+    }
+    ctx.strokeStyle=g.grade; ctx.lineWidth=1;
+    for(var gg=20;gg<=35;gg+=5){ var y=H-18-((gg-18)/(35-18))*(H-30); ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    var yA=H-18-((30-18)/(35-18))*(H-30);
+    ctx.strokeStyle=g.alvo; ctx.setLineDash([6,5]); ctx.beginPath(); ctx.moveTo(0,yA); ctx.lineTo(W,yA); ctx.stroke(); ctx.setLineDash([]);
+    var cores=[g.a,g.b,g.c], ks=['s1','s2','s3'];
+    ks.forEach(function(k,idx){
+      ctx.strokeStyle=cores[idx]; ctx.lineWidth=2.5; ctx.beginPath();
+      hist[k].forEach(function(v,i2){
+        var x=i2/(N-1)*W, y=H-18-((v-18)/(35-18))*(H-30);
+        i2?ctx.lineTo(x,y):ctx.moveTo(x,y);
       });
       ctx.stroke();
     });
