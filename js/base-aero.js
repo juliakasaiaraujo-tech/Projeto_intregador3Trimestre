@@ -1,4 +1,4 @@
-/* Sol+Água Aero v2 · acessibilidade + menu + reveal + aquário + cores de gráfico */
+/* Sol+Água Aero v3 · acessibilidade + Esc abre/fecha + VLibras watchdog + aquário + coresGraf */
 window.coresGraf = function () {
   var cs = getComputedStyle(document.body);
   return {
@@ -30,11 +30,26 @@ window.coresGraf = function () {
   window.addEventListener('DOMContentLoaded', function () {
     aplicar();
     const painel = $('painel-acess'), abre = $('btn-acess');
-    function abrir() { painel.removeAttribute('hidden'); abre.setAttribute('aria-expanded','true'); abre.textContent='✖'; const b=painel.querySelector('button'); if(b)b.focus(); }
-    function fechar() { painel.setAttribute('hidden',''); abre.setAttribute('aria-expanded','false'); abre.textContent='♿'; }
+    function abrir() {
+      painel.removeAttribute('hidden');
+      painel.classList.remove('abrindo'); void painel.offsetWidth; painel.classList.add('abrindo');
+      abre.setAttribute('aria-expanded', 'true'); abre.textContent = '✖';
+      abre.title = 'Fechar opções de acessibilidade';
+      const b = painel.querySelector('button'); if (b) b.focus();
+    }
+    function fechar() {
+      painel.setAttribute('hidden', '');
+      abre.setAttribute('aria-expanded', 'false'); abre.textContent = '♿';
+      abre.title = 'Abrir opções de acessibilidade';
+    }
     if (abre && painel) {
       abre.addEventListener('click', () => painel.hasAttribute('hidden') ? abrir() : fechar());
-      document.addEventListener('keydown', e => { if (e.key==='Escape' && !painel.hasAttribute('hidden')) { fechar(); abre.focus(); } });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          if (painel.hasAttribute('hidden')) { abrir(); }
+          else { fechar(); abre.focus(); }
+        }
+      });
     }
     const liga = (id, fn) => { const b = $(id); if (b) b.addEventListener('click', fn); };
     liga('btn-hc',  () => { estado.hc=!estado.hc; salvar(); });
@@ -53,6 +68,27 @@ window.coresGraf = function () {
     else {
       const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); io.unobserve(e.target); } }), { threshold: .12 });
       revs.forEach(r => io.observe(r));
+    }
+  });
+})();
+/* VLibras: init com retry e anti-duplicação */
+(function(){
+  function boot(){
+    if (window.__vlOK) return;
+    try { if (window.VLibras) { new VLibras.Widget('https://vlibras.gov.br/app'); window.__vlOK = true; } } catch (e) {}
+  }
+  window.addEventListener('load', function(){
+    boot();
+    if (!window.__vlOK) {
+      var t = setInterval(function(){ boot(); if (window.__vlOK) clearInterval(t); }, 1500);
+      setTimeout(function(){
+        clearInterval(t);
+        if (!window.__vlOK && !window.VLibras) {
+          var s = document.createElement('script');
+          s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+          s.onload = boot; document.body.appendChild(s);
+        }
+      }, 4000);
     }
   });
 })();
