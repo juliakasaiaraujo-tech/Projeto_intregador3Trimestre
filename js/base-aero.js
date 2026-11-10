@@ -1,4 +1,4 @@
-/* Sol+Água Aero v4 · painel ♿ e VLibras garantidos em TODAS as páginas */
+/* Sol+Água Aero v5 · painel ♿ com focus trap + retorno de foco + VLibras garantido */
 window.coresGraf = function () {
   var cs = getComputedStyle(document.body);
   return {
@@ -29,7 +29,6 @@ window.coresGraf = function () {
   }
   function salvar() { localStorage.setItem('solagua', JSON.stringify(estado)); aplicar(); }
 
-  /* Cria botão + painel de acessibilidade se a página não tiver (garantia total) */
   function garantirPainel() {
     if (!$('btn-acess')) {
       const b = document.createElement('button');
@@ -55,17 +54,15 @@ window.coresGraf = function () {
         '<button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>' +
         '<button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>' +
         '<button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>' +
-        '<p class="pa-nota">Tab navega · Enter ativa · Esc abre/fecha. VLibras no botão azul à direita.</p>';
+        '<p class="pa-nota">Tab circula dentro da janela · Esc abre/fecha · o foco volta para onde você estava.</p>';
       document.body.appendChild(p);
     }
   }
 
-  /* VLibras 100%: garante contêiner + plugin + inicialização com retry */
   function garantirVLibras() {
     if (!document.querySelector('div[vw]')) {
       const vw = document.createElement('div');
-      vw.setAttribute('vw', '');
-      vw.className = 'enabled';
+      vw.setAttribute('vw', ''); vw.className = 'enabled';
       vw.innerHTML = '<div access="true"></div>';
       document.body.appendChild(vw);
     }
@@ -79,8 +76,7 @@ window.coresGraf = function () {
         if (!document.querySelector('script[src*="vlibras-plugin"]')) {
           const s = document.createElement('script');
           s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
-          s.onload = boot;
-          document.body.appendChild(s);
+          s.onload = boot; document.body.appendChild(s);
         }
         var t = setInterval(function () { boot(); if (window.__vlOK) clearInterval(t); }, 1500);
         setTimeout(function () { clearInterval(t); }, 15000);
@@ -91,26 +87,45 @@ window.coresGraf = function () {
   window.addEventListener('DOMContentLoaded', function () {
     garantirPainel();
     aplicar();
+
     const painel = $('painel-acess'), abre = $('btn-acess');
+    let ultimoFoco = null;
+
+    function focaveis() { return painel.querySelectorAll('button'); }
     function abrir() {
+      ultimoFoco = document.activeElement;           /* guarda onde você estava */
       painel.removeAttribute('hidden');
       painel.classList.remove('abrindo'); void painel.offsetWidth; painel.classList.add('abrindo');
       abre.setAttribute('aria-expanded', 'true'); abre.textContent = '✖';
       abre.title = 'Fechar opções de acessibilidade';
-      const b = painel.querySelector('button'); if (b) b.focus();
+      const f = focaveis(); if (f.length) f[0].focus(); /* foco entra na janela */
     }
     function fechar() {
       painel.setAttribute('hidden', '');
       abre.setAttribute('aria-expanded', 'false'); abre.textContent = '♿';
       abre.title = 'Abrir opções de acessibilidade';
+      /* devolve o foco para onde você estava (ou para o botão ♿) */
+      if (ultimoFoco && document.contains(ultimoFoco) && ultimoFoco !== document.body) ultimoFoco.focus();
+      else abre.focus();
+      ultimoFoco = null;
     }
-    abre.addEventListener('click', () => painel.hasAttribute('hidden') ? abrir() : fechar());
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        if (painel.hasAttribute('hidden')) { abrir(); }
-        else { fechar(); abre.focus(); }
+    function estaAberto() { return !painel.hasAttribute('hidden'); }
+
+    abre.addEventListener('click', () => estaAberto() ? fechar() : abrir());
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { estaAberto() ? fechar() : abrir(); return; }
+      /* FOCUS TRAP: com a janela aberta, o Tab circula só dentro dela */
+      if (e.key === 'Tab' && estaAberto()) {
+        const f = focaveis();
+        if (!f.length) return;
+        const primeiro = f[0], ultimo = f[f.length - 1];
+        if (!painel.contains(document.activeElement)) { e.preventDefault(); primeiro.focus(); }
+        else if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
+        else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
       }
     });
+
     const liga = (id, fn) => { const b = $(id); if (b) b.addEventListener('click', fn); };
     liga('btn-hc',  () => { estado.hc=!estado.hc; salvar(); });
     liga('btn-fdx', () => { estado.fdx=!estado.fdx; salvar(); });
@@ -119,9 +134,11 @@ window.coresGraf = function () {
     liga('btn-a+',  () => { estado.fs=Math.min(130,(estado.fs||100)+10); salvar(); });
     liga('btn-a-',  () => { estado.fs=Math.max(85,(estado.fs||100)-10); salvar(); });
     liga('btn-reset', () => { localStorage.removeItem('solagua'); location.reload(); });
+
     const topo = document.querySelector('.topo'), tog = $('btn-menu');
     if (tog && topo) tog.addEventListener('click', () => { const a=topo.classList.toggle('aberto'); tog.setAttribute('aria-expanded',String(a)); });
     const ano = $('ano'); if (ano) ano.textContent = new Date().getFullYear();
+
     const revs = [...document.querySelectorAll('.reveal')];
     const sem = document.body.classList.contains('sem-anim');
     if (sem || !('IntersectionObserver' in window)) revs.forEach(r => r.classList.add('visivel'));
