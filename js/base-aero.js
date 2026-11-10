@@ -1,4 +1,4 @@
-/* Sol+Água Aero v3 · acessibilidade + Esc abre/fecha + VLibras watchdog + aquário + coresGraf */
+/* Sol+Água Aero v4 · painel ♿ e VLibras garantidos em TODAS as páginas */
 window.coresGraf = function () {
   var cs = getComputedStyle(document.body);
   return {
@@ -15,6 +15,7 @@ window.coresGraf = function () {
   const $ = id => document.getElementById(id);
   let estado = {};
   try { estado = JSON.parse(localStorage.getItem('solagua') || '{}'); } catch (e) { estado = {}; }
+
   function aplicar() {
     document.body.classList.toggle('hc', !!estado.hc);
     document.body.classList.toggle('fdx', !!estado.fdx);
@@ -27,7 +28,68 @@ window.coresGraf = function () {
     });
   }
   function salvar() { localStorage.setItem('solagua', JSON.stringify(estado)); aplicar(); }
+
+  /* Cria botão + painel de acessibilidade se a página não tiver (garantia total) */
+  function garantirPainel() {
+    if (!$('btn-acess')) {
+      const b = document.createElement('button');
+      b.id = 'btn-acess'; b.className = 'btn-flutuante';
+      b.setAttribute('aria-expanded', 'false');
+      b.setAttribute('aria-controls', 'painel-acess');
+      b.title = 'Abrir opções de acessibilidade';
+      b.textContent = '♿';
+      document.body.appendChild(b);
+    }
+    if (!$('painel-acess')) {
+      const p = document.createElement('div');
+      p.id = 'painel-acess'; p.className = 'painel-acess';
+      p.setAttribute('role', 'dialog');
+      p.setAttribute('aria-label', 'Opções de acessibilidade');
+      p.setAttribute('hidden', '');
+      p.innerHTML =
+        '<h2>♿ Acessibilidade</h2>' +
+        '<button id="btn-hc" class="pa-btn" aria-pressed="false">🌗 Alto contraste</button>' +
+        '<button id="btn-fdx" class="pa-btn" aria-pressed="false">🔤 Fonte para dislexia</button>' +
+        '<button id="btn-a+" class="pa-btn">A+ Aumentar texto</button>' +
+        '<button id="btn-a-" class="pa-btn">A− Diminuir texto</button>' +
+        '<button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>' +
+        '<button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>' +
+        '<button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>' +
+        '<p class="pa-nota">Tab navega · Enter ativa · Esc abre/fecha. VLibras no botão azul à direita.</p>';
+      document.body.appendChild(p);
+    }
+  }
+
+  /* VLibras 100%: garante contêiner + plugin + inicialização com retry */
+  function garantirVLibras() {
+    if (!document.querySelector('div[vw]')) {
+      const vw = document.createElement('div');
+      vw.setAttribute('vw', '');
+      vw.className = 'enabled';
+      vw.innerHTML = '<div access="true"></div>';
+      document.body.appendChild(vw);
+    }
+    function boot() {
+      if (window.__vlOK) return;
+      try { if (window.VLibras) { new VLibras.Widget('https://vlibras.gov.br/app'); window.__vlOK = true; } } catch (e) {}
+    }
+    window.addEventListener('load', function () {
+      boot();
+      if (!window.__vlOK) {
+        if (!document.querySelector('script[src*="vlibras-plugin"]')) {
+          const s = document.createElement('script');
+          s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+          s.onload = boot;
+          document.body.appendChild(s);
+        }
+        var t = setInterval(function () { boot(); if (window.__vlOK) clearInterval(t); }, 1500);
+        setTimeout(function () { clearInterval(t); }, 15000);
+      }
+    });
+  }
+
   window.addEventListener('DOMContentLoaded', function () {
+    garantirPainel();
     aplicar();
     const painel = $('painel-acess'), abre = $('btn-acess');
     function abrir() {
@@ -42,15 +104,13 @@ window.coresGraf = function () {
       abre.setAttribute('aria-expanded', 'false'); abre.textContent = '♿';
       abre.title = 'Abrir opções de acessibilidade';
     }
-    if (abre && painel) {
-      abre.addEventListener('click', () => painel.hasAttribute('hidden') ? abrir() : fechar());
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          if (painel.hasAttribute('hidden')) { abrir(); }
-          else { fechar(); abre.focus(); }
-        }
-      });
-    }
+    abre.addEventListener('click', () => painel.hasAttribute('hidden') ? abrir() : fechar());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (painel.hasAttribute('hidden')) { abrir(); }
+        else { fechar(); abre.focus(); }
+      }
+    });
     const liga = (id, fn) => { const b = $(id); if (b) b.addEventListener('click', fn); };
     liga('btn-hc',  () => { estado.hc=!estado.hc; salvar(); });
     liga('btn-fdx', () => { estado.fdx=!estado.fdx; salvar(); });
@@ -69,27 +129,7 @@ window.coresGraf = function () {
       const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); io.unobserve(e.target); } }), { threshold: .12 });
       revs.forEach(r => io.observe(r));
     }
-  });
-})();
-/* VLibras: init com retry e anti-duplicação */
-(function(){
-  function boot(){
-    if (window.__vlOK) return;
-    try { if (window.VLibras) { new VLibras.Widget('https://vlibras.gov.br/app'); window.__vlOK = true; } } catch (e) {}
-  }
-  window.addEventListener('load', function(){
-    boot();
-    if (!window.__vlOK) {
-      var t = setInterval(function(){ boot(); if (window.__vlOK) clearInterval(t); }, 1500);
-      setTimeout(function(){
-        clearInterval(t);
-        if (!window.__vlOK && !window.VLibras) {
-          var s = document.createElement('script');
-          s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
-          s.onload = boot; document.body.appendChild(s);
-        }
-      }, 4000);
-    }
+    garantirVLibras();
   });
 })();
 /* 🐠 aquário de fundo */
