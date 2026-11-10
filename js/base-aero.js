@@ -1,4 +1,4 @@
-/* Sol+Água Aero v5 · painel ♿ com focus trap + retorno de foco + VLibras garantido */
+/* Sol+Água Aero v6 · tecla E abre/fecha o painel · Tab sempre livre · VLibras garantido */
 window.coresGraf = function () {
   var cs = getComputedStyle(document.body);
   return {
@@ -35,7 +35,7 @@ window.coresGraf = function () {
       b.id = 'btn-acess'; b.className = 'btn-flutuante';
       b.setAttribute('aria-expanded', 'false');
       b.setAttribute('aria-controls', 'painel-acess');
-      b.title = 'Abrir opções de acessibilidade';
+      b.title = 'Abrir opções de acessibilidade (tecla E)';
       b.textContent = '♿';
       document.body.appendChild(b);
     }
@@ -54,7 +54,7 @@ window.coresGraf = function () {
         '<button id="btn-esp" class="pa-btn" aria-pressed="false">↔️ Mais espaçamento</button>' +
         '<button id="btn-sem" class="pa-btn" aria-pressed="false">🐢 Reduzir animações</button>' +
         '<button id="btn-reset" class="pa-btn">↩️ Restaurar padrão</button>' +
-        '<p class="pa-nota">Tab circula dentro da janela · Esc abre/fecha · o foco volta para onde você estava.</p>';
+        '<p class="pa-nota"></p>';
       document.body.appendChild(p);
     }
   }
@@ -89,41 +89,43 @@ window.coresGraf = function () {
     aplicar();
 
     const painel = $('painel-acess'), abre = $('btn-acess');
-    let ultimoFoco = null;
+    /* atualiza o texto de ajuda em TODAS as páginas (mesmo nas que já tinham painel no HTML) */
+    const nota = painel.querySelector('.pa-nota');
+    if (nota) nota.textContent = 'Tecla E abre/fecha · Esc fecha · Tab navega livre pela página. VLibras no botão azul à direita.';
+    abre.title = 'Abrir opções de acessibilidade (tecla E)';
 
-    function focaveis() { return painel.querySelectorAll('button'); }
+    let ultimoFoco = null;
+    function estaAberto() { return !painel.hasAttribute('hidden'); }
     function abrir() {
-      ultimoFoco = document.activeElement;           /* guarda onde você estava */
+      ultimoFoco = document.activeElement;
       painel.removeAttribute('hidden');
       painel.classList.remove('abrindo'); void painel.offsetWidth; painel.classList.add('abrindo');
       abre.setAttribute('aria-expanded', 'true'); abre.textContent = '✖';
-      abre.title = 'Fechar opções de acessibilidade';
-      const f = focaveis(); if (f.length) f[0].focus(); /* foco entra na janela */
+      abre.title = 'Fechar opções de acessibilidade (tecla E)';
+      const f = painel.querySelector('button'); if (f) f.focus();
     }
     function fechar() {
       painel.setAttribute('hidden', '');
       abre.setAttribute('aria-expanded', 'false'); abre.textContent = '♿';
-      abre.title = 'Abrir opções de acessibilidade';
-      /* devolve o foco para onde você estava (ou para o botão ♿) */
+      abre.title = 'Abrir opções de acessibilidade (tecla E)';
       if (ultimoFoco && document.contains(ultimoFoco) && ultimoFoco !== document.body) ultimoFoco.focus();
       else abre.focus();
       ultimoFoco = null;
     }
-    function estaAberto() { return !painel.hasAttribute('hidden'); }
 
     abre.addEventListener('click', () => estaAberto() ? fechar() : abrir());
 
+    /* TECLA E abre/fecha · ESC apenas fecha · SEM trap: o Tab anda livre */
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { estaAberto() ? fechar() : abrir(); return; }
-      /* FOCUS TRAP: com a janela aberta, o Tab circula só dentro dela */
-      if (e.key === 'Tab' && estaAberto()) {
-        const f = focaveis();
-        if (!f.length) return;
-        const primeiro = f[0], ultimo = f[f.length - 1];
-        if (!painel.contains(document.activeElement)) { e.preventDefault(); primeiro.focus(); }
-        else if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
-        else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
+      const el = document.activeElement;
+      const tag = el ? el.tagName : '';
+      const digitando = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (el && el.isContentEditable);
+      if ((e.key === 'e' || e.key === 'E') && !e.ctrlKey && !e.metaKey && !e.altKey && !digitando) {
+        e.preventDefault();
+        estaAberto() ? fechar() : abrir();
+        return;
       }
+      if (e.key === 'Escape' && estaAberto()) { fechar(); }
     });
 
     const liga = (id, fn) => { const b = $(id); if (b) b.addEventListener('click', fn); };
@@ -185,6 +187,4 @@ window.coresGraf = function () {
   function sinc(){ var sem=document.body.classList.contains('sem-anim'); anims.forEach(function(a){ sem?a.pause():a.play(); }); }
   new MutationObserver(sinc).observe(document.body,{attributes:true,attributeFilter:['class']});
   sinc();
-  fetch('js/base-aero.js').then(r=>r.text()).then(t=>console.log(t.includes('FOCUS TRAP') ? '✅ v5 no ar' : '❌ ainda é a versão antiga'))
 })();
-
