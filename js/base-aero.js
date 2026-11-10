@@ -185,4 +185,6 @@ window.coresGraf = function () {
   function sinc(){ var sem=document.body.classList.contains('sem-anim'); anims.forEach(function(a){ sem?a.pause():a.play(); }); }
   new MutationObserver(sinc).observe(document.body,{attributes:true,attributeFilter:['class']});
   sinc();
+  fetch('js/base-aero.js').then(r=>r.text()).then(t=>console.log(t.includes('FOCUS TRAP') ? '✅ v5 no ar' : '❌ ainda é a versão antiga'))
 })();
+
